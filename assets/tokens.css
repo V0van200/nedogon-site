@@ -2,6 +2,11 @@
 :root{
   color-scheme: dark;
   --asphalt:#121314; --lane:#1d1f21; --chalk:#f4f1ea; --dust:#9a958c;
+  --hero-dark:rgba(9,8,10,.92); --hero-translucent:rgba(9,8,10,.55);
+  --album-surface:#222; --album-border:rgba(255,255,255,.5);
+  --album-overlay:rgba(17,17,17,.33); --album-art-overlay:rgba(17,17,17,.73);
+  --album-art-border:rgba(255,255,255,.2); --album-lightbox:rgba(11,11,11,.96);
+  --album-backdrop:#000;
   --track:#ff5b47; --blush:#ffb3c1; --line:rgba(244,241,234,.14);
 
   --font-display:"Russo One", "Arial Black", Impact, system-ui, sans-serif;

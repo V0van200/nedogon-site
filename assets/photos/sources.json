@@ -97,5 +97,34 @@
     "context": "Public thumbnail from confirmed creator video supplied by user.",
     "retrievedOn": "2026-10-27",
     "synthetic": false
+  },
+  {
+    "file": "polina-flowers.webp",
+    "kind": "creator_photo",
+    "source": "User-supplied photograph authorized for website use",
+    "originalFilename": "photo_5242423664479774138_y.jpg",
+    "synthetic": false
+  },
+  {
+    "file": "polina-stream.webp",
+    "kind": "creator_photo",
+    "source": "User-supplied photograph authorized for website use",
+    "originalFilename": "photo_5289587675314727987_y.jpg",
+    "synthetic": false
+  },
+  {
+    "file": "polina-rain.webp",
+    "kind": "creator_photo",
+    "source": "User-supplied photograph authorized for website use",
+    "originalFilename": "photo_5323470741032344381_y.jpg",
+    "synthetic": false
+  },
+  {
+    "file": "../images/portrait-room.webp",
+    "mobileFile": "../img/hero.webp",
+    "kind": "generated_editorial_portrait",
+    "source": "Built-in ImageGen, based on three user-provided non-advertising reference photographs and the existing room artwork",
+    "synthetic": true,
+    "context": "Artistic scene; not an actual documentary photograph. Clearly labelled in gallery."
   }
 ]

@@ -31,6 +31,7 @@ document.querySelectorAll('.reveal').forEach((el, i) => { el.style.transitionDel
 const header = document.querySelector('.site-header');
 const progress = document.querySelector('.reading-progress');
 const room = document.querySelector('.hero-room');
+room.addEventListener('animationend', () => { room.style.animation = 'none'; updateScroll(); }, {once:true});
 let scrollQueued = false;
 function updateScroll() {
   scrollQueued = false;
