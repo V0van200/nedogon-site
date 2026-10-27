@@ -26,7 +26,7 @@ export const stories = [
       ],
     },
     moments: [
-      loop('in-taxi', 'Таксист, который возил её по всем достопримечательностям', tg(2706), 'Пост в Telegram', full('in-taxi-full', '0:34')),
+      loop('in-taxi', 'Таксист, который возил её по всем достопримечательностям', tg(2706), 'Пост в Telegram', full('in-taxi-full', '0:12')),
       loop('in-crowd', '«Чувствую себя самой популярной девушкой»', yt('qgsX30zvU-0', 884), 'Момент во влоге', full('in-crowd-full', '0:34')),
       loop('in-gateway', 'Ворота Индии и тысячи голубей', yt('qgsX30zvU-0'), 'Влог целиком'),
       loop('in-street', 'Старый Бомбей из окна такси', yt('qgsX30zvU-0', 456), 'Момент во влоге'),
@@ -57,7 +57,7 @@ export const stories = [
       ],
     },
     moments: [
-      loop('ae-captain', '«Капитан Недогон прибыл к вашим услугам! Отправляемся в плаванье»', yt('FUNw28TGBHc', 157), 'Нарезка на YouTube', full('ae-captain-full', '0:31')),
+      loop('ae-captain', '«Капитан Недогон прибыл к вашим услугам! Отправляемся в плаванье»', yt('FUNw28TGBHc', 166), 'Нарезка на YouTube', full('ae-captain-full', '0:18')),
       loop('ae-pirates', '«Мой последний день на Титанике»: надувной бассейн в море не выдержал', yt('FUNw28TGBHc', 280), 'Нарезка на YouTube', full('ae-titanic-full', '0:46')),
       loop('ae-obstacle', 'Водная полоса с LEVA2K и ENZZAI: «сейчас я прыгну, снимай!»', yt('kf36kJSLh4U', 119), 'Нарезка на YouTube', full('ae-obstacle-full', '0:52')),
       loop('ae-love', '«Я люблю вас. Спасибо, что приходите ко мне на стримы»', yt('FUNw28TGBHc', 577), 'Нарезка на YouTube', full('ae-love-full', '0:18')),
