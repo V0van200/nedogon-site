@@ -2,31 +2,150 @@
 <html lang="ru">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>NEDOGONPOLYA — скоро</title>
-<meta name="description" content="Сайт стримерши NEDOGONPOLYA скоро будет здесь. А пока — стримы на Twitch.">
-<style>
-:root{--bg:#0d0d0f;--fg:#f2efe9;--muted:#a19c93;--accent:#ff5a36;color-scheme:dark}
-*{box-sizing:border-box}
-html,body{height:100%}
-body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.5 "Segoe UI",system-ui,-apple-system,Roboto,sans-serif;display:grid;place-items:center;padding:24px}
-main{max-width:640px;width:100%}
-.tag{display:inline-block;font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);border:1px solid #2a2a2e;border-radius:999px;padding:6px 12px}
-h1{font-size:clamp(40px,11vw,88px);line-height:.95;margin:22px 0 14px;letter-spacing:-.02em;font-weight:800}
-h1 span{color:var(--accent)}
-p{color:var(--muted);font-size:clamp(16px,2.6vw,19px);margin:0 0 28px;max-width:46ch}
-a.btn{display:inline-flex;gap:10px;align-items:center;background:var(--accent);color:#120806;font-weight:700;text-decoration:none;padding:14px 22px;border-radius:12px}
-a.btn:focus-visible{outline:2px solid var(--fg);outline-offset:3px}
-footer{margin-top:40px;font-size:13px;color:#6f6a63}
-</style>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Полина Недогон — NEDOGONPOLYA</title>
+<meta name="description" content="Полина Недогон — стримерша NEDOGONPOLYA: спорт, акробатика, путешествия и эфиры, где тебя ждут.">
+<meta name="theme-color" content="#121314">
+<meta property="og:title" content="Полина Недогон — не догонишь">
+<meta property="og:description" content="Спорт, акробатика, путешествия и эфиры с чатом. Twitch: nedogonpolya">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://nedogon-polya.ru/">
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<link rel="preload" href="assets/fonts/RussoOne-400-cyrillic.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="assets/fonts/fonts.css">
+<link rel="stylesheet" href="assets/tokens.css">
+<link rel="stylesheet" href="assets/site.css">
 </head>
 <body>
+<div class="race" aria-hidden="true"><div class="race__fill"></div><div class="race__runner"></div></div>
+
+<header class="top">
+  <a class="top__logo" href="#start">НЕДОГОН</a>
+  <nav class="top__nav" aria-label="Разделы">
+    <a href="#distance">Дистанция</a>
+    <a href="#captain">Маршрут</a>
+    <a href="#crew">В кадре</a>
+    <a href="#finish">Финиш</a>
+  </nav>
+  <a class="btn btn--live" href="https://www.twitch.tv/nedogonpolya" target="_blank" rel="noopener"><span class="dot"></span>Twitch</a>
+</header>
+
 <main>
-  <span class="tag">сайт в разработке</span>
-  <h1>NEDOGON<span>POLYA</span></h1>
-  <p>Скоро здесь будет сайт. А пока — стримы на Twitch: спорт, путешествия, активный отдых, Dota&nbsp;2 с чатом и душевные разговоры.</p>
-  <a class="btn" href="https://www.twitch.tv/nedogonpolya" rel="noopener">Смотреть на Twitch →</a>
-  <footer>nedogon-polya.ru</footer>
+  <section class="hero" id="start" aria-labelledby="hero-title">
+    <canvas class="hero__speed" aria-hidden="true"></canvas>
+    <div class="hero__photo" aria-hidden="true"><img src="assets/img/hero.webp" alt="" width="900" height="1200" fetchpriority="high" onerror="this.remove()"></div>
+    <div class="hero__inner">
+      <p class="bib" aria-hidden="true"><span>старт</span>NEDOGONPOLYA</p>
+      <h1 class="hero__title" id="hero-title">
+        <span class="hero__name">Полина</span>
+        <span class="hero__word" data-split>Недогон</span>
+      </h1>
+      <p class="hero__lead">Спорт, сальто, путешествия и эфиры, где с&nbsp;чатом всё по-честному. <b>Тебя тут ждут.</b></p>
+      <div class="hero__cta">
+        <a class="btn btn--track" href="https://www.twitch.tv/nedogonpolya" target="_blank" rel="noopener">Смотреть эфир</a>
+        <a class="btn btn--ghost" href="https://t.me/NEDOGONPOLYAA" target="_blank" rel="noopener">Telegram</a>
+      </div>
+    </div>
+    <div class="hero__lanes" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+  </section>
+
+  <div class="ticker" aria-hidden="true"><div class="ticker__row">
+    <span>Не догонишь</span><span>NEDOGONPOLYA</span><span>Спорт</span><span>Сальто</span><span>Dota с чатом</span><span>IRL</span><span>Путешествия</span>
+    <span>Не догонишь</span><span>NEDOGONPOLYA</span><span>Спорт</span><span>Сальто</span><span>Dota с чатом</span><span>IRL</span><span>Путешествия</span>
+  </div></div>
+
+  <section class="surname reveal" aria-labelledby="surname-q">
+    <p class="kicker">Вопрос номер один в чате</p>
+    <h2 class="surname__q" id="surname-q">«А Недогон — это ник?»</h2>
+    <p class="surname__a">Нет. <em>Недогон</em> — фамилия. Поля — имя. А&nbsp;вот догнать её правда сложно.</p>
+  </section>
+
+  <section class="distance" id="distance" aria-labelledby="distance-h">
+    <header class="section-head reveal">
+      <p class="kicker">Дистанция</p>
+      <h2 id="distance-h">Кто бежит по этой дорожке</h2>
+    </header>
+    <div class="lanes">
+      <article class="lane reveal" style="--i:0">
+        <span class="lane__no">01</span>
+        <h3>Гимнастика и акробатика</h3>
+        <p>Тренировала детей и готовила гимнасток — по нескольку часов в день. Сальто для неё не трюк для клипа, а привычное движение.</p>
+      </article>
+      <article class="lane lane--wide reveal" style="--i:1">
+        <span class="lane__no">02</span>
+        <h3>Эфиры, где говорят по-настоящему</h3>
+        <p>Готовка, уборка, душевные разговоры. Dota&nbsp;2, GTA и CS — вместе с чатом, а не для галочки.</p>
+      </article>
+      <article class="lane reveal" style="--i:2">
+        <span class="lane__no">03</span>
+        <h3>Активный отдых</h3>
+        <p>Сноуборд, прыжки с высоты, водные полосы препятствий и прогулки по Москве в IRL.</p>
+      </article>
+      <article class="lane lane--accent reveal" style="--i:3">
+        <span class="lane__no">04</span>
+        <h3>Спонтанность</h3>
+        <p>В 2022 году собралась и переехала в Дубай — «в новую жизнь, о которой давно мечтала». С тех пор так и живёт: сначала делает, потом рассказывает.</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="captain" id="captain" aria-labelledby="captain-h">
+    <header class="section-head reveal">
+      <p class="kicker">Маршрут</p>
+      <h2 id="captain-h">Капитан Недогон</h2>
+      <p class="section-head__sub">Так она представилась, отправляясь в «кругосветку» на надувном бассейне. Бассейн не доплыл. Зато вот куда добралась сама.</p>
+    </header>
+    <div class="captain__grid">
+      <div class="globe" id="globe" role="img" aria-label="Глобус с отметками путешествий Полины">
+        <p class="globe__hint">Покрути глобус или выбери место</p>
+      </div>
+      <div class="trips">
+        <div class="trips__years" role="group" aria-label="Годы"></div>
+        <ol class="trips__list"></ol>
+        <article class="trip-card" aria-live="polite"></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="crew" id="crew" aria-labelledby="crew-h">
+    <header class="section-head reveal">
+      <p class="kicker">Чекпоинты</p>
+      <h2 id="crew-h">В кадре с ней были</h2>
+    </header>
+    <ul class="crew__list">
+      <li class="reveal"><b>Fasoollka</b><span>Сочи: прыжок с 69 метров в Skypark и самые высокие качели</span></li>
+      <li class="reveal"><b>LEVA2K × ENZZAI</b><span>Дубай: водная полоса препятствий и гонка «кто быстрее»</span></li>
+      <li class="reveal"><b>Хетаг Хугаев</b><span>«Однажды на New Star Camp» — гостевой выпуск HUGA Stand Up</span></li>
+      <li class="reveal"><b>«Спорно»</b><span>Гостья шоу</span></li>
+      <li class="reveal"><b>Buster</b><span>Тот самый клип, где он пытается произнести её имя</span></li>
+    </ul>
+  </section>
+
+  <section class="finish" id="finish" aria-labelledby="finish-h">
+    <div class="finish__line" aria-hidden="true"></div>
+    <header class="section-head reveal">
+      <p class="kicker">Финиш</p>
+      <h2 id="finish-h">Догоняй здесь</h2>
+    </header>
+    <div class="links">
+      <a class="link link--big reveal" href="https://www.twitch.tv/nedogonpolya" target="_blank" rel="noopener"><span>Twitch</span><small>эфиры почти каждый день</small></a>
+      <a class="link reveal" href="https://t.me/NEDOGONPOLYAA" target="_blank" rel="noopener"><span>Telegram</span><small>анонсы и жизнь</small></a>
+      <a class="link reveal" href="https://www.youtube.com/channel/UCRPK3mxYd62KKzDTVxXKsHQ" target="_blank" rel="noopener"><span>YouTube</span><small>влоги</small></a>
+      <a class="link reveal" href="https://www.youtube.com/@NEDOGONPOLYA2" target="_blank" rel="noopener"><span>YouTube&nbsp;2</span><small>нарезки</small></a>
+      <a class="link reveal" href="https://www.tiktok.com/@nedogonpolya" target="_blank" rel="noopener"><span>TikTok</span><small>сальто и короткое</small></a>
+      <a class="link reveal" href="https://www.instagram.com/_nedogon/" target="_blank" rel="noopener"><span>Instagram</span><small>_nedogon</small></a>
+      <a class="link reveal" href="https://t.me/RareLOSNEAKERS" target="_blank" rel="noopener"><span>Магазин</span><small>кроссовки, техника, бренды</small></a>
+      <a class="link reveal" href="https://ihaqdonate.com/d/NEDOGONPOLYA" target="_blank" rel="noopener"><span>Донат</span><small>поддержать эфир</small></a>
+    </div>
+    <p class="collab reveal">Сотрудничество: <a href="mailto:nedogonpolina@gmail.com">nedogonpolina@gmail.com</a></p>
+  </section>
 </main>
+
+<footer class="foot">
+  <p>Сделано с любовью для Полины и её чата · nedogon-polya.ru</p>
+</footer>
+
+<script src="vendor/topojson-client.min.js"></script>
+<script type="module" src="assets/main.js"></script>
 </body>
 </html>
