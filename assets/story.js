@@ -115,6 +115,55 @@ function setSound(on) {
   soundBtn.textContent = on ? 'Выключить звук' : 'Смотреть со звуком';
 }
 
+// --- кинорежим: момент со звуком на весь экран ---
+const cinema = el('dialog', 'cinema');
+cinema.setAttribute('aria-label', 'Видео со звуком');
+const cineVideo = el('video');
+Object.assign(cineVideo, { controls: true, playsInline: true, preload: 'auto' });
+cineVideo.setAttribute('playsinline', '');
+const cineTitle = el('p');
+const cineLink = el('a');
+Object.assign(cineLink, { target: '_blank', rel: 'noopener noreferrer' });
+const cineCap = el('div', 'cinema-cap');
+cineCap.append(cineTitle, cineLink);
+const cineClose = el('button', 'cinema-close', '×');
+cineClose.type = 'button';
+cineClose.setAttribute('aria-label', 'Закрыть видео');
+cinema.append(cineClose, cineVideo, cineCap);
+document.body.append(cinema);
+
+function openCinema(full, title, link, linkText) {
+  if (soundBtn.getAttribute('aria-pressed') === 'true') setSound(false);
+  stageVideo()?.pause();
+  cineVideo.poster = full.poster || '';
+  cineVideo.src = full.src;
+  cineVideo.muted = false;
+  cineTitle.textContent = title || '';
+  cineLink.hidden = !link;
+  if (link) { cineLink.href = link; cineLink.textContent = `${linkText || 'Открыть'} ↗`; }
+  cinema.showModal();
+  cineVideo.play().catch(() => {});
+}
+function closeCinema() {
+  if (!cinema.open) return;
+  cineVideo.pause();
+  cineVideo.removeAttribute('src');
+  cineVideo.load();
+  cinema.close();
+  play(stageVideo());
+}
+cineClose.addEventListener('click', closeCinema);
+cinema.addEventListener('cancel', (e) => { e.preventDefault(); closeCinema(); });
+cinema.addEventListener('click', (e) => { if (e.target === cinema) closeCinema(); });
+
+function soundButton(label, full, title, link, linkText) {
+  const b = el('button', 'film-play');
+  b.type = 'button';
+  b.append(el('b'), document.createTextNode(`${label} · ${full.dur}`));
+  b.addEventListener('click', () => openCinema(full, title, link, linkText));
+  return b;
+}
+
 // --- главы ---
 function kicker(n) { return el('p', 'kicker', `Глава ${n} · ${CHAPTERS[n - 1]}`); }
 
@@ -132,6 +181,7 @@ function buildOpen(s) {
     box.append(b, el('p', 'sub', s.open.sub));
   } else {
     box.append(words(el('blockquote', 'quote reveal'), `«${s.open.quote}»`), el('p', 'sub', s.open.sub));
+    if (s.open.full) box.append(soundButton('Смотреть со звуком', s.open.full, s.open.full.title));
   }
   const cue = el('p', 'cue', 'Листай вниз');
   cue.prepend(el('i'));
@@ -163,6 +213,15 @@ function buildMoments(s) {
     const fig = el('figure', 'card');
     const box = el('div', 'media');
     box.append(mediaNode(m, { lazy: true }), el('span', 'tag', m.role), el('span', 'no', pad(i + 1)));
+    if (m.full) {
+      box.classList.add('has-sound');
+      const pb = el('button', 'card-play');
+      pb.type = 'button';
+      pb.append(el('b'), document.createTextNode(`Со звуком · ${m.full.dur}`));
+      pb.setAttribute('aria-label', `Смотреть со звуком: ${m.caption}`);
+      box.append(pb);
+      box.addEventListener('click', () => openCinema(m.full, m.caption, m.link, m.linkText));
+    }
     const cap = el('figcaption');
     cap.append(el('span', null, m.caption));
     if (m.link) {
@@ -183,6 +242,7 @@ function buildFinale(s, next) {
   const sec = el('section', 'chapter ch-finale');
   const top = el('div', 'wrap');
   top.append(kicker(4), words(el('blockquote', 'quote reveal'), `«${s.finale.quote}»`), el('p', 'sub', s.finale.sub));
+  if (s.finale.full) top.append(soundButton('Её слова со звуком', s.finale.full, s.finale.full.title));
   if (s.finale.link) {
     const a = el('a', 'finale-link', `${s.finale.linkText} ↗`);
     Object.assign(a, { href: s.finale.link, target: '_blank', rel: 'noopener noreferrer' });

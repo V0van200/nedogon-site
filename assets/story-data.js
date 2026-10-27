@@ -4,7 +4,8 @@ const V = (f) => `assets/video/${f}.mp4`;
 const P = (f) => `assets/video/${f}.jpg`;
 const yt = (id, t) => `https://www.youtube.com/watch?v=${id}${t ? `&t=${t}s` : ''}`;
 const tg = (n) => `https://t.me/NEDOGONPOLYAA/${n}`;
-const loop = (f, caption, link, linkText) => ({ video: V(f), poster: P(f), caption, link, linkText, role: 'её поездка' });
+const full = (f, dur) => ({ src: V(f), poster: P(f.replace('-full', '')), dur });
+const loop = (f, caption, link, linkText, sound) => ({ video: V(f), poster: P(f), caption, link, linkText, role: 'её поездка', full: sound });
 const photo = (src, caption, link, linkText, role = 'её поездка') => ({ img: src, caption, link, linkText, role });
 
 export const stories = [
@@ -25,8 +26,8 @@ export const stories = [
       ],
     },
     moments: [
-      loop('in-taxi', 'Таксист, который возил её по всем достопримечательностям', tg(2706), 'Пост в Telegram'),
-      loop('in-crowd', 'Местные подходили сфотографироваться — «как будто какая-то знаменитость»', yt('qgsX30zvU-0', 494), 'Момент во влоге'),
+      loop('in-taxi', 'Таксист, который возил её по всем достопримечательностям', tg(2706), 'Пост в Telegram', full('in-taxi-full', '0:34')),
+      loop('in-crowd', '«Чувствую себя самой популярной девушкой»', yt('qgsX30zvU-0', 884), 'Момент во влоге', full('in-crowd-full', '0:34')),
       loop('in-gateway', 'Ворота Индии и тысячи голубей', yt('qgsX30zvU-0'), 'Влог целиком'),
       loop('in-street', 'Старый Бомбей из окна такси', yt('qgsX30zvU-0', 456), 'Момент во влоге'),
       loop('in-view', 'Смотровая площадка над городом', yt('qgsX30zvU-0', 860), 'Момент во влоге'),
@@ -42,6 +43,7 @@ export const stories = [
     id: 'ae', name: 'ОАЭ', years: '2022–2025', place: 'Дубай',
     open: {
       media: loop('ae-wake'),
+      full: { ...full('ae-wake-full', '1:16'), title: 'На гидроцикле с Ekatze' },
       quote: 'Всё как во сне',
       sub: 'Октябрь 2022. Спонтанный переезд в Дубай.',
     },
@@ -55,12 +57,15 @@ export const stories = [
       ],
     },
     moments: [
-      loop('ae-obstacle', 'Водная полоса с LEVA2K и ENZZAI: кто первым сделает сальто?', yt('kf36kJSLh4U', 186), 'Нарезка на YouTube'),
-      loop('ae-pirates', '«Пиратская кругосветка»: надувной бассейн в море не выдержал', yt('FUNw28TGBHc', 296), 'Нарезка на YouTube'),
+      loop('ae-captain', '«Капитан Недогон прибыл к вашим услугам! Отправляемся в плаванье»', yt('FUNw28TGBHc', 157), 'Нарезка на YouTube', full('ae-captain-full', '0:31')),
+      loop('ae-pirates', '«Мой последний день на Титанике»: надувной бассейн в море не выдержал', yt('FUNw28TGBHc', 280), 'Нарезка на YouTube', full('ae-titanic-full', '0:46')),
+      loop('ae-obstacle', 'Водная полоса с LEVA2K и ENZZAI: «сейчас я прыгну, снимай!»', yt('kf36kJSLh4U', 119), 'Нарезка на YouTube', full('ae-obstacle-full', '0:52')),
+      loop('ae-love', '«Я люблю вас. Спасибо, что приходите ко мне на стримы»', yt('FUNw28TGBHc', 577), 'Нарезка на YouTube', full('ae-love-full', '0:18')),
       photo('assets/photos/video-dubai.jpg', '«Стримхата 192»: неделя на вилле со стримерами', yt('593JhVfwRwY'), 'Первый день'),
     ],
     finale: {
       media: loop('ae-beach'),
+      full: { ...full('ae-thanks-full', '0:37'), title: 'Её слова чату после стрима' },
       quote: 'Главное не расслабляться',
       sub: 'Так она написала через пару недель после переезда.',
       link: tg(1928), linkText: 'Пост в Telegram',
