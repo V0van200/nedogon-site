@@ -268,6 +268,84 @@
    "status": "published",
    "playbackCheckedOn": "2026-10-27",
    "reviewNote": "Шортс с её канала @NEDOGONPOLYAA, заголовок вшит в видео. Звук на слух не проверен человеком."
+  },
+  {
+   "id": "cooking-masterchef",
+   "topic": "cooking",
+   "title": "Мастершеф у Fasoollka",
+   "summary": "Две команды, блюда вытянуты наугад, а за продуктами — бегом: на всё 20 секунд.",
+   "kind": "clip",
+   "src": "assets/video/cooking/cooking-masterchef.mp4",
+   "poster": "assets/video/cooking/cooking-masterchef-poster.webp",
+   "captions": "assets/video/cooking/cooking-masterchef.ru.vtt",
+   "durationSeconds": 35,
+   "width": 1280,
+   "height": 720,
+   "people": [
+    "Fasoollka",
+    "MuhanJan",
+    "Follentass",
+    "RudySayuki",
+    "VATARlS"
+   ],
+   "sourceUrl": "https://www.youtube.com/watch?v=vzZmfkZ4ZDo",
+   "sourceIn": "00:02:10",
+   "sourceOut": "00:10:30",
+   "music": "HoliznaCC0 — Wave Maker (CC0)",
+   "captionsNote": "Whisper по исходнику, выверено по тексту, неразборчивое не подписано",
+   "status": "published",
+   "playbackCheckedOn": null,
+   "reviewNote": "Мат проверен Whisper по всему клипу — не найден. Звук на слух ещё не проверен человеком."
+  },
+  {
+   "id": "cooking-challenge",
+   "topic": "cooking",
+   "title": "Кукинг-челлендж",
+   "summary": "Один в наушниках, другой с завязанными глазами — и всё равно надо приготовить ужин.",
+   "kind": "clip",
+   "src": "assets/video/cooking/cooking-challenge.mp4",
+   "poster": "assets/video/cooking/cooking-challenge-poster.webp",
+   "captions": "assets/video/cooking/cooking-challenge.ru.vtt",
+   "durationSeconds": 42,
+   "width": 1280,
+   "height": 720,
+   "people": [
+    "Enzzai",
+    "Элдос",
+    "Огр"
+   ],
+   "sourceUrl": "https://www.youtube.com/watch?v=z1u8GtDwn0o",
+   "sourceIn": "00:02:11",
+   "sourceOut": "00:08:08",
+   "music": "HoliznaCC0 — I Don't Understand a Thing (CC0)",
+   "captionsNote": "Whisper по исходнику, выверено по тексту, неразборчивое не подписано",
+   "status": "published",
+   "playbackCheckedOn": null,
+   "reviewNote": "Мат проверен Whisper по всему клипу — не найден. Звук на слух ещё не проверен человеком."
+  },
+  {
+   "id": "cooking-mabelend",
+   "topic": "cooking",
+   "title": "Роллы и зефир с Mabelend",
+   "summary": "Роллы с «приправой» из жвачки, запись на ужин к шеф-поварам и зефир со вкусом розжига.",
+   "kind": "clip",
+   "src": "assets/video/cooking/cooking-mabelend.mp4",
+   "poster": "assets/video/cooking/cooking-mabelend-poster.webp",
+   "captions": "assets/video/cooking/cooking-mabelend.ru.vtt",
+   "durationSeconds": 41,
+   "width": 1280,
+   "height": 720,
+   "people": [
+    "Mabelend"
+   ],
+   "sourceUrl": "https://www.youtube.com/watch?v=Xevo3g7ghFM",
+   "sourceIn": "00:04:55",
+   "sourceOut": "00:08:58",
+   "music": "HoliznaCC0 — Orbs in a Photo (CC0)",
+   "captionsNote": "Whisper по исходнику, выверено по тексту, неразборчивое не подписано",
+   "status": "published",
+   "playbackCheckedOn": null,
+   "reviewNote": "Мат проверен Whisper по всему клипу — не найден. Звук на слух ещё не проверен человеком."
   }
  ]
 }

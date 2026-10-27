@@ -457,7 +457,8 @@ async function init() {
     // data-limit="0" + data-more — без клипов, только карточка-переход в раздел
     if (!list.length && !slot.dataset.more) return;
     slot.classList.add('clip-slot');
-    if (slot.dataset.layout === 'row') slot.classList.add('clip-slot--row');
+    if (slot.dataset.layout === 'row' || slot.dataset.layout === 'feature') slot.classList.add('clip-slot--row');
+    if (slot.dataset.layout === 'feature') slot.classList.add('clip-slot--feature');
     if (slot.dataset.layout === 'shorts') slot.classList.add('clip-slot--shorts');
     slot.replaceChildren(...list.map(card));
     // data-more="cooking.html" data-more-label="Все кукинги" — ссылка на страницу раздела под карточками

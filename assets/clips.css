@@ -31,6 +31,13 @@
 .clip-more{justify-self:start;font:600 13px/1 var(--sans,system-ui);color:var(--lilac,#d5b0ef);padding-bottom:6px;border-bottom:1px solid currentColor;transition:opacity .2s}
 .clip-more:hover{opacity:.75}
 .clip-slot--row .clip-more{grid-column:1/-1}
+/* data-layout="feature": 5 клипов = 2 крупных сверху + 3 снизу */
+@media (min-width:900px){
+  .clip-slot--feature{grid-template-columns:repeat(6,minmax(0,1fr))}
+  .clip-slot--feature>.clip-card{grid-column:span 2}
+  .clip-slot--feature>.clip-card:nth-child(-n+2){grid-column:span 3}
+  .clip-slot--feature>.clip-card:nth-child(-n+2) .clip-card__title{font-size:clamp(26px,2.2vw,32px)}
+}
 
 /* ---------- «Состав»: карточки стримеров ---------- */
 .people{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(360px,100%),1fr));gap:18px;align-items:start}
