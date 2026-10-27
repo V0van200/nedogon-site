@@ -63,3 +63,7 @@ Manrope взят из google/fonts, лицензия `assets/fonts/OFL.txt`. Thr
 
 ## Streaming formats — 27 October 2026
 Replaced #what with audience snapshot, cooking/sports editorial image cards, Isolation project poster, and source-linked cosplay/guest entries. Header now links to Эфиры. All source/provenance and image prompts are in assets/img/formats/sources.json. Cooking and sports illustrations are generated from user-approved Polina portraits; they describe formats, not specific past events. Per user instruction, no visible AI labels on these cards. Isolation image is user-supplied staged project art. Audience figures are a rounded dated snapshot, not live counters. Images are local lazy-loaded WebP. CSS hover/reveal motion respects the existing pause control and reduced motion. No new WebGL contexts or embeds. Browser visual QA unavailable because earlier browser-origin access was declined; source and HTTP checks only.
+
+
+## Interests — 27 October 2026
+Added #interests after streaming formats: music/festivals, self-edited videos and a personal blog, snowboard progress. Native details/summary keeps stories compact and keyboard accessible; no new JS/media. Primary creator sources: Telegram /9353 (festival response), /4461 (concert), /9245 (editing), /9249 (blog), /3574 (India edit), /8900 (first snowboard jump), /8897 (snowboard day). Only hobbies and public creative work; no routes or residence information added.
