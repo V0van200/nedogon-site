@@ -1,126 +1,39 @@
-// 3D-глобус «Капитан Недогон». three.js и карта мира лежат в /vendor — никаких внешних CDN.
-import * as THREE from '../vendor/three.module.min.js';
+import * as THREE from './vendor/three.module.min.js';
 
-const R = 1;
-const css = (n) => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
-
-function toVec(lat, lon, r = R) {
-  const phi = (90 - lat) * Math.PI / 180, th = (lon + 180) * Math.PI / 180;
-  return new THREE.Vector3(-r * Math.sin(phi) * Math.cos(th), r * Math.cos(phi), r * Math.sin(phi) * Math.sin(th));
-}
-
-export async function initGlobe(host, trips, { onSelect } = {}) {
-  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-  renderer.setPixelRatio(Math.min(devicePixelRatio || 1, 2));
-  host.appendChild(renderer.domElement);
-  const scene = new THREE.Scene();
-  const camera = new THREE.PerspectiveCamera(32, 1, 0.1, 50);
-  camera.position.set(0, 0, 4.2);
-
-  const globe = new THREE.Group();
-  globe.rotation.order = 'XYZ';
-  scene.add(globe);
-
-  // тело планеты и мягкое свечение края
-  globe.add(new THREE.Mesh(new THREE.SphereGeometry(R, 64, 48), new THREE.MeshBasicMaterial({ color: css('--lane') || '#1d1f21' })));
-  const glow = new THREE.Mesh(new THREE.SphereGeometry(R * 1.12, 64, 48), new THREE.ShaderMaterial({
-    transparent: true, side: THREE.BackSide, depthWrite: false,
-    uniforms: { c: { value: new THREE.Color(css('--track') || '#ff5b47') } },
-    vertexShader: 'varying vec3 n; void main(){ n = normalize(normalMatrix*normal); gl_Position = projectionMatrix*modelViewMatrix*vec4(position,1.); }',
-    fragmentShader: 'uniform vec3 c; varying vec3 n; void main(){ float i = pow(0.62 - dot(n, vec3(0.,0.,1.)), 3.); gl_FragColor = vec4(c, clamp(i,0.,1.)*0.4); }',
-  }));
-  scene.add(glow);
-
-  // сетка широт/долгот
-  const gridMat = new THREE.LineBasicMaterial({ color: css('--chalk') || '#f4f1ea', transparent: true, opacity: 0.06 });
-  for (let lat = -60; lat <= 60; lat += 30) {
-    const pts = []; for (let lon = -180; lon <= 180; lon += 4) pts.push(toVec(lat, lon, R * 1.001));
-    globe.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints(pts), gridMat));
-  }
-  for (let lon = -180; lon < 180; lon += 30) {
-    const pts = []; for (let lat = -90; lat <= 90; lat += 4) pts.push(toVec(lat, lon, R * 1.001));
-    globe.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints(pts), gridMat));
-  }
-
-  // контуры суши
-  try {
-    const topo = await (await fetch(new URL('../vendor/land-110m.json', import.meta.url))).json();
-    const mesh = window.topojson.mesh(topo, topo.objects.land);
-    const landMat = new THREE.LineBasicMaterial({ color: css('--chalk') || '#f4f1ea', transparent: true, opacity: 0.55 });
-    for (const line of mesh.coordinates) {
-      const pts = line.map(([lon, lat]) => toVec(lat, lon, R * 1.002));
-      globe.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints(pts), landMat));
-    }
-  } catch (e) { console.warn('карта не загрузилась', e); }
-
-  // метки путешествий
-  const markers = trips.map((t) => {
-    const g = new THREE.Group();
-    const p = toVec(t.lat, t.lon, R * 1.004);
-    g.position.copy(p); g.lookAt(p.clone().multiplyScalar(2));
-    const dot = new THREE.Mesh(new THREE.CircleGeometry(0.022, 24), new THREE.MeshBasicMaterial({ color: css('--track') || '#ff5b47' }));
-    const ring = new THREE.Mesh(new THREE.RingGeometry(0.03, 0.038, 32), new THREE.MeshBasicMaterial({ color: css('--blush') || '#ffb3c1', transparent: true, opacity: 0.9 }));
-    const hit = new THREE.Mesh(new THREE.CircleGeometry(0.08, 12), new THREE.MeshBasicMaterial({ visible: false }));
-    g.add(dot, ring, hit); g.userData = { trip: t, ring, dot, hit, dir: p.clone().normalize() };
-    globe.add(g); return g;
-  });
-
-  // вращение
-  let target = { x: 0.35, y: 0 }, cur = { x: 0.35, y: 0 }, dragging = false, last = null, idle = 0, active = null;
-  const el = renderer.domElement;
-  el.style.touchAction = 'pan-y';
-  el.addEventListener('pointerdown', (e) => { dragging = true; last = { x: e.clientX, y: e.clientY, t: e.pointerType }; el.setPointerCapture(e.pointerId); idle = 0; });
-  el.addEventListener('pointermove', (e) => {
-    if (!dragging) return;
-    const dx = e.clientX - last.x, dy = e.clientY - last.y; last.x = e.clientX; last.y = e.clientY;
-    target.y += dx * 0.006; target.x = Math.max(-1.1, Math.min(1.1, target.x + dy * 0.006));
-  });
-  el.addEventListener('pointerup', (e) => { dragging = false; idle = 0; pick(e); });
-
-  const ray = new THREE.Raycaster(), ndc = new THREE.Vector2();
-  function pick(e) {
-    const r = el.getBoundingClientRect();
-    ndc.set(((e.clientX - r.left) / r.width) * 2 - 1, -((e.clientY - r.top) / r.height) * 2 + 1);
-    ray.setFromCamera(ndc, camera);
-    const hits = ray.intersectObjects(markers.map((m) => m.userData.hit));
-    if (hits.length) { const t = hits[0].object.parent.userData.trip; focus(t.id); onSelect && onSelect(t.id); }
-  }
-
-  function focus(id) {
-    const m = markers.find((x) => x.userData.trip.id === id); if (!m) return;
-    active = id; idle = 0;
-    const d = m.userData.dir;
-    const yaw = Math.atan2(d.x, d.z);
-    let ty = -yaw; while (ty - target.y > Math.PI) ty -= 2 * Math.PI; while (target.y - ty > Math.PI) ty += 2 * Math.PI;
-    target.y = ty; target.x = Math.atan2(d.y, Math.hypot(d.x, d.z));
-  }
-
-  function size() {
-    const w = host.clientWidth, h = host.clientHeight || w;
-    renderer.setSize(w, h, false); camera.aspect = w / h; camera.updateProjectionMatrix();
-  }
-  new ResizeObserver(size).observe(host); size();
-
-  let visible = true;
-  new IntersectionObserver(([e]) => { visible = e.isIntersecting; }).observe(host);
-  const clock = new THREE.Clock();
-  (function loop() {
-    requestAnimationFrame(loop);
-    if (!visible) return;
-    const dt = Math.min(clock.getDelta(), 0.05); idle += dt;
-    if (!dragging && !reduce && idle > 4) target.y += dt * 0.12;
-    cur.x += (target.x - cur.x) * Math.min(1, dt * 5); cur.y += (target.y - cur.y) * Math.min(1, dt * 5);
-    globe.rotation.x = cur.x; globe.rotation.y = cur.y;
-    const t = clock.elapsedTime;
-    for (const m of markers) {
-      const on = m.userData.trip.id === active;
-      const k = reduce ? 1 : 1 + ((t * 0.9 + m.userData.trip.lat) % 1.6) * 0.9;
-      m.userData.ring.scale.setScalar(on ? 1.6 : k);
-      m.userData.ring.material.opacity = on ? 1 : Math.max(0, 1.15 - (k - 1));
-      m.userData.dot.scale.setScalar(on ? 1.7 : 1);
-    }
-    renderer.render(scene, camera);
-  })();
-  return { focus };
+export async function createGlobe(host, places, onSelect, reducedMotion) {
+ const renderer=new THREE.WebGLRenderer({alpha:true,antialias:devicePixelRatio<2,powerPreference:'low-power'});
+ renderer.setPixelRatio(Math.min(devicePixelRatio,1.75));renderer.setClearColor(0x0c0e13,0);renderer.outputColorSpace=THREE.SRGBColorSpace;
+ renderer.domElement.setAttribute('aria-hidden','true');host.append(renderer.domElement);
+ const scene=new THREE.Scene(),camera=new THREE.PerspectiveCamera(38,1,.1,50),world=new THREE.Group();scene.add(world);
+ const loader=new THREE.TextureLoader();
+ const [day,night]=await Promise.all([loader.loadAsync('./assets/images/earth.jpg'),loader.loadAsync('./assets/images/earth-lights.png')]);
+ day.colorSpace=night.colorSpace=THREE.SRGBColorSpace;
+ const radius=1.08;
+ const earth=new THREE.Mesh(new THREE.SphereGeometry(radius,64,40),new THREE.MeshPhongMaterial({map:day,color:0x667b9c,emissive:0xe4c590,emissiveMap:night,emissiveIntensity:1.7,shininess:8,specular:0x233548}));world.add(earth);
+ scene.add(new THREE.AmbientLight(0xb5c9e8,1.5));const sun=new THREE.DirectionalLight(0xe4e9ff,2.2);sun.position.set(-3,3,5);scene.add(sun);
+ const atmosphere=new THREE.Mesh(new THREE.SphereGeometry(radius*1.025,48,32),new THREE.ShaderMaterial({transparent:true,side:THREE.BackSide,depthWrite:false,uniforms:{tint:{value:new THREE.Color(0x789ac4)}},vertexShader:'varying vec3 vNormal; varying vec3 vPosition; void main(){vec4 p=modelViewMatrix*vec4(position,1.0);vNormal=normalize(normalMatrix*normal);vPosition=p.xyz;gl_Position=projectionMatrix*p;}',fragmentShader:'uniform vec3 tint; varying vec3 vNormal;varying vec3 vPosition;void main(){float rim=pow(1.0-abs(dot(normalize(vNormal),normalize(-vPosition))),2.5);gl_FragColor=vec4(tint,rim*0.24);}'}));world.add(atmosphere);
+ const gridMaterial=new THREE.LineBasicMaterial({color:0xc3bdce,transparent:true,opacity:.075});
+ // Latitude lines, not invented flight routes.
+ for(const lat of [-60,-30,0,30,60]){const y=Math.sin(THREE.MathUtils.degToRad(lat))*(radius+.003),r=Math.cos(THREE.MathUtils.degToRad(lat))*(radius+.003);const vertices=Array.from({length:129},(_,i)=>new THREE.Vector3(r*Math.cos(i/128*Math.PI*2),y,r*Math.sin(i/128*Math.PI*2)));world.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints(vertices),gridMaterial));}
+ function position(lat,lon,r){const a=THREE.MathUtils.degToRad(lat),b=THREE.MathUtils.degToRad(lon);return new THREE.Vector3(r*Math.cos(a)*Math.cos(b),r*Math.sin(a),-r*Math.cos(a)*Math.sin(b));}
+ const markerGeometry=new THREE.SphereGeometry(.018,12,8),markers=[];
+ for(const place of places){const marker=new THREE.Mesh(markerGeometry,new THREE.MeshBasicMaterial({color:0xd5b0ef}));marker.position.copy(position(place.lat,place.lon,radius+.014));marker.userData.placeId=place.id;const ring=new THREE.Mesh(new THREE.RingGeometry(.03,.034,32),new THREE.MeshBasicMaterial({color:0xe5c3fb,transparent:true,opacity:.6,side:THREE.DoubleSide,depthWrite:false}));ring.position.copy(marker.position.clone().multiplyScalar(1.003));ring.quaternion.setFromUnitVectors(new THREE.Vector3(0,0,1),marker.position.clone().normalize());world.add(marker,ring);markers.push({place,marker,ring});}
+ const selection=new THREE.Mesh(new THREE.RingGeometry(.045,.052,40),new THREE.MeshBasicMaterial({color:0xf5e9ff,transparent:true,opacity:.9,side:THREE.DoubleSide,depthWrite:false}));world.add(selection);
+ const labels=document.createElement('div');labels.className='globe-labels';labels.setAttribute('aria-hidden','true');host.append(labels);markers.forEach(m=>{m.label=document.createElement('span');m.label.className='globe-label';m.label.textContent=m.place.name;labels.append(m.label);});
+ let activeId='bali',visibleIds=new Set(places.map(p=>p.id)),inView=false,dirty=true,autoRotate=!reducedMotion,paused=false,dragging=false,moved=false,target=null,lastTime=0,lastPointer={x:0,y:0},pauseUntil=0;
+ const spin=document.querySelector('.globe-spin');
+ function syncSpin(){spin.setAttribute('aria-pressed',String(paused));spin.innerHTML=`${paused?'▶':'Ⅱ'} <span>${paused?'Вращать глобус':'Остановить вращение'}</span>`;}
+ spin.addEventListener('click',()=>{paused=!paused;autoRotate=!paused&&!reducedMotion;syncSpin();dirty=true;});
+ window.addEventListener('motionchange',e=>{reducedMotion=e.detail.disabled;autoRotate=!paused&&!reducedMotion;if(reducedMotion&&target){world.rotation.set(target.x,target.y,0);target=null;}dirty=true;});
+ function resize(){const {width,height}=host.getBoundingClientRect();if(!width||!height)return;renderer.setSize(width,height,false);camera.aspect=width/height;camera.position.set(0,0,3.65/Math.min(1,camera.aspect));camera.updateProjectionMatrix();dirty=true;}
+ const observer=new ResizeObserver(resize);observer.observe(host);resize();const visibility=new IntersectionObserver(e=>{inView=e[0].isIntersecting;dirty=true;},{threshold:.01});visibility.observe(host);
+ const raycaster=new THREE.Raycaster(),pointer=new THREE.Vector2(),worldPosition=new THREE.Vector3(),cameraDirection=new THREE.Vector3();
+ function pick(event){const rect=host.getBoundingClientRect();pointer.set((event.clientX-rect.left)/rect.width*2-1,-(event.clientY-rect.top)/rect.height*2+1);raycaster.setFromCamera(pointer,camera);const candidates=markers.filter(m=>visibleIds.has(m.place.id)).map(m=>m.marker),hit=raycaster.intersectObjects(candidates)[0];if(hit){const earthHit=raycaster.intersectObject(earth)[0];if(!earthHit||hit.distance<earthHit.distance+.025)onSelect(hit.object.userData.placeId);}}
+ renderer.domElement.addEventListener('pointerdown',e=>{if(e.button!==0)return;dragging=true;moved=false;lastPointer={x:e.clientX,y:e.clientY};target=null;pauseUntil=performance.now()+7000;renderer.domElement.setPointerCapture(e.pointerId);});
+ renderer.domElement.addEventListener('pointermove',e=>{if(!dragging)return;const dx=e.clientX-lastPointer.x,dy=e.clientY-lastPointer.y;if(Math.abs(dx)+Math.abs(dy)>2)moved=true;world.rotation.y+=dx*.005;world.rotation.x=THREE.MathUtils.clamp(world.rotation.x+dy*.004,-1.15,1.15);lastPointer={x:e.clientX,y:e.clientY};dirty=true;});
+ renderer.domElement.addEventListener('pointerup',e=>{if(!dragging)return;dragging=false;if(!moved)pick(e);pauseUntil=performance.now()+6000;});renderer.domElement.addEventListener('pointercancel',()=>{dragging=false;});
+ function select(id,focus){activeId=id;const item=markers.find(m=>m.place.id===id);if(!item)return;selection.position.copy(item.marker.position.clone().multiplyScalar(1.009));selection.quaternion.copy(item.ring.quaternion);selection.visible=visibleIds.has(id);if(focus){const desired=-Math.PI/2-THREE.MathUtils.degToRad(item.place.lon),y=world.rotation.y,delta=THREE.MathUtils.euclideanModulo(desired-y+Math.PI,Math.PI*2)-Math.PI;target={x:THREE.MathUtils.degToRad(item.place.lat),y:y+delta};pauseUntil=performance.now()+7000;if(reducedMotion){world.rotation.set(target.x,target.y,0);target=null;}}dirty=true;}
+ function filter(ids){visibleIds=new Set(ids);markers.forEach(m=>{m.marker.visible=m.ring.visible=visibleIds.has(m.place.id);});dirty=true;}
+ function frame(time){requestAnimationFrame(frame);if(!inView||document.hidden){lastTime=time;return;}const dt=Math.min((time-lastTime)/1000,.05);lastTime=time;const moving=autoRotate&&!dragging&&time>pauseUntil;if(target&&!dragging){world.rotation.x=THREE.MathUtils.lerp(world.rotation.x,target.x,.08);world.rotation.y=THREE.MathUtils.lerp(world.rotation.y,target.y,.08);if(Math.abs(world.rotation.y-target.y)+Math.abs(world.rotation.x-target.x)<.001)target=null;dirty=true;}else if(moving){world.rotation.y+=dt*.045;dirty=true;}if(!dirty)return;dirty=false;world.updateMatrixWorld();cameraDirection.copy(camera.position).normalize();markers.forEach(m=>{m.marker.scale.setScalar(m.place.id===activeId?1.5:1);m.marker.material.color.setHex(m.place.id===activeId?0xffffff:0xd5b0ef);m.ring.material.opacity=m.place.id===activeId?.9:.45;m.marker.getWorldPosition(worldPosition);const front=worldPosition.clone().normalize().dot(cameraDirection)>.2,show=visibleIds.has(m.place.id)&&front&&(m.place.id===activeId||['saratov','dubai','bali','vietnam'].includes(m.place.id));m.label.hidden=!show;if(show){const projected=worldPosition.clone().project(camera);m.label.style.transform=`translate(${(projected.x*.5+.5)*host.clientWidth+9}px,${(-projected.y*.5+.5)*host.clientHeight-7}px)`;m.label.classList.toggle('selected',m.place.id===activeId);}});renderer.render(scene,camera);}
+ requestAnimationFrame(frame);renderer.domElement.addEventListener('webglcontextlost',e=>{e.preventDefault();host.parentElement.classList.remove('globe-ready');document.querySelector('#globe-status').textContent='Карта недоступна · выбирай истории в списке';});syncSpin();return{select,filter};
 }
