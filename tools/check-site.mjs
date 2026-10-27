@@ -6,6 +6,11 @@ const moduleFromSource=async file=>import('data:text/javascript;base64,'+Buffer.
 const {countries,safeContentOverride}=await moduleFromSource('assets/atlas-data.js');
 const {findCountry,pointInGeometry,normalizeLongitude}=await moduleFromSource('assets/atlas-math.js');
 const {clips,nextClip,randomOtherClip}=await moduleFromSource('assets/moments-data.js');
+const {streamClips,twitchEmbedUrl}=await moduleFromSource('assets/stream-player.js');
+assert.equal(streamClips.length,3);
+for(const clip of streamClips){const url=new URL(twitchEmbedUrl(clip.id,'nedogon-polya.ru'));assert.equal(url.hostname,'clips.twitch.tv');assert.equal(url.searchParams.get('clip'),clip.slug);assert.equal(url.searchParams.get('parent'),'nedogon-polya.ru');assert.equal(url.searchParams.get('autoplay'),'false');}
+assert.equal(new URL(twitchEmbedUrl('channel','localhost')).searchParams.get('channel'),'nedogonpolya');
+assert.throws(()=>twitchEmbedUrl('unknown','nedogon-polya.ru'));assert.throws(()=>twitchEmbedUrl('channel','bad/host'));
 assert.equal(clips.length,6);assert.equal(new Set(clips.map(c=>c.id)).size,6);
 for(const clip of clips){assert.ok(clip.url.startsWith('https://www.youtube.com/watch?'));assert.ok(/^\d\d:\d\d$/.test(clip.time));assert.ok(fs.readFileSync(clip.image).length);}
 assert.equal(nextClip(0,-1),5);assert.equal(nextClip(5,1),0);
@@ -32,6 +37,7 @@ assert.ok(ids.includes('country-drawer'));assert.ok(ids.includes('drawer-country
 const resources=new Set(['index.html','gallery.html','assets/app.js','assets/atlas.js','assets/atlas-data.js','assets/atlas-math.js','assets/atlas-globe.js','assets/images/earth.jpg','assets/images/earth-lights.png','assets/countries/boundaries.json','assets/vendor/three.module.min.js']);
 if(contentIndex)resources.add(contentIndex);
 resources.add('assets/moments.js');resources.add('assets/moments-data.js');
+resources.add('assets/stream-player.js');
 for(const source of [html,gallery])for(const match of source.matchAll(/(?:src|href)="([^"#]+)"/g))if(!/^(https?:|mailto:)/.test(match[1]))resources.add(match[1].split(/[?#]/)[0]);
 for(const file of ['assets/site.css','assets/atlas.css','assets/gallery.css'])for(const match of read(file).matchAll(/url\(['"]?([^)'"\s]+)['"]?\)/g))resources.add(path.posix.normalize(path.posix.join('assets',match[1])));
 for(const country of countries)for(const image of country.images)resources.add(image.src);
