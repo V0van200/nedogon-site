@@ -1,0 +1,43 @@
+/* Карточки клипов и плеер поверх страницы (assets/clips.js). Цвета — из токенов site.css. */
+.clip-slot{display:grid;gap:14px;margin-top:28px}
+.clip-card{all:unset;box-sizing:border-box;display:grid;grid-template-columns:minmax(120px,42%) 1fr;gap:18px;align-items:center;
+  padding:10px;border:1px solid var(--line,rgba(242,238,230,.16));border-radius:14px;cursor:pointer;background:rgba(25,25,27,.55);
+  transition:border-color .25s,transform .25s,background .25s}
+.clip-card:hover{border-color:var(--lilac,#d5b0ef);transform:translateY(-2px);background:rgba(25,25,27,.85)}
+.clip-card:focus-visible{outline:2px solid var(--lilac,#d5b0ef);outline-offset:3px}
+.clip-card__media{position:relative;display:block;aspect-ratio:16/9;border-radius:9px;overflow:hidden;background:#000}
+.clip-card__media img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .6s}
+.clip-card:hover .clip-card__media img{transform:scale(1.05)}
+.clip-card__play{position:absolute;left:50%;top:50%;width:44px;height:44px;margin:-22px 0 0 -22px;border-radius:50%;
+  background:var(--ink,#f2eee6);box-shadow:0 6px 24px rgba(0,0,0,.45);transition:transform .25s}
+.clip-card__play::before{content:"";position:absolute;left:17px;top:13px;border-left:14px solid #111;border-top:9px solid transparent;border-bottom:9px solid transparent}
+.clip-card:hover .clip-card__play{transform:scale(1.1)}
+.clip-card__time{position:absolute;right:7px;bottom:7px;padding:3px 7px;border-radius:5px;font:600 11px/1 var(--sans,system-ui);
+  letter-spacing:.04em;background:rgba(17,17,17,.82);color:var(--ink,#f2eee6);font-variant-numeric:tabular-nums}
+.clip-card__text{display:grid;gap:5px;min-width:0}
+.clip-card__label{font:700 10px/1 var(--sans,system-ui);letter-spacing:.16em;text-transform:uppercase;color:var(--lilac,#d5b0ef)}
+.clip-card__title{font:italic 21px/1.15 var(--serif,Georgia,serif);color:var(--ink,#f2eee6)}
+.clip-card__summary{font:14px/1.45 var(--sans,system-ui);color:var(--muted,#aaa6a4)}
+@media (max-width:560px){.clip-card{grid-template-columns:1fr}.clip-card__title{font-size:19px}}
+
+.clip-dialog{border:0;padding:0;margin:auto;background:transparent;max-width:min(1100px,94vw);width:100%;color:var(--ink,#f2eee6)}
+.clip-dialog::backdrop{background:rgba(8,8,10,.86);backdrop-filter:blur(6px)}
+.clip-dialog[open]{animation:clip-in .35s cubic-bezier(.2,.8,.2,1)}
+@keyframes clip-in{from{opacity:0;transform:translateY(24px) scale(.97)}}
+.clip-dialog__box{position:relative;display:grid;gap:14px;padding-top:56px}
+.clip-dialog__video{width:100%;max-height:78vh;border-radius:14px;background:#000;display:block}
+.clip-dialog.is-vertical{max-width:min(460px,94vw)}
+.clip-dialog__video::cue{font:500 18px/1.35 var(--sans,system-ui);background:rgba(17,17,17,.78);color:#f2eee6}
+.clip-dialog__close{position:absolute;right:0;top:0;width:44px;height:44px;border-radius:50%;border:1px solid var(--line,rgba(242,238,230,.16));
+  background:rgba(25,25,27,.9);color:var(--ink,#f2eee6);font-size:26px;line-height:1;cursor:pointer}
+.clip-dialog__close:focus-visible,.clip-dialog__retry:focus-visible,.clip-dialog__source:focus-visible{outline:2px solid var(--lilac,#d5b0ef);outline-offset:3px}
+.clip-dialog__meta{display:grid;gap:4px}
+.clip-dialog__meta h3{margin:0;font:italic 24px/1.2 var(--serif,Georgia,serif)}
+.clip-dialog__meta p{margin:0;color:var(--muted,#aaa6a4);font:15px/1.5 var(--sans,system-ui)}
+.clip-dialog__source{color:var(--lilac,#d5b0ef);font:600 14px var(--sans,system-ui);text-underline-offset:4px}
+.clip-dialog__error{position:absolute;inset:56px 0 auto;aspect-ratio:16/9;display:grid;place-content:center;gap:12px;text-align:center;
+  background:rgba(17,17,17,.92);border-radius:14px;padding:20px}
+.clip-dialog__error[hidden]{display:none}
+.clip-dialog__retry{justify-self:center;padding:10px 18px;border-radius:999px;border:0;background:var(--ink,#f2eee6);color:#111;font:700 14px var(--sans,system-ui);cursor:pointer}
+html.clip-open{overflow:hidden}
+@media (prefers-reduced-motion:reduce){.clip-card,.clip-card__media img,.clip-card__play{transition:none}.clip-dialog[open]{animation:none}}

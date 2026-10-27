@@ -10,7 +10,7 @@
    "src": "assets/video/sport/sport-teach-acro.mp4",
    "poster": "assets/video/sport/sport-teach-acro-poster.webp",
    "captions": "assets/video/sport/sport-teach-acro.ru.vtt",
-   "durationSeconds": 41,
+   "durationSeconds": 38,
    "width": 1280,
    "height": 720,
    "people": [
@@ -34,7 +34,7 @@
    "src": "assets/video/cooking/cooking-handcuffs.mp4",
    "poster": "assets/video/cooking/cooking-handcuffs-poster.webp",
    "captions": "assets/video/cooking/cooking-handcuffs.ru.vtt",
-   "durationSeconds": 44,
+   "durationSeconds": 41,
    "width": 1280,
    "height": 720,
    "people": [
@@ -60,7 +60,7 @@
    "src": "assets/video/collabs/collab-quest.mp4",
    "poster": "assets/video/collabs/collab-quest-poster.webp",
    "captions": "assets/video/collabs/collab-quest.ru.vtt",
-   "durationSeconds": 32,
+   "durationSeconds": 29,
    "width": 1280,
    "height": 720,
    "people": [
