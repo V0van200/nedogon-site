@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Истории путешествий — NEDOGONPOLYA</title>
+<meta name="description" content="Полина Недогон: истории путешествий на весь экран — Индия, Дубай, Мальдивы, Таиланд, Бали и Вьетнам её глазами.">
+<meta name="theme-color" content="#0d0c10">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="preload" href="assets/fonts/manrope-variable.ttf" as="font" type="font/ttf" crossorigin>
+<link rel="stylesheet" href="assets/story.css">
+</head>
+<body>
+<div class="stage" aria-hidden="true">
+  <div class="layer"></div>
+  <div class="layer"></div>
+  <div class="shade"></div>
+</div>
+<div class="lamp" aria-hidden="true"></div>
+<div class="grain" aria-hidden="true"></div>
+
+<header class="bar">
+  <a class="back" href="index.html#travel" aria-label="Вернуться к атласу на главной">← Атлас</a>
+  <nav class="chips" aria-label="Страны"></nav>
+  <button class="sound" type="button" hidden aria-pressed="false">Смотреть со звуком</button>
+</header>
+<div class="progress" aria-hidden="true"><i></i></div>
+<nav class="rail" aria-label="Главы истории"></nav>
+
+<main id="story" tabindex="-1"></main>
+
+<div class="curtain is-cover" aria-hidden="true">
+  <p class="curtain__meta"></p>
+  <p class="curtain__name"></p>
+</div>
+<noscript><p class="noscript">Истории работают с включённым JavaScript. <a href="index.html#travel">Вернуться к атласу</a></p></noscript>
+<script type="module" src="assets/story.js"></script>
+</body>
+</html>
