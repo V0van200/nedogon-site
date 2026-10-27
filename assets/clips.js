@@ -283,7 +283,7 @@ function openPlayer(item, card, preview) {
   dialog.showModal();
   video.play().catch(() => {});
   if (motionOff()) return;
-  flip(card.querySelector('.clip-card__media').getBoundingClientRect(), false);
+  flip((card.querySelector('.clip-card__media') || card).getBoundingClientRect(), false);
   P.shade.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 480, easing: 'ease-out' });
   chrome().forEach((n, i) => {
     n.animate([{ opacity: 0, transform: 'translateY(10px)' }, { opacity: 1, transform: 'none' }],
@@ -306,7 +306,7 @@ function closePlayer() {
   };
   if (document.fullscreenElement) document.exitFullscreen().catch(() => {});
   if (motionOff() || !P.opener) { finish(); return; }
-  const anim = flip(P.opener.querySelector('.clip-card__media').getBoundingClientRect(), true);
+  const anim = flip((P.opener.querySelector('.clip-card__media') || P.opener).getBoundingClientRect(), true);
   P.shade.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 420, easing: 'ease-in', fill: 'forwards' });
   chrome().forEach((n) => n.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 180, fill: 'forwards' }));
   // страховка: на слабом компьютере анимация может стартовать с задержкой — окно всё равно закроется
@@ -356,9 +356,75 @@ function card(item) {
   return b;
 }
 
+// ---------- «Состав»: стримеры, с кем Полина снималась (content/media/people.json) ----------
+const plural = (n) => (n % 10 === 1 && n % 100 !== 11 ? 'совместная нарезка'
+  : n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 10 || n % 100 >= 20) ? 'совместные нарезки' : 'совместных нарезок');
+const outLink = (text, href, cls) => {
+  const a = el('a', cls, text);
+  Object.assign(a, { href, target: '_blank', rel: 'noopener noreferrer' });
+  return a;
+};
+
+function personCard(p, i, byId) {
+  const card = el('article', 'crew');
+  card.style.setProperty('--h', String((i * 47 + 280) % 360));
+  const top = el('div', 'crew__top');
+  const mono = el('span', 'crew__mono', p.name.replace(/[^A-Za-zА-Яа-яЁё0-9]/g, '').slice(0, 2).toUpperCase());
+  mono.setAttribute('aria-hidden', 'true');
+  const head = el('div', 'crew__head');
+  head.append(el('h3', null, p.name), el('span', 'crew__count', `${p.count} ${plural(p.count)}`));
+  top.append(mono, head);
+  if (p.twitch) {
+    const t = outLink('Twitch ↗', p.twitch, 'crew__twitch');
+    t.setAttribute('aria-label', `${p.name} на Twitch`);
+    top.append(t);
+  }
+  card.append(top, el('p', 'crew__line', p.line));
+  if (p.members && p.members.length) {
+    const m = el('p', 'crew__members');
+    p.members.forEach((x, k) => { m.append(outLink(x.name, x.twitch)); if (k < p.members.length - 1) m.append(' · '); });
+    card.append(m);
+  }
+  const clips = (p.clips || []).map((id) => byId.get(id)).filter(Boolean);
+  if (clips.length) {
+    const box = el('div', 'crew__clips');
+    clips.forEach((c) => {
+      const b = el('button', 'crew__play');
+      b.type = 'button';
+      b.dataset.play = c.id;
+      b.setAttribute('aria-label', `Смотреть момент: ${c.title}`);
+      b.append(el('span', 'crew__play-icon'), el('span', 'crew__play-title', c.title), el('small', null, fmt(c.durationSeconds)));
+      box.append(b);
+    });
+    card.append(box);
+  }
+  if (p.projects && p.projects.length) {
+    const ul = el('ul', 'crew__projects');
+    p.projects.forEach((pr) => {
+      const li = el('li');
+      li.append(outLink(`${pr.title} ↗`, `https://www.youtube.com/watch?v=${pr.youtube}`));
+      ul.append(li);
+    });
+    card.append(el('span', 'crew__label', 'Вместе на канале'), ul);
+  }
+  return card;
+}
+
+async function renderPeople(byId) {
+  const hosts = [...document.querySelectorAll('[data-people]')];
+  if (!hosts.length) return;
+  let people = [];
+  try {
+    people = (await (await fetch('content/media/people.json', { cache: 'no-cache' })).json()).people || [];
+  } catch (e) {
+    console.warn('clips: состав не загрузился', e);
+    return;
+  }
+  hosts.forEach((host) => host.replaceChildren(...people.map((p, i) => personCard(p, i, byId))));
+}
+
 async function init() {
-  const slots = [...document.querySelectorAll('[data-clips]')];
-  if (!slots.length) return;
+  if (!document.querySelector('[data-clips], [data-people], [data-play]')) return;
   let items = [];
   try {
     items = (await (await fetch(LIB, { cache: 'no-cache' })).json()).items || [];
@@ -367,6 +433,17 @@ async function init() {
     return;
   }
   const ready = items.filter((i) => i.status === 'published' && i.src && i.poster);
+  const byId = new Map(ready.map((i) => [i.id, i]));
+  await renderPeople(byId);
+  // любая кнопка с data-play="<id>" открывает клип в плеере
+  document.addEventListener('click', (e) => {
+    const b = e.target.closest('[data-play]');
+    const item = b && byId.get(b.dataset.play);
+    if (!item) return;
+    e.preventDefault();
+    openPlayer(item, b, null);
+  });
+  const slots = [...document.querySelectorAll('[data-clips]')];
   slots.forEach((slot) => {
     // data-ids="a,b,c" — конкретные клипы по порядку; иначе — по теме data-clips
     const ids = (slot.dataset.ids || '').split(',').map((s) => s.trim()).filter(Boolean);

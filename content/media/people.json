@@ -1,0 +1,260 @@
+{
+ "description": "Стримеры, с кем Полина снималась. Только публичное: ник, ссылка на Twitch из описаний её нарезок, совместные ролики. clips — id из library.json.",
+ "people": [
+  {
+   "id": "ekatze",
+   "name": "Ekatze",
+   "twitch": "https://www.twitch.tv/ekatze007",
+   "count": 12,
+   "line": "Чаще всех в кадре: кухня, вода, косплеи, дрифт и Дубай.",
+   "projects": [
+    {
+     "title": "Кулинарное шоу: суши и фетучини",
+     "youtube": "AnGRiPYlEfY"
+    },
+    {
+     "title": "Вейксёрф и джетски в Дубае",
+     "youtube": "7-zeFrjgrcU"
+    },
+    {
+     "title": "Хэллоуин: Ангел и Демон",
+     "youtube": "W8VTlcZRd6g"
+    },
+    {
+     "title": "Дрифт на стриме",
+     "youtube": "bOHwibVj3G0"
+    }
+   ],
+   "clips": [
+    "cooking-sushi-show"
+   ]
+  },
+  {
+   "id": "enzzai",
+   "name": "Enzzai",
+   "twitch": "https://www.twitch.tv/enzzai",
+   "count": 5,
+   "line": "Кукинги, челлендж на деньги и первый раз в Дубае.",
+   "projects": [
+    {
+     "title": "Кукинг в наручниках",
+     "youtube": "ewmpbKK12tc"
+    },
+    {
+     "title": "Удиви меня — получи деньги",
+     "youtube": "CYc2K4Hha2A"
+    },
+    {
+     "title": "Показала Дубай Энзаю",
+     "youtube": "Z_yr4Eikvu0"
+    },
+    {
+     "title": "Самый страшный квест",
+     "youtube": "zz2r0-bPEFI"
+    }
+   ],
+   "clips": [
+    "cooking-handcuffs",
+    "collab-quest"
+   ]
+  },
+  {
+   "id": "fasoollka",
+   "name": "Fasoollka",
+   "twitch": null,
+   "count": 7,
+   "line": "Сочи и Skypark, акробатика, мастершеф и прогулки на природе.",
+   "projects": [
+    {
+     "title": "Первый раз в Skypark",
+     "youtube": "z9EltZQ3KRg"
+    },
+    {
+     "title": "Акробатика: первое сальто",
+     "youtube": "7JBBlOMdOUk"
+    },
+    {
+     "title": "Мастершеф у Фасольки",
+     "youtube": "vzZmfkZ4ZDo"
+    },
+    {
+     "title": "Разбудили всех белок в лесу",
+     "youtube": "2XnxKCgyLUc"
+    }
+   ],
+   "clips": [
+    "sport-teach-acro"
+   ]
+  },
+  {
+   "id": "mugretnug",
+   "name": "mugretnug",
+   "twitch": "https://www.twitch.tv/mugretnug",
+   "count": 6,
+   "line": "Йога, косплеи и аттракционы.",
+   "projects": [
+    {
+     "title": "Йога с mugretnug",
+     "youtube": "YtYFzKu5Rxw"
+    },
+    {
+     "title": "Косплей на Спанч Боба и Патрика",
+     "youtube": "0eD2jmhctUY"
+    },
+    {
+     "title": "Аттракционы",
+     "youtube": "GLgzhxhIxU4"
+    }
+   ],
+   "clips": [
+    "sport-yoga-two-types"
+   ]
+  },
+  {
+   "id": "leva2k",
+   "name": "LEVA2K",
+   "twitch": "https://www.twitch.tv/leva2k",
+   "count": 4,
+   "line": "Водная полоса в Дубае, страшный квест и интервью.",
+   "projects": [
+    {
+     "title": "Водная полоса в Дубае",
+     "youtube": "kf36kJSLh4U"
+    },
+    {
+     "title": "Самый страшный квест",
+     "youtube": "zz2r0-bPEFI"
+    },
+    {
+     "title": "Интервью LEVA2K",
+     "youtube": "bIjJfgp-eJ4"
+    }
+   ],
+   "clips": [
+    "collab-quest"
+   ]
+  },
+  {
+   "id": "llaviks",
+   "name": "Славик",
+   "twitch": "https://www.twitch.tv/llaviks",
+   "count": 3,
+   "line": "Дрифт: ночной, учебный и «гламурный».",
+   "projects": [
+    {
+     "title": "Ночной дрифт со Славиком",
+     "youtube": "ALtmbFMmnI8"
+    },
+    {
+     "title": "Сломала бэху, пока учили дрифтить",
+     "youtube": "RBheo4i_S7s"
+    },
+    {
+     "title": "Гламурный дрифт",
+     "youtube": "Ut1ZG3zefrQ"
+    }
+   ],
+   "clips": []
+  },
+  {
+   "id": "muhanjan",
+   "name": "MuhanJan",
+   "twitch": "https://www.twitch.tv/muhanjan",
+   "count": 3,
+   "line": "Кукинги и прятки, в которых кто-то застрял под диваном.",
+   "projects": [
+    {
+     "title": "Кукинг в наручниках",
+     "youtube": "ewmpbKK12tc"
+    },
+    {
+     "title": "Застрял под диваном во время пряток",
+     "youtube": "nlL6GUAHw-o"
+    }
+   ],
+   "clips": [
+    "cooking-handcuffs"
+   ]
+  },
+  {
+   "id": "mabelend",
+   "name": "Mabelend",
+   "twitch": "https://www.twitch.tv/mabelend",
+   "count": 2,
+   "line": "Кукинги, которые пошли не по плану.",
+   "projects": [
+    {
+     "title": "Кукинг с Mabelend",
+     "youtube": "Xevo3g7ghFM"
+    },
+    {
+     "title": "Кукинг в наручниках",
+     "youtube": "ewmpbKK12tc"
+    }
+   ],
+   "clips": [
+    "cooking-handcuffs"
+   ]
+  },
+  {
+   "id": "streamhouse",
+   "name": "Стримхата 192",
+   "twitch": null,
+   "count": 8,
+   "line": "Неделя на вилле в Дубае, 2025: девять стримеров под одной крышей.",
+   "projects": [
+    {
+     "title": "День 1: первая встреча на вилле",
+     "youtube": "593JhVfwRwY"
+    },
+    {
+     "title": "День 5",
+     "youtube": "flUWgigDNFw"
+    },
+    {
+     "title": "Последний день на вилле",
+     "youtube": "RTrokUItsh8"
+    }
+   ],
+   "clips": [],
+   "members": [
+    {
+     "name": "evelone2004",
+     "twitch": "https://www.twitch.tv/evelone2004"
+    },
+    {
+     "name": "zloyn",
+     "twitch": "https://www.twitch.tv/zloyn"
+    },
+    {
+     "name": "shadowkekw",
+     "twitch": "https://www.twitch.tv/shadowkekw"
+    },
+    {
+     "name": "ravshann",
+     "twitch": "https://www.twitch.tv/ravshann"
+    },
+    {
+     "name": "renatko",
+     "twitch": "https://www.twitch.tv/renatko"
+    },
+    {
+     "name": "steel",
+     "twitch": "https://www.twitch.tv/steel"
+    },
+    {
+     "name": "ct0m",
+     "twitch": "https://www.twitch.tv/ct0m"
+    },
+    {
+     "name": "skillz0r1337",
+     "twitch": "https://www.twitch.tv/skillz0r1337"
+    },
+    {
+     "name": "ekatze007",
+     "twitch": "https://www.twitch.tv/ekatze007"
+    }
+   ]
+  }
+ ]
+}
