@@ -1,4 +1,78 @@
 {
-  "description": "Готовые ролики для сайта. Плеер показывает только status = published. Формат и правила — docs/COLLAB.md.",
-  "items": []
+ "description": "Готовые ролики для сайта. Плеер показывает только status = published. Формат и правила — docs/COLLAB.md.",
+ "items": [
+  {
+   "id": "sport-teach-acro",
+   "topic": "sport",
+   "title": "Учит Фасольку акробатике",
+   "summary": "Фасолька перечисляет, чему хочет научиться за один день, — а дальше сальто, прыжки и полотна.",
+   "kind": "clip",
+   "src": "assets/video/sport/sport-teach-acro.mp4",
+   "poster": "assets/video/sport/sport-teach-acro-poster.webp",
+   "captions": "assets/video/sport/sport-teach-acro.ru.vtt",
+   "durationSeconds": 41,
+   "width": 1280,
+   "height": 720,
+   "people": [
+    "Fasoollka"
+   ],
+   "sourceUrl": "https://www.youtube.com/watch?v=7JBBlOMdOUk",
+   "sourceIn": "00:01:43",
+   "sourceOut": "00:13:13",
+   "music": "HoliznaCC0 — Walking Away (CC0)",
+   "captionsNote": "Автораспознавание (Whisper + YouTube), выверено по тексту, не на слух",
+   "status": "edited",
+   "playbackCheckedOn": null
+  },
+  {
+   "id": "cooking-handcuffs",
+   "topic": "cooking",
+   "title": "Кукинг в наручниках",
+   "summary": "Готовят, будучи связанными друг с другом, — а в конце садятся за стол «как семья».",
+   "kind": "clip",
+   "src": "assets/video/cooking/cooking-handcuffs.mp4",
+   "poster": "assets/video/cooking/cooking-handcuffs-poster.webp",
+   "captions": "assets/video/cooking/cooking-handcuffs.ru.vtt",
+   "durationSeconds": 44,
+   "width": 1280,
+   "height": 720,
+   "people": [
+    "Enzzai",
+    "MuhanJan",
+    "Mabelend"
+   ],
+   "sourceUrl": "https://www.youtube.com/watch?v=ewmpbKK12tc",
+   "sourceIn": "00:01:39",
+   "sourceOut": "00:11:09",
+   "music": "HoliznaCC0 — Doodles (CC0)",
+   "captionsNote": "Автораспознавание (Whisper + YouTube), выверено по тексту, не на слух",
+   "status": "edited",
+   "playbackCheckedOn": null
+  },
+  {
+   "id": "collab-quest",
+   "topic": "collabs",
+   "title": "После самого страшного квеста",
+   "summary": "Разбор квеста в машине: кто «вообще не напугался», а кто еле дышал.",
+   "kind": "clip",
+   "src": "assets/video/collabs/collab-quest.mp4",
+   "poster": "assets/video/collabs/collab-quest-poster.webp",
+   "captions": "assets/video/collabs/collab-quest.ru.vtt",
+   "durationSeconds": 32,
+   "width": 1280,
+   "height": 720,
+   "people": [
+    "LEVA2K",
+    "Enzzai",
+    "MuhanJan"
+   ],
+   "sourceUrl": "https://www.youtube.com/watch?v=zz2r0-bPEFI",
+   "sourceIn": "00:14:22",
+   "sourceOut": "00:14:54",
+   "music": "HoliznaCC0 — Bubbles (CC0)",
+   "captionsNote": "Автораспознавание (Whisper + YouTube), выверено по тексту, не на слух",
+   "status": "edited",
+   "playbackCheckedOn": null
+  }
+ ]
 }
