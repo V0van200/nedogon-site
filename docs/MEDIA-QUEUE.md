@@ -17,14 +17,14 @@ Claude отмечает: `- [~]` в работе, `- [x]` готово (+ id в 
 ## Партия 2 — клипы из канала нарезок (материалы: content/topics/)
 
 - [x] cooking-handcuffs (library: cooking-handcuffs) — cooking.html — кукинг в наручниках у Enzzai (ewmpbKK12tc)
-- [ ] cooking-fettuccine — cooking.html — фетучини с Ekatze, «пришли соседи» (AnGRiPYlEfY)
+- [x] cooking-fettuccine → cooking-sushi-show — cooking.html — фетучини с Ekatze, «пришли соседи» (AnGRiPYlEfY)
 - [x] sport-teach-acro (library: sport-teach-acro) — sport.html — учит Фасольку акробатике (7JBBlOMdOUk)
 - [x] sport-yoga-trio → sport-yoga-stuck (+ sport-yoga-two-types) — sport.html — позы йоги для троих (qfdN-qkuY0U)
 - [x] snow-rope → snow-car-ride — sport.html / snowboard — катание на тросе (h9sNDW86yJQ)
 - [ ] cosplay-spongebob — cosplay.html — Спанч Боб и Патрик с mugretnug (0eD2jmhctUY)
 - [ ] cosplay-halloween — cosplay.html — Ангел и Демон с Катей (W8VTlcZRd6g)
 - [x] collab-quest (library: collab-quest) — collabs.html — самый страшный квест (zz2r0-bPEFI)
-- [ ] collab-camp — collabs.html — Нескучный лагерь (j3FV__mA1ng)
+- [x] collab-camp — collabs.html — Нескучный лагерь (j3FV__mA1ng)
 - [ ] challenge-treasure — talks/challenges — закопала клад для зрителей (Iv3Qsll9lCc)
 - [ ] drift-first — drift — «сломала бэху, пока учили дрифтить» (RBheo4i_S7s)
 

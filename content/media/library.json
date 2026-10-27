@@ -144,6 +144,52 @@
    "status": "published",
    "playbackCheckedOn": "2026-10-27",
    "reviewNote": "Тех. проверка: запуск, перемотка, субтитры. Звук на слух ещё не проверен человеком."
+  },
+  {
+   "id": "cooking-sushi-show",
+   "topic": "cooking",
+   "title": "Кулинарное шоу с Ekatze",
+   "summary": "Включили свет «как в кино» и запустили своё шоу: суши, протёртые лимоны и фетучини с грибами.",
+   "kind": "clip",
+   "src": "assets/video/cooking/cooking-sushi-show.mp4",
+   "poster": "assets/video/cooking/cooking-sushi-show-poster.webp",
+   "captions": "assets/video/cooking/cooking-sushi-show.ru.vtt",
+   "durationSeconds": 32,
+   "width": 1280,
+   "height": 720,
+   "people": [
+    "Ekatze"
+   ],
+   "sourceUrl": "https://www.youtube.com/watch?v=AnGRiPYlEfY",
+   "sourceIn": "00:04:01",
+   "sourceOut": "00:04:33",
+   "music": "HoliznaCC0 — Warm Fuzz (CC0)",
+   "captionsNote": "Whisper + YouTube, выверено по тексту, не на слух",
+   "status": "published",
+   "playbackCheckedOn": null,
+   "reviewNote": "Тех. проверка: запуск, перемотка, субтитры. Звук на слух ещё не проверен человеком."
+  },
+  {
+   "id": "collab-camp",
+   "topic": "collabs",
+   "title": "Нескучный лагерь",
+   "summary": "Стримеры в детском лагере: полоса на снарядах и «Полин, поддержи меня!».",
+   "kind": "clip",
+   "src": "assets/video/collabs/collab-camp.mp4",
+   "poster": "assets/video/collabs/collab-camp-poster.webp",
+   "captions": "assets/video/collabs/collab-camp.ru.vtt",
+   "durationSeconds": 27,
+   "width": 1280,
+   "height": 720,
+   "people": [],
+   "sourceUrl": "https://www.youtube.com/watch?v=j3FV__mA1ng",
+   "sourceIn": "00:10:31",
+   "sourceOut": "00:10:58",
+   "music": "HoliznaCC0 — One Good Day (CC0)",
+   "captionsNote": "Whisper + YouTube, выверено по тексту, не на слух",
+   "status": "published",
+   "playbackCheckedOn": null,
+   "reviewNote": "Тех. проверка: запуск, перемотка, субтитры. Звук на слух ещё не проверен человеком."
   }
  ]
 }
