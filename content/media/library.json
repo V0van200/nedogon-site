@@ -21,8 +21,9 @@
    "sourceOut": "00:13:13",
    "music": "HoliznaCC0 — Walking Away (CC0)",
    "captionsNote": "Автораспознавание (Whisper + YouTube), выверено по тексту, не на слух",
-   "status": "edited",
-   "playbackCheckedOn": null
+   "status": "published",
+   "playbackCheckedOn": "2026-10-27",
+   "reviewNote": "Тех. проверка на nedogon-polya.ru: запуск, перемотка, субтитры. Звук на слух ещё не проверен человеком."
   },
   {
    "id": "cooking-handcuffs",
@@ -46,8 +47,9 @@
    "sourceOut": "00:11:09",
    "music": "HoliznaCC0 — Doodles (CC0)",
    "captionsNote": "Автораспознавание (Whisper + YouTube), выверено по тексту, не на слух",
-   "status": "edited",
-   "playbackCheckedOn": null
+   "status": "published",
+   "playbackCheckedOn": "2026-10-27",
+   "reviewNote": "Тех. проверка на nedogon-polya.ru: запуск, перемотка, субтитры. Звук на слух ещё не проверен человеком."
   },
   {
    "id": "collab-quest",
@@ -71,8 +73,9 @@
    "sourceOut": "00:14:54",
    "music": "HoliznaCC0 — Bubbles (CC0)",
    "captionsNote": "Автораспознавание (Whisper + YouTube), выверено по тексту, не на слух",
-   "status": "edited",
-   "playbackCheckedOn": null
+   "status": "published",
+   "playbackCheckedOn": "2026-10-27",
+   "reviewNote": "Тех. проверка на nedogon-polya.ru: запуск, перемотка, субтитры. Звук на слух ещё не проверен человеком."
   }
  ]
 }

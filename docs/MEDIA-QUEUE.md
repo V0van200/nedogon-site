@@ -11,19 +11,19 @@ Claude отмечает: `- [~]` в работе, `- [x]` готово (+ id в 
 - [ ] cooking-lyusya — cooking.html — совместная готовка с Люсей (t.me/NEDOGONPOLYAA/8844)
 - [ ] cooking-danya — cooking.html — кукинг с Даней (t.me/NEDOGONPOLYAA/9813)
 - [ ] cooking-chat-menu — cooking.html — чат выбирает еду (t.me/NEDOGONPOLYAA/9204), результат (/8848)
-- [ ] collab-funny-1 — collabs.html — один самый смешной совместный момент, короткий и понятный без контекста
+- [x] collab-funny-1 → collab-quest — collabs.html — один самый смешной совместный момент, короткий и понятный без контекста
 - [ ] music-new-star-camp — music.html / sport.html — из присланного `assets/video/music/new-star-camp.mp4`: постер, проверка, при необходимости субтитры (позже — по просьбе пользователя)
 
 ## Партия 2 — клипы из канала нарезок (материалы: content/topics/)
 
-- [ ] cooking-handcuffs — cooking.html — кукинг в наручниках у Enzzai (ewmpbKK12tc)
+- [x] cooking-handcuffs (library: cooking-handcuffs) — cooking.html — кукинг в наручниках у Enzzai (ewmpbKK12tc)
 - [ ] cooking-fettuccine — cooking.html — фетучини с Ekatze, «пришли соседи» (AnGRiPYlEfY)
-- [ ] sport-teach-acro — sport.html — учит Фасольку акробатике (7JBBlOMdOUk)
+- [x] sport-teach-acro (library: sport-teach-acro) — sport.html — учит Фасольку акробатике (7JBBlOMdOUk)
 - [ ] sport-yoga-trio — sport.html — позы йоги для троих (qfdN-qkuY0U)
 - [ ] snow-rope — sport.html / snowboard — катание на тросе (h9sNDW86yJQ)
 - [ ] cosplay-spongebob — cosplay.html — Спанч Боб и Патрик с mugretnug (0eD2jmhctUY)
 - [ ] cosplay-halloween — cosplay.html — Ангел и Демон с Катей (W8VTlcZRd6g)
-- [ ] collab-quest — collabs.html — самый страшный квест (zz2r0-bPEFI)
+- [x] collab-quest (library: collab-quest) — collabs.html — самый страшный квест (zz2r0-bPEFI)
 - [ ] collab-camp — collabs.html — Нескучный лагерь (j3FV__mA1ng)
 - [ ] challenge-treasure — talks/challenges — закопала клад для зрителей (Iv3Qsll9lCc)
 - [ ] drift-first — drift — «сломала бэху, пока учили дрифтить» (RBheo4i_S7s)
