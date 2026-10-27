@@ -1,0 +1,276 @@
+{
+  "updatedOn": "2026-10-27",
+  "scope": "Historical creator-published travel stories. Not a live location tracker or exhaustive travel history.",
+  "countryCount": 8,
+  "locationCount": 14,
+  "dateRule": "sourcePublishedOn is the post date in Europe/Moscow, not necessarily the arrival date. eventDate is supplied only when explicitly established.",
+  "coordinateRule": "No precise locations. Future map anchors should use labelled city, island, region or country representatives.",
+  "locations": [
+    {
+      "id": "moscow",
+      "name": "Москва",
+      "country": "RU",
+      "geographicPrecision": "city",
+      "sourcePublishedOn": "2022-10-05",
+      "eventDate": null,
+      "eventDatePrecision": "not_established",
+      "summary": "Московский этап перед переездом; позднее возвращалась в город.",
+      "sources": [
+        {
+          "url": "https://t.me/NEDOGONPOLYAA/1768",
+          "type": "creator_public_telegram",
+          "checkedOn": "2026-10-27"
+        }
+      ],
+      "verification": "supported_by_creator_content",
+      "coordinates": null
+    },
+    {
+      "id": "saratov",
+      "name": "Саратов",
+      "country": "RU",
+      "geographicPrecision": "city",
+      "sourcePublishedOn": "2026-10-18",
+      "eventDate": null,
+      "eventDatePrecision": "not_established",
+      "summary": "Эфир из Саратова с поздравлением папы. Также подтверждены более ранние поездки.",
+      "sources": [
+        {
+          "url": "https://t.me/NEDOGONPOLYAA/10545",
+          "type": "creator_public_telegram",
+          "checkedOn": "2026-10-27"
+        }
+      ],
+      "verification": "supported_by_creator_content",
+      "coordinates": null
+    },
+    {
+      "id": "sochi",
+      "name": "Сочи",
+      "country": "RU",
+      "geographicPrecision": "city",
+      "sourcePublishedOn": "2025-01-18",
+      "eventDate": null,
+      "eventDatePrecision": "not_established",
+      "summary": "Эфир из Сочи. Дополнительные поездки подтверждены в марте и сентябре 2026.",
+      "sources": [
+        {
+          "url": "https://t.me/NEDOGONPOLYAA/6580",
+          "type": "creator_public_telegram",
+          "checkedOn": "2026-10-27"
+        }
+      ],
+      "verification": "supported_by_creator_content",
+      "coordinates": null
+    },
+    {
+      "id": "dubai",
+      "name": "Дубай",
+      "country": "AE",
+      "geographicPrecision": "city",
+      "sourcePublishedOn": "2022-10-07",
+      "eventDate": null,
+      "eventDatePrecision": "not_established",
+      "summary": "Прибытие в Дубай; последующие посты прямо подтверждают переезд.",
+      "sources": [
+        {
+          "url": "https://t.me/NEDOGONPOLYAA/1788",
+          "type": "creator_public_telegram",
+          "checkedOn": "2026-10-27"
+        }
+      ],
+      "verification": "supported_by_creator_content",
+      "coordinates": null
+    },
+    {
+      "id": "mumbai",
+      "name": "Мумбаи",
+      "country": "IN",
+      "geographicPrecision": "city",
+      "sourcePublishedOn": null,
+      "eventDate": "2023-01",
+      "eventDatePrecision": "month",
+      "summary": "По описанию влога поездка состоялась в январе 2023; прогулка во время пересадки.",
+      "sources": [
+        {
+          "url": "https://www.youtube.com/watch?v=qgsX30zvU-0",
+          "type": "user_supplied_video_description_and_transcript",
+          "checkedOn": "2026-10-27"
+        }
+      ],
+      "verification": "supported_by_creator_content",
+      "coordinates": null
+    },
+    {
+      "id": "goa",
+      "name": "Гоа",
+      "country": "IN",
+      "geographicPrecision": "region",
+      "sourcePublishedOn": null,
+      "eventDate": "2023-01",
+      "eventDatePrecision": "month",
+      "summary": "В том же влоге говорит о прибытии на Гоа и анонсирует продолжение.",
+      "sources": [
+        {
+          "url": "https://www.youtube.com/watch?v=qgsX30zvU-0",
+          "type": "user_supplied_video_description_and_transcript",
+          "checkedOn": "2026-10-27"
+        }
+      ],
+      "verification": "supported_by_creator_content",
+      "coordinates": null
+    },
+    {
+      "id": "maldives",
+      "name": "Мальдивы",
+      "country": "MV",
+      "geographicPrecision": "country",
+      "sourcePublishedOn": "2023-10-13",
+      "eventDate": null,
+      "eventDatePrecision": "not_established",
+      "summary": "Сообщает о нахождении на местном острове; название острова не установлено.",
+      "sources": [
+        {
+          "url": "https://t.me/NEDOGONPOLYAA/4051",
+          "type": "creator_public_telegram",
+          "checkedOn": "2026-10-27"
+        }
+      ],
+      "verification": "supported_by_creator_content",
+      "coordinates": null
+    },
+    {
+      "id": "phuket",
+      "name": "Пхукет",
+      "country": "TH",
+      "geographicPrecision": "island",
+      "sourcePublishedOn": "2024-04-03",
+      "eventDate": null,
+      "eventDatePrecision": "not_established",
+      "summary": "Рассказывает о пребывании на Пхукете; на следующий день меняет первые впечатления.",
+      "sources": [
+        {
+          "url": "https://t.me/NEDOGONPOLYAA/5011",
+          "type": "creator_public_telegram",
+          "checkedOn": "2026-10-27"
+        }
+      ],
+      "verification": "supported_by_creator_content",
+      "coordinates": null
+    },
+    {
+      "id": "koh-phangan",
+      "name": "Панган",
+      "country": "TH",
+      "geographicPrecision": "island",
+      "sourcePublishedOn": "2024-04-08",
+      "eventDate": null,
+      "eventDatePrecision": "not_established",
+      "summary": "Прямо сообщает, что находится на Пангане; прогулка через море и подъём к горе.",
+      "sources": [
+        {
+          "url": "https://t.me/NEDOGONPOLYAA/5039",
+          "type": "creator_public_telegram",
+          "checkedOn": "2026-10-27"
+        }
+      ],
+      "verification": "supported_by_creator_content",
+      "coordinates": null
+    },
+    {
+      "id": "bangkok",
+      "name": "Бангкок",
+      "country": "TH",
+      "geographicPrecision": "city",
+      "sourcePublishedOn": "2025-03-24",
+      "eventDate": null,
+      "eventDatePrecision": "not_established",
+      "summary": "Анонсирует эфир в последний день в Бангкоке.",
+      "sources": [
+        {
+          "url": "https://t.me/NEDOGONPOLYAA/7061",
+          "type": "creator_public_telegram",
+          "checkedOn": "2026-10-27"
+        }
+      ],
+      "verification": "supported_by_creator_content",
+      "coordinates": null
+    },
+    {
+      "id": "bali",
+      "name": "Бали",
+      "country": "ID",
+      "geographicPrecision": "island",
+      "sourcePublishedOn": "2024-12-01",
+      "eventDate": null,
+      "eventDatePrecision": "not_established",
+      "summary": "Первый эфир с Бали, затем посты о поездках по острову и джунглям.",
+      "sources": [
+        {
+          "url": "https://t.me/NEDOGONPOLYAA/6293",
+          "type": "creator_public_telegram",
+          "checkedOn": "2026-10-27"
+        }
+      ],
+      "verification": "supported_by_creator_content",
+      "coordinates": null
+    },
+    {
+      "id": "vietnam",
+      "name": "Вьетнам",
+      "country": "VN",
+      "geographicPrecision": "country",
+      "sourcePublishedOn": "2026-04-15",
+      "eventDate": null,
+      "eventDatePrecision": "not_established",
+      "summary": "Первый день поездки подтверждён итоговым постом; далее пляж, пещеры и горы. Конкретные места требуют проверки.",
+      "sources": [
+        {
+          "url": "https://t.me/NEDOGONPOLYAA/9431",
+          "type": "creator_public_telegram",
+          "checkedOn": "2026-10-27"
+        }
+      ],
+      "verification": "supported_by_creator_content",
+      "coordinates": null
+    },
+    {
+      "id": "istanbul",
+      "name": "Стамбул",
+      "country": "TR",
+      "geographicPrecision": "city",
+      "sourcePublishedOn": "2026-06-08",
+      "eventDate": null,
+      "eventDatePrecision": "not_established",
+      "summary": "Анонс собственного IRL-эфира из Стамбула.",
+      "sources": [
+        {
+          "url": "https://t.me/NEDOGONPOLYAA/9712",
+          "type": "creator_public_telegram",
+          "checkedOn": "2026-10-27"
+        }
+      ],
+      "verification": "supported_by_creator_content",
+      "coordinates": null
+    },
+    {
+      "id": "antalya",
+      "name": "Анталия",
+      "country": "TR",
+      "geographicPrecision": "city",
+      "sourcePublishedOn": "2026-06-10",
+      "eventDate": null,
+      "eventDatePrecision": "not_established",
+      "summary": "Пишет о завершившемся отдыхе в Анталии; точные дни пребывания неизвестны.",
+      "sources": [
+        {
+          "url": "https://t.me/NEDOGONPOLYAA/9725",
+          "type": "creator_public_telegram",
+          "checkedOn": "2026-10-27"
+        }
+      ],
+      "verification": "supported_by_creator_content",
+      "coordinates": null
+    }
+  ]
+}
