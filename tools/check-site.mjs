@@ -7,6 +7,12 @@ const {countries,safeContentOverride}=await moduleFromSource('assets/atlas-data.
 const {findCountry,pointInGeometry,normalizeLongitude}=await moduleFromSource('assets/atlas-math.js');
 const {clips,nextClip,randomOtherClip}=await moduleFromSource('assets/moments-data.js');
 const {streamClips,twitchEmbedUrl}=await moduleFromSource('assets/stream-player.js');
+const {shouldNudge}=await moduleFromSource('assets/polya-guide.js');
+assert.ok(shouldNudge([{y:0,time:0,chapter:-1},{y:2600,time:1500,chapter:2}],1000));
+assert.ok(!shouldNudge([{y:0,time:0,chapter:0},{y:1000,time:1500,chapter:2}],1000));
+assert.ok(!shouldNudge([{y:0,time:0,chapter:0},{y:3000,time:4000,chapter:3}],1000));
+assert.ok(!shouldNudge([{y:0,time:0,chapter:0},{y:3000,time:1200,chapter:1}],1000));
+assert.ok(!shouldNudge([],1000));
 assert.equal(streamClips.length,3);
 for(const clip of streamClips){const url=new URL(twitchEmbedUrl(clip.id,'nedogon-polya.ru'));assert.equal(url.hostname,'clips.twitch.tv');assert.equal(url.searchParams.get('clip'),clip.slug);assert.equal(url.searchParams.get('parent'),'nedogon-polya.ru');assert.equal(url.searchParams.get('autoplay'),'false');}
 assert.equal(new URL(twitchEmbedUrl('channel','localhost')).searchParams.get('channel'),'nedogonpolya');
@@ -38,6 +44,7 @@ const resources=new Set(['index.html','gallery.html','assets/app.js','assets/atl
 if(contentIndex)resources.add(contentIndex);
 resources.add('assets/moments.js');resources.add('assets/moments-data.js');
 resources.add('assets/stream-player.js');
+resources.add('assets/polya-guide.js');resources.add('assets/img/guide/polya-wait-v1.webp');
 for(const source of [html,gallery])for(const match of source.matchAll(/(?:src|href)="([^"#]+)"/g))if(!/^(https?:|mailto:)/.test(match[1]))resources.add(match[1].split(/[?#]/)[0]);
 for(const file of ['assets/site.css','assets/atlas.css','assets/gallery.css'])for(const match of read(file).matchAll(/url\(['"]?([^)'"\s]+)['"]?\)/g))resources.add(path.posix.normalize(path.posix.join('assets',match[1])));
 for(const country of countries)for(const image of country.images)resources.add(image.src);
