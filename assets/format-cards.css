@@ -1,0 +1,45 @@
+/* Карточки разделов на главной («01 / Кухня», «02 / Движение»): цельная стеклянная карточка с кнопкой «Открыть».
+   Вся карточка кликабельна (растянутая ссылка .format-open). Автор — Claude, правки — по docs/COLLAB.md. */
+.stream-formats{position:relative;isolation:isolate}
+.stream-formats::before{content:"";position:absolute;inset:8% 4%;z-index:-1;pointer-events:none;filter:blur(50px);
+  background:radial-gradient(circle at 22% 30%,rgba(213,176,239,.20),transparent 42%),radial-gradient(circle at 78% 72%,rgba(255,198,168,.13),transparent 46%)}
+
+.stream-formats .format-card{position:relative;isolation:isolate;display:grid;padding:14px;border-radius:26px;
+  background:linear-gradient(150deg,rgba(255,255,255,.10),rgba(255,255,255,.025) 42%,rgba(213,176,239,.07));
+  border:1px solid rgba(255,255,255,.13);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.16),inset 0 -1px 0 rgba(255,255,255,.04),0 28px 70px -34px rgba(0,0,0,.85);
+  -webkit-backdrop-filter:blur(18px) saturate(150%);backdrop-filter:blur(18px) saturate(150%);
+  transition:transform .45s var(--ease,cubic-bezier(.2,.8,.2,1)),border-color .3s,box-shadow .45s}
+/* блик стекла */
+.stream-formats .format-card::before{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;z-index:-1;
+  background:radial-gradient(120% 55% at 18% 0%,rgba(255,255,255,.14),transparent 62%);transition:opacity .45s}
+.stream-formats .format-card:hover{transform:translateY(-5px);border-color:rgba(213,176,239,.5);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.2),0 34px 80px -34px rgba(213,176,239,.4)}
+.stream-formats .format-card:has(.format-open:focus-visible){border-color:var(--lilac,#d5b0ef)}
+
+.stream-formats .format-photo{border-radius:18px}
+.stream-formats .format-index{border-radius:999px;background:rgba(17,17,17,.62);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);
+  border:1px solid rgba(255,255,255,.14);color:var(--ink,#f2eee6)}
+.stream-formats .format-copy{display:grid;padding:22px 10px 8px}
+.stream-formats .format-copy p{margin:14px 0 22px}
+
+.format-open{justify-self:start;display:inline-flex;align-items:center;gap:12px;padding:13px 22px;border-radius:999px;
+  background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.22);
+  font:700 13px/1 var(--sans,system-ui);letter-spacing:.02em;color:var(--ink,#f2eee6);
+  transition:background .25s,border-color .25s,color .25s,gap .3s}
+.format-open span[aria-hidden]{font-size:16px;transition:transform .3s}
+/* вся карточка — ссылка (у самой кнопки НЕ должно быть backdrop-filter/transform — иначе ::after сожмётся до кнопки) */
+.format-open::after{content:"";position:absolute;inset:0;border-radius:26px;z-index:2}
+.stream-formats .format-card:hover .format-open{background:var(--lilac,#d5b0ef);border-color:var(--lilac,#d5b0ef);color:#151217}
+.stream-formats .format-card:hover .format-open span[aria-hidden]{transform:translateX(4px)}
+.format-open:focus-visible{outline:2px solid var(--lilac,#d5b0ef);outline-offset:3px}
+
+@media (max-width:780px){
+  .stream-formats .format-card{padding:12px;border-radius:22px}
+  .format-open::after{border-radius:22px}
+  .stream-formats .format-copy{padding:18px 6px 6px}
+  .format-open{justify-self:stretch;justify-content:center;padding:16px 22px;font-size:14px}
+}
+@media (prefers-reduced-motion:reduce){.stream-formats .format-card,.format-open,.format-open span[aria-hidden]{transition:none}.stream-formats .format-card:hover{transform:none}}
+html.reduce-motion .stream-formats .format-card{transition:none}
+html.reduce-motion .stream-formats .format-card:hover{transform:none}
