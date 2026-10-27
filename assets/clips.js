@@ -454,7 +454,8 @@ async function init() {
       // по теме: широкие клипы; шортсы — только если data-kind="short"
       : ready.filter((i) => i.topic === slot.dataset.clips && (slot.dataset.kind ? i.kind === slot.dataset.kind : i.kind !== 'short'))
         .slice(0, Number(slot.dataset.limit || 3));
-    if (!list.length) return;
+    // data-limit="0" + data-more — без клипов, только карточка-переход в раздел
+    if (!list.length && !slot.dataset.more) return;
     slot.classList.add('clip-slot');
     if (slot.dataset.layout === 'row') slot.classList.add('clip-slot--row');
     if (slot.dataset.layout === 'shorts') slot.classList.add('clip-slot--shorts');
