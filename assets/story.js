@@ -2,7 +2,7 @@ import { setPosterBackground } from './media-loading.js?v=1';
 // Полноэкранные истории стран: смена фона между главами, проявление текста, лента моментов, занавес между странами.
 import { stories } from './story-data.js';
 
-const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const reduce = false; // анимации на сайте включены всегда
 const TINTS = { in: '#ffb37a', ae: '#f3cf8a', mv: '#8fe3e0', th: '#b9e59c', id: '#9ee6b8', vn: '#a3d8ff' };
 const CHAPTERS = ['Первые эмоции', 'История', 'Моменты', 'Финал'];
 const CURTAIN_MS = 850;

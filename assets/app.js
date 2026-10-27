@@ -1,30 +1,14 @@
-import { initPolyaGuide } from './polya-guide.js?v=8';
+import { initPolyaGuide } from './polya-guide.js?v=9';
 import { initStreamPlayer } from './stream-player.js?v=1';
 import { initMoments } from './moments.js?v=4';
 import { initAtlas } from './atlas.js?v=4';
 
 const root = document.documentElement;
-const systemMotion = matchMedia('(prefers-reduced-motion: reduce)');
-let motionOff = systemMotion.matches;
-try { motionOff ||= localStorage.getItem('nedogon-motion') === 'off'; } catch { /* Storage may be disabled. */ }
-const motionButton = document.querySelector('.motion-toggle');
-function syncMotion() {
-  root.classList.toggle('reduce-motion', motionOff);
-  root.classList.toggle('js-motion', !motionOff);
-  motionButton.setAttribute('aria-pressed', String(motionOff));
-  const label = motionOff ? 'Включить анимации' : 'Отключить анимации';
-  motionButton.title = label;
-  motionButton.querySelector('.sr-only').textContent = label;
-  motionButton.querySelector('.motion-icon').textContent = motionOff ? '▶' : 'Ⅱ';
-  window.dispatchEvent(new CustomEvent('motionchange', {detail: {disabled:motionOff}}));
-}
-syncMotion();
-motionButton.addEventListener('click', () => {
-  motionOff = !motionOff;
-  try { localStorage.setItem('nedogon-motion', motionOff ? 'off' : 'on'); } catch { /* Optional preference. */ }
-  syncMotion();
-});
-systemMotion.addEventListener('change', e => { motionOff = e.matches; syncMotion(); });
+// Анимации включены всегда — так решил владелец сайта: без кнопки паузы и без оглядки на настройку «уменьшить движение».
+const motionOff = false;
+try { localStorage.removeItem('nedogon-motion'); } catch { /* Storage may be disabled. */ }
+root.classList.remove('reduce-motion');
+root.classList.add('js-motion');
 
 const reveals = new IntersectionObserver(entries => {
   entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add('visible'); reveals.unobserve(entry.target); } });

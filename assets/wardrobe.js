@@ -3,7 +3,7 @@ import {wardrobeItems,cycleWardrobe} from './wardrobe-data.js';
 const $=selector=>document.querySelector(selector),rail=$('#wardrobe-rail'),stage=$('#wardrobe-stage'),dialog=$('.w-lightbox');
 let current=0,view='look',request=0;
 try{if(localStorage.getItem('nedogon-motion')==='off')document.documentElement.classList.add('w-motion-off');}catch{}
-const reduced=()=>document.documentElement.classList.contains('w-motion-off')||matchMedia('(prefers-reduced-motion: reduce)').matches;
+const reduced=()=>false; // анимации на сайте включены всегда
 rail.innerHTML=wardrobeItems.map((item,i)=>`<button class="w-piece" data-item="${i}" type="button" aria-pressed="${i===0}" aria-label="Выбрать: ${item.name}" draggable="true"><span class="w-piece-frame"><img src="${item.image}" alt="${item.name}" width="240" height="300" loading="lazy" draggable="false"></span><small>${item.number} / ${item.category}</small><strong>${item.name}</strong></button>`).join('');
 
 async function showStage(){

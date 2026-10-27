@@ -177,15 +177,7 @@ body.is-playing .film-head > *{opacity:0;pointer-events:none}
 .card .media.has-sound:hover .card-play{transform:translate(-50%,-50%) scale(1.07)}
 @media (max-width:820px){.cinema-cap{flex-direction:column;gap:6px}}
 
-@media (prefers-reduced-motion: reduce){
-  .layer,.layer > img,.layer > video,.reveal .w,.para .w,.ch-open h1 .ch,.curtain,.curtain__name .ch{transition:none!important;animation:none!important}
-  .layer.on{transform:none}
-  .reveal .w,.para .w,.ch-open h1 .ch,.curtain__name .ch{opacity:1;filter:none;transform:none}
-  .grain,.cue i{animation:none}
-  .ch-moments{height:auto!important}
-  .moments-pin{position:static;height:auto;padding-block:12svh}
-  .track{overflow-x:auto;transform:none!important;padding-right:var(--gutter)}
-}
+
 
 /* Loading feedback: never silently leave a blank cinema frame on a slow connection. */
 .cinema-state{font-size:13px;color:var(--ink);text-align:center;min-height:1.7em;max-width:55ch;margin:12px auto}.cinema-retry{display:block;border:1px solid var(--line);border-radius:30px;padding:10px 20px;margin:10px auto;min-height:44px;font-size:12px}.cinema-retry[hidden]{display:none}.layer{background-repeat:no-repeat}.layer>video{transition:opacity .35s}

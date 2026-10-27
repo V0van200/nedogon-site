@@ -35,7 +35,7 @@ export function initPolyaGuide() {
   const title = dialog.querySelector('.polya-spoken');
   const actions = dialog.querySelector('.polya-actions');
   const returnHint = dialog.querySelector('.polya-return');
-  const motionOff = () => document.documentElement.classList.contains('reduce-motion') || matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const motionOff = () => false; // анимации на сайте включены всегда
   const chapterIndex = () => chapters.reduce((current, chapter, i) => {
     const section = document.getElementById(chapter.id);
     return section && section.getBoundingClientRect().top < innerHeight * .6 ? i : current;

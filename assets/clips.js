@@ -4,9 +4,8 @@
 // Автор модуля — Claude, правила — docs/COLLAB.md.
 const LIB = 'content/media/library.json';
 const root = document.documentElement;
-const systemReduce = matchMedia('(prefers-reduced-motion: reduce)');
 const canHover = matchMedia('(hover: hover) and (pointer: fine)');
-const motionOff = () => systemReduce.matches || root.classList.contains('reduce-motion');
+const motionOff = () => false; // анимации на сайте включены всегда
 const saveData = () => Boolean(navigator.connection && navigator.connection.saveData);
 const EASE = 'cubic-bezier(.2,.8,.2,1)';
 

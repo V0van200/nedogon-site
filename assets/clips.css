@@ -70,7 +70,7 @@
 .crew__projects{list-style:none;margin:0;padding:0;display:grid;gap:7px}
 .crew__projects a{font:13px/1.45 var(--sans,system-ui);color:var(--muted,#aaa6a4);transition:color .2s}
 .crew__projects a:hover{color:var(--ink,#f2eee6)}
-@media (prefers-reduced-motion:reduce){.crew{transition:none}.crew:hover{transform:none}}
+
 
 /* «Коротко»: вертикальные шортсы узкими карточками в ряд, как сторис */
 .clip-slot--shorts{grid-template-columns:repeat(auto-fill,minmax(150px,190px));gap:14px}
@@ -97,7 +97,7 @@
 .clip-promo__go{padding:13px 20px;border-radius:999px;background:var(--ink,#f2eee6);color:#151217;font:800 13px/1 var(--sans,system-ui);white-space:nowrap;transition:background .25s}
 .clip-promo:hover .clip-promo__go{background:var(--lilac,#d5b0ef)}
 @media (max-width:620px){.clip-promo{grid-template-columns:88px minmax(0,1fr);padding:10px 14px 10px 10px}.clip-promo__go{grid-column:1/-1;text-align:center}.clip-promo__title{font-size:24px}}
-@media (prefers-reduced-motion:reduce){.clip-promo,.clip-promo__media img{transition:none}.clip-promo:hover{transform:none}}
+
 
 /* ---------- окно плеера ---------- */
 .clip-dialog{position:fixed;inset:0;width:100%;height:100%;max-width:none;max-height:none;margin:0;padding:0;border:0;
@@ -194,7 +194,5 @@ html.clip-open{overflow:hidden}
   .cp-time{display:none}
   .cp-vol__range{display:none}
 }
-@media (prefers-reduced-motion:reduce){
-  .clip-card,.clip-card__media img,.clip-card__play,.clip-card__preview,.cp-flower i,.cp-thumb,.clip-player__bar,.cp-play svg{transition:none}
-}
+
 html.reduce-motion .clip-card,html.reduce-motion .clip-card__media img,html.reduce-motion .cp-flower i,html.reduce-motion .cp-thumb{transition:none}

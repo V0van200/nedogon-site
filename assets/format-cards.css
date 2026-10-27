@@ -40,7 +40,7 @@
   .stream-formats .format-copy{padding:18px 6px 6px}
   .format-open{justify-self:stretch;justify-content:center;padding:16px 22px;font-size:14px}
 }
-@media (prefers-reduced-motion:reduce){.stream-formats .format-card,.format-open,.format-open span[aria-hidden]{transition:none}.stream-formats .format-card:hover{transform:none}}
+
 html.reduce-motion .stream-formats .format-card{transition:none}
 html.reduce-motion .stream-formats .format-card:hover{transform:none}
 

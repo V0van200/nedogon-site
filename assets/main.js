@@ -2,7 +2,7 @@
 import { TRIPS } from './trips.js';
 
 document.documentElement.classList.add('js');
-const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const reduce = false; // анимации на сайте включены всегда
 
 // «Недогон» влетает по буквам
 for (const el of document.querySelectorAll('[data-split]')) {

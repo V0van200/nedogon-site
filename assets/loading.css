@@ -14,5 +14,5 @@ img.image-ready{transition:filter .4s}
 img.image-failed{background:var(--album-surface,#222);object-fit:contain!important;cursor:pointer;filter:none!important}
 @keyframes loader-line{0%{transform:translateX(-120%)}100%{transform:translateX(330%)}}
 @media(max-width:780px){.hero-room{background-image:url('./img/hero.webp'),var(--hero-mobile-preview)}html.hero-image-ready .hero-room{background-image:url('./img/hero.webp')}}
-@media(prefers-reduced-motion:reduce){.loader-track:after{animation:none;transform:none;width:100%}img.image-loading{transition:none}}
+
 html.reduce-motion .loader-track:after{animation:none;width:100%}
