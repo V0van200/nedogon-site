@@ -1,0 +1,26 @@
+{
+  "createdOn": "2026-10-27",
+  "sources": "Six product photos supplied by user",
+  "construction": "Procedural polygon meshes, local Three.js; two approximate silhouettes and seven color/pattern variants. Not photogrammetry or official product CAD.",
+  "features": [
+    "Lofted upper with open collar",
+    "Extruded sole layers",
+    "Tube laces and eyelets",
+    "Side stripe geometry",
+    "Approximate tread"
+  ],
+  "fit": "Neutral lower-leg mannequin, not Polina. Display proportions are arbitrary; no size/fit measurement.",
+  "limitations": "Invisible surfaces and material patterns are reconstructed. Brand/SKU specifics and stock not independently confirmed. Compare original photos before buying.",
+  "models": [
+    "assets/models/converse-black.glb",
+    "assets/models/gazelle-brown.glb"
+  ],
+  "sourceFiles": [
+    "photo_5377809017990151341_y.jpg",
+    "photo_5377809017990151344_y.jpg",
+    "photo_5391338650307597746_y.jpg",
+    "photo_5391338650307597747_y.jpg",
+    "photo_5391338650307597748_y.jpg",
+    "photo_5391338650307597749_y.jpg"
+  ]
+}

@@ -12,6 +12,7 @@ const {shouldNudge}=await moduleFromSource('assets/polya-guide.js');
 const {localImageKey}=await moduleFromSource('assets/media-loading.js');
 const {flightPoint,wheelImpulse}=await moduleFromSource('assets/atlas-flight-math.js');
 const {wardrobeItems,cycleWardrobe}=await moduleFromSource('assets/wardrobe-data.js');
+const {sneakers}=await moduleFromSource('assets/sneaker-data.js');
 assert.equal(wardrobeItems.length,3);assert.equal(cycleWardrobe(0,-1),2);assert.equal(cycleWardrobe(2,1),0);
 for(const item of wardrobeItems){assert.ok(item.source.startsWith('https://t.me/RareLOSNEAKERS/'));for(const file of [item.image,item.look]){assert.ok(fs.readFileSync(file).length);assert.ok(fs.readFileSync(file).length<200000);}}
 assert.equal(wheelImpulse(100000),1.4);assert.equal(wheelImpulse(-100000),-1.4);assert.equal(wheelImpulse(1,1),.096);
@@ -71,6 +72,8 @@ resources.add('assets/media-loading.js');resources.add('assets/boot.js');resourc
 resources.add('assets/atlas-flight-math.js');
 resources.add('wardrobe.html');resources.add('assets/wardrobe.js');resources.add('assets/wardrobe-data.js');resources.add('assets/wardrobe.css');
 for(const item of wardrobeItems){resources.add(item.image);resources.add(item.look);}
+for(const file of ['sneakers.html','assets/sneaker-viewer.js','assets/sneaker-data.js','assets/sneakers.css','assets/shoe-model.js','assets/shoe-profile.js','assets/shoe-glb.js','assets/models/converse-black.glb','assets/models/gazelle-brown.glb'])resources.add(file);
+for(const item of sneakers)resources.add(item.photo);
 for(const source of [html,gallery])for(const match of source.matchAll(/(?:src|href)="([^"#]+)"/g))if(!/^(https?:|mailto:)/.test(match[1]))resources.add(match[1].split(/[?#]/)[0]);
 for(const file of ['assets/site.css','assets/atlas.css','assets/gallery.css'])for(const match of read(file).matchAll(/url\(['"]?([^)'"\s]+)['"]?\)/g))resources.add(path.posix.normalize(path.posix.join('assets',match[1])));
 for(const country of countries)for(const image of country.images)resources.add(image.src);
