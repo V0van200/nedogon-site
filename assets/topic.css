@@ -60,3 +60,10 @@
   .topic-top nav{display:none}
 }
 @media (max-width:780px){.topic-section{padding-block:52px}.topic-next{padding:24px;margin-bottom:60px}}
+
+.topic-step-photo{margin:0 0 6px;border-radius:12px;overflow:hidden;background:#000}
+.topic-step-photo img{display:block;width:100%;height:auto;aspect-ratio:4/4.4;object-fit:cover}
+.topic-step-quote{display:grid;place-content:center;gap:12px;margin:0 0 6px;aspect-ratio:4/4.4;border-radius:12px;padding:22px;text-align:center;
+  background:radial-gradient(circle at 30% 20%,rgba(213,176,239,.28),transparent 55%),radial-gradient(circle at 80% 85%,rgba(255,198,168,.18),transparent 50%),#1b1820}
+.topic-step-quote span{font:italic 400 clamp(26px,2.6vw,34px)/1.15 var(--serif);color:var(--ink)}
+.topic-step-quote small{font-size:12px;color:var(--muted)}

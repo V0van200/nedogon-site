@@ -74,6 +74,24 @@
 .clip-slot--shorts .clip-card__label{font-size:9px}
 @media (max-width:560px){.clip-slot--shorts{grid-template-columns:repeat(2,minmax(0,1fr))}}
 
+/* карточка-переход в раздел под клипами (data-more-image) */
+.clip-promo{grid-column:1/-1;display:grid;grid-template-columns:120px minmax(0,1fr) auto;gap:20px;align-items:center;margin-top:6px;padding:12px 22px 12px 12px;
+  border-radius:20px;background:linear-gradient(120deg,rgba(213,176,239,.16),rgba(255,255,255,.04) 55%,rgba(255,198,168,.10));
+  border:1px solid rgba(213,176,239,.35);box-shadow:inset 0 1px 0 rgba(255,255,255,.14);transition:border-color .3s,transform .35s,background .3s}
+.clip-promo:hover{border-color:var(--lilac,#d5b0ef);transform:translateY(-3px)}
+.clip-promo:focus-visible{outline:2px solid var(--lilac,#d5b0ef);outline-offset:3px}
+.clip-promo__media{display:block;aspect-ratio:4/3;border-radius:12px;overflow:hidden;background:#000}
+.clip-promo__media img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .6s}
+.clip-promo:hover .clip-promo__media img{transform:scale(1.06)}
+.clip-promo__text{display:grid;gap:5px;min-width:0}
+.clip-promo__eyebrow{font:700 10px/1 var(--sans,system-ui);letter-spacing:.16em;text-transform:uppercase;color:var(--lilac,#d5b0ef)}
+.clip-promo__title{font:italic 400 clamp(24px,2.6vw,34px)/1.05 var(--serif,Georgia,serif);color:var(--ink,#f2eee6)}
+.clip-promo__sub{font:14px/1.45 var(--sans,system-ui);color:var(--muted,#aaa6a4)}
+.clip-promo__go{padding:13px 20px;border-radius:999px;background:var(--ink,#f2eee6);color:#151217;font:800 13px/1 var(--sans,system-ui);white-space:nowrap;transition:background .25s}
+.clip-promo:hover .clip-promo__go{background:var(--lilac,#d5b0ef)}
+@media (max-width:620px){.clip-promo{grid-template-columns:88px minmax(0,1fr);padding:10px 14px 10px 10px}.clip-promo__go{grid-column:1/-1;text-align:center}.clip-promo__title{font-size:24px}}
+@media (prefers-reduced-motion:reduce){.clip-promo,.clip-promo__media img{transition:none}.clip-promo:hover{transform:none}}
+
 /* ---------- окно плеера ---------- */
 .clip-dialog{position:fixed;inset:0;width:100%;height:100%;max-width:none;max-height:none;margin:0;padding:0;border:0;
   background:transparent;color:var(--ink,#f2eee6);overflow:hidden}

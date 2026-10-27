@@ -43,3 +43,9 @@
 @media (prefers-reduced-motion:reduce){.stream-formats .format-card,.format-open,.format-open span[aria-hidden]{transition:none}.stream-formats .format-card:hover{transform:none}}
 html.reduce-motion .stream-formats .format-card{transition:none}
 html.reduce-motion .stream-formats .format-card:hover{transform:none}
+
+/* шаги кукинга на главной: фото справа от текста */
+.kitchen-steps li:has(.kitchen-thumb){display:grid;grid-template-columns:minmax(0,1fr) 104px;column-gap:20px;align-items:start}
+.kitchen-steps li:has(.kitchen-thumb)>*{grid-column:1}
+.kitchen-steps li>.kitchen-thumb{grid-column:2;grid-row:1/span 3;width:104px;height:124px;object-fit:cover;border-radius:12px;border:1px solid rgba(255,255,255,.14)}
+@media (max-width:560px){.kitchen-steps li:has(.kitchen-thumb){grid-template-columns:minmax(0,1fr) 84px;column-gap:14px}.kitchen-steps li>.kitchen-thumb{width:84px;height:100px}}

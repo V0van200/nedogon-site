@@ -461,9 +461,24 @@ async function init() {
     slot.replaceChildren(...list.map(card));
     // data-more="cooking.html" data-more-label="Все кукинги" — ссылка на страницу раздела под карточками
     if (slot.dataset.more) {
-      const more = el('a', 'clip-more', `${slot.dataset.moreLabel || 'Все клипы'} →`);
-      more.href = slot.dataset.more;
-      slot.append(more);
+      const label = slot.dataset.moreLabel || 'Все клипы';
+      if (slot.dataset.moreImage) {
+        // крупная карточка-переход: фото, заголовок, строка о разделе, кнопка
+        const more = el('a', 'clip-promo');
+        more.href = slot.dataset.more;
+        const img = el('img');
+        Object.assign(img, { src: slot.dataset.moreImage, alt: '', loading: 'lazy', decoding: 'async' });
+        const txt = el('span', 'clip-promo__text');
+        txt.append(el('span', 'clip-promo__eyebrow', 'Раздел'), el('span', 'clip-promo__title', label));
+        if (slot.dataset.moreText) txt.append(el('span', 'clip-promo__sub', slot.dataset.moreText));
+        more.append(el('span', 'clip-promo__media'), txt, el('span', 'clip-promo__go', 'Открыть →'));
+        more.querySelector('.clip-promo__media').append(img);
+        slot.append(more);
+      } else {
+        const more = el('a', 'clip-more', `${label} →`);
+        more.href = slot.dataset.more;
+        slot.append(more);
+      }
     }
   });
 }
