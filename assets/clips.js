@@ -270,6 +270,8 @@ function openPlayer(item, card, preview) {
   P.summary.textContent = item.summary || '';
   P.source.hidden = !item.sourceUrl;
   if (item.sourceUrl) P.source.href = item.sourceUrl;
+  P.source.textContent = item.kind === 'short' ? 'Шортс на YouTube ↗' : 'Полная нарезка ↗';
+  P.cc.hidden = !item.captions;
   P.error.hidden = true;
   video.poster = item.poster || '';
   if (item.captions) track.src = item.captions; else track.removeAttribute('src');
@@ -449,10 +451,13 @@ async function init() {
     const ids = (slot.dataset.ids || '').split(',').map((s) => s.trim()).filter(Boolean);
     const list = ids.length
       ? ids.map((id) => ready.find((i) => i.id === id)).filter(Boolean)
-      : ready.filter((i) => i.topic === slot.dataset.clips).slice(0, Number(slot.dataset.limit || 3));
+      // по теме: широкие клипы; шортсы — только если data-kind="short"
+      : ready.filter((i) => i.topic === slot.dataset.clips && (slot.dataset.kind ? i.kind === slot.dataset.kind : i.kind !== 'short'))
+        .slice(0, Number(slot.dataset.limit || 3));
     if (!list.length) return;
     slot.classList.add('clip-slot');
     if (slot.dataset.layout === 'row') slot.classList.add('clip-slot--row');
+    if (slot.dataset.layout === 'shorts') slot.classList.add('clip-slot--shorts');
     slot.replaceChildren(...list.map(card));
     // data-more="cooking.html" data-more-label="Все кукинги" — ссылка на страницу раздела под карточками
     if (slot.dataset.more) {

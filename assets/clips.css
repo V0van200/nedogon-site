@@ -65,6 +65,15 @@
 .crew__projects a:hover{color:var(--ink,#f2eee6)}
 @media (prefers-reduced-motion:reduce){.crew{transition:none}.crew:hover{transform:none}}
 
+/* «Коротко»: вертикальные шортсы узкими карточками в ряд, как сторис */
+.clip-slot--shorts{grid-template-columns:repeat(auto-fill,minmax(150px,190px));gap:14px}
+.clip-slot--shorts .clip-card{grid-template-columns:1fr;gap:10px;padding:8px;border-radius:16px}
+.clip-slot--shorts .clip-card__media{aspect-ratio:9/16;border-radius:11px}
+.clip-slot--shorts .clip-card__summary{display:none}
+.clip-slot--shorts .clip-card__title{font-size:16px}
+.clip-slot--shorts .clip-card__label{font-size:9px}
+@media (max-width:560px){.clip-slot--shorts{grid-template-columns:repeat(2,minmax(0,1fr))}}
+
 /* ---------- окно плеера ---------- */
 .clip-dialog{position:fixed;inset:0;width:100%;height:100%;max-width:none;max-height:none;margin:0;padding:0;border:0;
   background:transparent;color:var(--ink,#f2eee6);overflow:hidden}
