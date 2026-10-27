@@ -49,3 +49,6 @@ html.reduce-motion .stream-formats .format-card:hover{transform:none}
 .kitchen-steps li:has(.kitchen-thumb)>*{grid-column:1}
 .kitchen-steps li>.kitchen-thumb{grid-column:2;grid-row:1/span 3;width:104px;height:124px;object-fit:cover;border-radius:12px;border:1px solid rgba(255,255,255,.14)}
 @media (max-width:560px){.kitchen-steps li:has(.kitchen-thumb){grid-template-columns:minmax(0,1fr) 84px;column-gap:14px}.kitchen-steps li>.kitchen-thumb{width:84px;height:100px}}
+/* три раздела в ряд: Кукинги · Спорт · Эфиры */
+@media (min-width:1000px){.stream-formats{grid-template-columns:repeat(3,minmax(0,1fr));gap:28px}}
+@media (min-width:640px) and (max-width:999px){.stream-formats{grid-template-columns:1fr 1fr}.stream-formats .format-streams{grid-column:1/-1}}

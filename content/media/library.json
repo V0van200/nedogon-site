@@ -346,6 +346,44 @@
    "status": "published",
    "playbackCheckedOn": "2026-10-27",
    "reviewNote": "Мат проверен Whisper по всему клипу — не найден. Звук на слух ещё не проверен человеком."
+  },
+  {
+   "id": "short-river",
+   "topic": "streams",
+   "title": "Достал со дна",
+   "summary": "Задание из доната: прыгнуть в речку за 5000 ₽.",
+   "kind": "short",
+   "src": "assets/video/shorts/short-river.mp4",
+   "poster": "assets/video/shorts/short-river-poster.webp",
+   "captions": null,
+   "durationSeconds": 13,
+   "width": 720,
+   "height": 1280,
+   "people": [],
+   "sourceUrl": "https://www.youtube.com/shorts/coScSk7tz0Q",
+   "music": null,
+   "status": "published",
+   "playbackCheckedOn": null,
+   "reviewNote": "Шортс с её канала @NEDOGONPOLYAA, заголовок вшит в видео. Текст проверен Whisper — без мата. Звук на слух не проверен человеком."
+  },
+  {
+   "id": "short-concert",
+   "topic": "streams",
+   "title": "Прервал концерт на самом интересном",
+   "summary": "Караоке-кабинка, а им стучат: «Закрыты уже. Есть у вас три минуты?»",
+   "kind": "short",
+   "src": "assets/video/shorts/short-concert.mp4",
+   "poster": "assets/video/shorts/short-concert-poster.webp",
+   "captions": null,
+   "durationSeconds": 17,
+   "width": 720,
+   "height": 1280,
+   "people": [],
+   "sourceUrl": "https://www.youtube.com/shorts/Ffrr2A5h7Xg",
+   "music": null,
+   "status": "published",
+   "playbackCheckedOn": null,
+   "reviewNote": "Шортс с её канала @NEDOGONPOLYAA, заголовок вшит в видео. Текст проверен Whisper — без мата. Звук на слух не проверен человеком."
   }
  ]
 }
