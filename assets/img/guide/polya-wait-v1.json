@@ -1,0 +1,14 @@
+{
+  "file": "assets/img/guide/polya-wait-v1.webp",
+  "createdOn": "2026-10-27",
+  "method": "built-in image_gen",
+  "synthetic": true,
+  "purpose": "Portrait for planned playful scroll-speed dialog. Image only; overlay not implemented.",
+  "references": [
+    "User-supplied streaming portrait photo_5289587675314727987_y.jpg",
+    "User-supplied portrait photo_5242423664479774138_y.jpg"
+  ],
+  "prompt": "Create a premium photorealistic editorial website portrait of the EXACT SAME adult woman Polina as in the two reference photographs. Both references are identity references, not scene targets. Preserve her distinctive facial geometry, brown eyes, natural nose and lips, light skin texture, long naturally curly light brown/caramel hair; make her clearly recognizable as the woman in these references, not a generic fashion model. Purpose: playful full-screen website interruption when a visitor scrolls too fast. Expression: mock stern, gently raised eyebrow, lips pressed into the faintest knowing smirk, amused reproach, warm and funny, not actually hostile. Look directly into camera as if saying wait a minute. Natural relaxed arms crossed across torso, two anatomically correct hands with realistic fingers subtly tucked around upper arms. Medium shot from hips upward, fully clothed in a simple fitted charcoal knit long sleeve top, no branding, no headphones. Composition: wide cinematic 3:2 photograph, woman occupies right 45% of frame, face around right upper third, all curls and crossed arms inside frame; left 50% is deliberately quiet dark charcoal negative space for future animated HTML text. Environment: tasteful cozy contemporary evening lounge/editorial studio, dark warm wood, textured charcoal wall, a small warm amber lamp in distant background and a very restrained soft lilac accent light, shallow depth of field, no bright windows, no gaming chair, no recreation of her actual room. Soft warm key light on face, delicate hair rim light, realistic camera optics, subtle natural grain, sophisticated black/cream/muted lilac website palette. No other people. NO TEXT, no letters, no interface, no buttons, no logos, no watermark, no speech bubble. This is a standalone photographic background asset; all text and buttons will be added in real code later.",
+  "layout": "3:2, Polina on right, left negative space for HTML text. Keep typography/buttons in code.",
+  "usage": "User requested identity-based portrait and publication of website assets. No visible AI label requested."
+}
