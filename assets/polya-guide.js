@@ -1,8 +1,12 @@
+// разгон: ≥2.4 экрана и ≥2 главы за BURST_MS; запас по времени — на подвисания тяжёлой страницы на слабых телефонах
+const BURST_MS = 4000;
+const INPUT_GAP_MS = 3500;
+
 export function shouldNudge(samples, viewport) {
   if (samples.length < 2 || viewport <= 0) return false;
   const first = samples[0], last = samples.at(-1);
   const elapsed = last.time - first.time;
-  return elapsed >= 80 && elapsed <= 2600 && Math.abs(last.y - first.y) >= viewport * 2.4 && Math.abs(last.chapter - first.chapter) >= 2;
+  return elapsed >= 80 && elapsed <= BURST_MS && Math.abs(last.y - first.y) >= viewport * 2.4 && Math.abs(last.chapter - first.chapter) >= 2;
 }
 
 // Главы главной: по ним понимаем, где гость был до того, как начал быстро листать.
@@ -23,7 +27,7 @@ export function initPolyaGuide() {
   const dialog = document.querySelector('#polya-guide');
   if (!dialog || !dialog.showModal) return;
   const key = 'nedogon-polya-nudge-v2';
-  let shown = 0, cooldownUntil = 0, skipFrom = null, rest = null, restTimer, pendingTarget = null;
+  let shown = 0, cooldownUntil = 0, skipFrom = null, rest = null, lastInputStamp = -Infinity, pendingTarget = null;
   try { shown = Number(sessionStorage.getItem(key)) || 0; } catch {}
   const resting = () => shown >= MAX_PER_SESSION || performance.now() < cooldownUntil;
   let samples = [], timer, typingTimer, buttonTimer, suppressUntil = performance.now() + 3000, lastInput = -Infinity;
@@ -93,11 +97,22 @@ export function initPolyaGuide() {
     });
   });
   window.addEventListener('motionchange', () => { if(dialog.open) { stopTyping(); title.textContent = SPOKEN; revealActions(); } });
-  function input() { lastInput = performance.now(); }
+  // где гость стоял до разгона: позиция в момент первого жеста после паузы дольше секунды.
+  // Берём метку времени самого жеста — подвисание тяжёлой страницы посреди разгона её не сдвинет.
+  const READ_PAUSE_MS = 1000;
+  function input(event) {
+    const stamp = event && event.timeStamp ? event.timeStamp : performance.now();
+    if (!dialog.open && stamp - lastInputStamp > READ_PAUSE_MS) {
+      rest = {y:scrollY, chapter:chapterIndex()};
+      samples = [{y:rest.y, time:stamp, chapter:rest.chapter}]; // разгон считаем от первого жеста
+    }
+    lastInputStamp = stamp; lastInput = performance.now();
+  }
   window.addEventListener('wheel', input, {passive:true});
+  window.addEventListener('touchstart', input, {passive:true});
   window.addEventListener('touchmove', input, {passive:true});
   window.addEventListener('keydown', event => {
-    if (!event.target.closest('input,textarea,select,[contenteditable="true"]') && ['PageDown','PageUp','ArrowDown','ArrowUp',' '].includes(event.key)) input();
+    if (!event.target.closest('input,textarea,select,[contenteditable="true"]') && ['PageDown','PageUp','ArrowDown','ArrowUp',' ','End','Home'].includes(event.key)) input(event);
   });
   document.addEventListener('click', event => {
     if (event.target.closest('a[href*="#"], .menu-toggle, .atlas-preview, [data-open-clip]')) {
@@ -105,16 +120,11 @@ export function initPolyaGuide() {
     }
   }, true);
   window.addEventListener('hashchange', () => { suppressUntil = performance.now() + 3500; samples = []; });
-  // где гость стоял до разгона: запоминаем, когда прокрутка затихла
-  const remember = () => { rest = {y:scrollY, chapter:chapterIndex()}; };
-  remember();
-  window.addEventListener('scroll', () => {
-    clearTimeout(restTimer); restTimer = setTimeout(() => { if (!dialog.open) remember(); }, 450);
-  }, {passive:true});
+  rest = {y:scrollY, chapter:chapterIndex()};
   window.addEventListener('scroll', () => {
     const now = performance.now();
-    if (resting() || now < suppressUntil || now - lastInput > 2200 || busy()) { samples = []; return; }
-    samples = samples.filter(sample => now - sample.time <= 2600);
+    if (resting() || now < suppressUntil || now - lastInput > INPUT_GAP_MS || busy()) { samples = []; return; }
+    samples = samples.filter(sample => now - sample.time <= BURST_MS);
     samples.push({y:scrollY,time:now,chapter:chapterIndex()});
     clearTimeout(timer);
     const qualifies = shouldNudge(samples, innerHeight);

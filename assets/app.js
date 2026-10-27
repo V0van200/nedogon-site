@@ -1,4 +1,4 @@
-import { initPolyaGuide } from './polya-guide.js?v=4';
+import { initPolyaGuide } from './polya-guide.js?v=8';
 import { initStreamPlayer } from './stream-player.js?v=1';
 import { initMoments } from './moments.js?v=4';
 import { initAtlas } from './atlas.js?v=4';
