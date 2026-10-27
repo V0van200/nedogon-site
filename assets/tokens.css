@@ -1,0 +1,15 @@
+/* Дизайн-токены nedogon-polya.ru — см. DESIGN.md. Все цвета и размеры сайта берутся только отсюда. */
+:root{
+  color-scheme: dark;
+  --asphalt:#121314; --lane:#1d1f21; --chalk:#f4f1ea; --dust:#9a958c;
+  --track:#ff5b47; --blush:#ffb3c1; --line:rgba(244,241,234,.14);
+
+  --font-display:"Russo One", "Arial Black", Impact, system-ui, sans-serif;
+  --font-body:"Manrope", "Segoe UI", system-ui, -apple-system, Roboto, sans-serif;
+  --font-num:"JetBrains Mono", ui-monospace, Consolas, monospace;
+
+  --t-xs:14px; --t-s:16px; --t-m:20px; --t-l:28px; --t-xl:44px; --t-hero:clamp(56px,12vw,128px);
+  --s1:8px; --s2:16px; --s3:24px; --s4:40px; --s5:64px; --s6:96px;
+  --radius:10px; --maxw:1120px; --measure:62ch;
+}
+@media (prefers-reduced-motion: reduce){ :root{ --motion:0; } }
