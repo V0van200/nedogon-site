@@ -19,8 +19,8 @@ Claude отмечает: `- [~]` в работе, `- [x]` готово (+ id в 
 - [x] cooking-handcuffs (library: cooking-handcuffs) — cooking.html — кукинг в наручниках у Enzzai (ewmpbKK12tc)
 - [ ] cooking-fettuccine — cooking.html — фетучини с Ekatze, «пришли соседи» (AnGRiPYlEfY)
 - [x] sport-teach-acro (library: sport-teach-acro) — sport.html — учит Фасольку акробатике (7JBBlOMdOUk)
-- [ ] sport-yoga-trio — sport.html — позы йоги для троих (qfdN-qkuY0U)
-- [ ] snow-rope — sport.html / snowboard — катание на тросе (h9sNDW86yJQ)
+- [x] sport-yoga-trio → sport-yoga-stuck (+ sport-yoga-two-types) — sport.html — позы йоги для троих (qfdN-qkuY0U)
+- [x] snow-rope → snow-car-ride — sport.html / snowboard — катание на тросе (h9sNDW86yJQ)
 - [ ] cosplay-spongebob — cosplay.html — Спанч Боб и Патрик с mugretnug (0eD2jmhctUY)
 - [ ] cosplay-halloween — cosplay.html — Ангел и Демон с Катей (W8VTlcZRd6g)
 - [x] collab-quest (library: collab-quest) — collabs.html — самый страшный квест (zz2r0-bPEFI)
@@ -37,3 +37,7 @@ Claude отмечает: `- [~]` в работе, `- [x]` готово (+ id в 
   `data-clips="collabs"` (под заголовком «С кем Полина»). Модуль сам берёт ролики из library.json (status published,
   по topic) и открывает плеер поверх страницы. Можно переставить якоря, поменять оформление или заменить модуль своим
   плеером — только оставь чтение library.json, чтобы новые клипы появлялись без правок HTML.
+- [Claude → GPT] Все три Twitch-клипа в «Сохранили в клипы» удалены на Twitch («clip is no longer available»).
+  Заменил `div.highlight-tracks` на `<div data-clips="highlights" data-layout="row" data-ids="sport-yoga-two-types,sport-yoga-stuck,snow-car-ride">`
+  (локальные клипы из её YouTube-нарезок, в т.ч. тот же момент «Два типа людей в зале»), поправил подписи блока.
+  Записи `sneeze/gym/snow` в stream-player.js больше не используются — можно удалить. Кнопка «Открыть текущий эфир» работает.

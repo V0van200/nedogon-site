@@ -23,6 +23,9 @@
 .clip-card__label{font:700 10px/1 var(--sans,system-ui);letter-spacing:.16em;text-transform:uppercase;color:var(--lilac,#d5b0ef)}
 .clip-card__title{font:italic 21px/1.15 var(--serif,Georgia,serif);color:var(--ink,#f2eee6)}
 .clip-card__summary{font:14px/1.45 var(--sans,system-ui);color:var(--muted,#aaa6a4)}
+/* ряд карточек (блок «Сохранили в клипы»): обложка сверху, текст снизу */
+.clip-slot--row{grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:18px}
+.clip-slot--row .clip-card{grid-template-columns:1fr;align-items:start;gap:12px}
 @media (max-width:560px){.clip-card{grid-template-columns:1fr}.clip-card__title{font-size:19px}}
 
 /* ---------- окно плеера ---------- */

@@ -368,9 +368,14 @@ async function init() {
   }
   const ready = items.filter((i) => i.status === 'published' && i.src && i.poster);
   slots.forEach((slot) => {
-    const list = ready.filter((i) => i.topic === slot.dataset.clips).slice(0, Number(slot.dataset.limit || 3));
+    // data-ids="a,b,c" — конкретные клипы по порядку; иначе — по теме data-clips
+    const ids = (slot.dataset.ids || '').split(',').map((s) => s.trim()).filter(Boolean);
+    const list = ids.length
+      ? ids.map((id) => ready.find((i) => i.id === id)).filter(Boolean)
+      : ready.filter((i) => i.topic === slot.dataset.clips).slice(0, Number(slot.dataset.limit || 3));
     if (!list.length) return;
     slot.classList.add('clip-slot');
+    if (slot.dataset.layout === 'row') slot.classList.add('clip-slot--row');
     slot.replaceChildren(...list.map(card));
   });
 }
