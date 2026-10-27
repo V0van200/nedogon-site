@@ -1,5 +1,7 @@
 /* Карточки клипов и плеер поверх страницы (assets/clips.js). Цвета — из токенов site.css. */
 .clip-slot{display:grid;gap:14px;margin-top:28px}
+
+/* ---------- карточка ---------- */
 .clip-card{all:unset;box-sizing:border-box;display:grid;grid-template-columns:minmax(120px,42%) 1fr;gap:18px;align-items:center;
   padding:10px;border:1px solid var(--line,rgba(242,238,230,.16));border-radius:14px;cursor:pointer;background:rgba(25,25,27,.55);
   transition:border-color .25s,transform .25s,background .25s}
@@ -8,11 +10,14 @@
 .clip-card__media{position:relative;display:block;aspect-ratio:16/9;border-radius:9px;overflow:hidden;background:#000}
 .clip-card__media img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .6s}
 .clip-card:hover .clip-card__media img{transform:scale(1.05)}
-.clip-card__play{position:absolute;left:50%;top:50%;width:44px;height:44px;margin:-22px 0 0 -22px;border-radius:50%;
-  background:var(--ink,#f2eee6);box-shadow:0 6px 24px rgba(0,0,0,.45);transition:transform .25s}
+.clip-card__preview{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .45s;pointer-events:none}
+.clip-card__media.is-previewing .clip-card__preview{opacity:1}
+.clip-card__play{position:absolute;left:50%;top:50%;width:44px;height:44px;margin:-22px 0 0 -22px;border-radius:50%;z-index:1;
+  background:var(--ink,#f2eee6);box-shadow:0 6px 24px rgba(0,0,0,.45);transition:transform .3s,opacity .3s}
 .clip-card__play::before{content:"";position:absolute;left:17px;top:13px;border-left:14px solid #111;border-top:9px solid transparent;border-bottom:9px solid transparent}
 .clip-card:hover .clip-card__play{transform:scale(1.1)}
-.clip-card__time{position:absolute;right:7px;bottom:7px;padding:3px 7px;border-radius:5px;font:600 11px/1 var(--sans,system-ui);
+.clip-card__media.is-previewing .clip-card__play{opacity:0;transform:scale(.6)}
+.clip-card__time{position:absolute;right:7px;bottom:7px;z-index:1;padding:3px 7px;border-radius:5px;font:600 11px/1 var(--sans,system-ui);
   letter-spacing:.04em;background:rgba(17,17,17,.82);color:var(--ink,#f2eee6);font-variant-numeric:tabular-nums}
 .clip-card__text{display:grid;gap:5px;min-width:0}
 .clip-card__label{font:700 10px/1 var(--sans,system-ui);letter-spacing:.16em;text-transform:uppercase;color:var(--lilac,#d5b0ef)}
@@ -20,24 +25,102 @@
 .clip-card__summary{font:14px/1.45 var(--sans,system-ui);color:var(--muted,#aaa6a4)}
 @media (max-width:560px){.clip-card{grid-template-columns:1fr}.clip-card__title{font-size:19px}}
 
-.clip-dialog{border:0;padding:0;margin:auto;background:transparent;max-width:min(1100px,94vw);width:100%;color:var(--ink,#f2eee6)}
-.clip-dialog::backdrop{background:rgba(8,8,10,.86);backdrop-filter:blur(6px)}
-.clip-dialog[open]{animation:clip-in .35s cubic-bezier(.2,.8,.2,1)}
-@keyframes clip-in{from{opacity:0;transform:translateY(24px) scale(.97)}}
-.clip-dialog__box{position:relative;display:grid;gap:14px;padding-top:56px}
-.clip-dialog__video{width:100%;max-height:78vh;border-radius:14px;background:#000;display:block}
-.clip-dialog.is-vertical{max-width:min(460px,94vw)}
-.clip-dialog__video::cue{font:500 18px/1.35 var(--sans,system-ui);background:rgba(17,17,17,.78);color:#f2eee6}
-.clip-dialog__close{position:absolute;right:0;top:0;width:44px;height:44px;border-radius:50%;border:1px solid var(--line,rgba(242,238,230,.16));
-  background:rgba(25,25,27,.9);color:var(--ink,#f2eee6);font-size:26px;line-height:1;cursor:pointer}
-.clip-dialog__close:focus-visible,.clip-dialog__retry:focus-visible,.clip-dialog__source:focus-visible{outline:2px solid var(--lilac,#d5b0ef);outline-offset:3px}
-.clip-dialog__meta{display:grid;gap:4px}
-.clip-dialog__meta h3{margin:0;font:italic 24px/1.2 var(--serif,Georgia,serif)}
-.clip-dialog__meta p{margin:0;color:var(--muted,#aaa6a4);font:15px/1.5 var(--sans,system-ui)}
-.clip-dialog__source{color:var(--lilac,#d5b0ef);font:600 14px var(--sans,system-ui);text-underline-offset:4px}
-.clip-dialog__error{position:absolute;inset:56px 0 auto;aspect-ratio:16/9;display:grid;place-content:center;gap:12px;text-align:center;
-  background:rgba(17,17,17,.92);border-radius:14px;padding:20px}
-.clip-dialog__error[hidden]{display:none}
-.clip-dialog__retry{justify-self:center;padding:10px 18px;border-radius:999px;border:0;background:var(--ink,#f2eee6);color:#111;font:700 14px var(--sans,system-ui);cursor:pointer}
+/* ---------- окно плеера ---------- */
+.clip-dialog{position:fixed;inset:0;width:100%;height:100%;max-width:none;max-height:none;margin:0;padding:0;border:0;
+  background:transparent;color:var(--ink,#f2eee6);overflow:hidden}
+.clip-dialog[open]{display:grid;place-items:center}
+.clip-dialog::backdrop{background:transparent}
+.clip-dialog__shade{position:absolute;inset:0;background:radial-gradient(ellipse at 50% 38%,rgba(46,30,60,.9),rgba(8,8,10,.95) 70%);backdrop-filter:blur(8px)}
+.clip-player{position:relative;width:min(1100px,92vw);display:grid;gap:14px;padding-top:56px}
+.clip-dialog.is-vertical .clip-player{width:min(430px,92vw)}
+.clip-player__close{position:absolute;right:0;top:0;width:44px;height:44px;border-radius:50%;border:1px solid var(--line,rgba(242,238,230,.16));
+  background:rgba(25,25,27,.9);color:var(--ink,#f2eee6);font-size:26px;line-height:1;cursor:pointer;transition:transform .25s,border-color .25s}
+.clip-player__close:hover{transform:rotate(90deg);border-color:var(--lilac,#d5b0ef)}
+.clip-player__stage{position:relative;border-radius:14px;overflow:hidden;background:#000;transform-origin:0 0;
+  box-shadow:0 40px 120px -40px rgba(213,176,239,.45)}
+.clip-player__video{display:block;width:100%;max-height:74vh;background:#000;object-fit:contain;cursor:pointer}
+.clip-dialog.is-vertical .clip-player__video{aspect-ratio:9/16}
+.clip-player__stage.is-idle,.clip-player__stage.is-idle .clip-player__video{cursor:none}
+
+/* вспышка в центре при паузе/старте */
+.clip-player__flash{position:absolute;left:50%;top:50%;width:84px;height:84px;border-radius:50%;display:grid;place-items:center;
+  background:rgba(242,238,230,.16);opacity:0;pointer-events:none;transform:translate(-50%,-50%)}
+.clip-player__flash svg{width:38px;height:38px;fill:var(--ink,#f2eee6)}
+.clip-player__flash .cp-i-pause,.clip-player__flash.show-pause .cp-i-play{display:none}
+.clip-player__flash.show-pause .cp-i-pause{display:block}
+
+/* панель управления */
+.clip-player__bar{position:absolute;left:0;right:0;bottom:0;display:flex;align-items:center;gap:10px;padding:34px 14px 12px;
+  background:linear-gradient(0deg,rgba(10,8,12,.85),rgba(10,8,12,0));transition:opacity .35s,transform .35s}
+@media (min-width:621px){.clip-player__stage.is-idle .clip-player__bar{opacity:0;transform:translateY(8px)}}
+.cp-btn{position:relative;flex:0 0 auto;width:40px;height:40px;border-radius:50%;border:0;padding:0;display:grid;place-items:center;
+  background:transparent;color:var(--ink,#f2eee6);cursor:pointer;transition:background .25s,transform .2s}
+.cp-btn:hover{background:rgba(213,176,239,.18)}
+.cp-btn:active{transform:scale(.92)}
+.cp-btn:focus-visible,.cp-progress:focus-visible,.clip-player__close:focus-visible,.clip-player__retry:focus-visible,
+.clip-player__source:focus-visible,.cp-vol__range:focus-visible{outline:2px solid var(--lilac,#d5b0ef);outline-offset:2px}
+.cp-btn svg{width:22px;height:22px;fill:currentColor}
+.cp-btn[aria-pressed="true"]{color:var(--lilac,#d5b0ef)}
+.cp-play svg{position:absolute;transition:opacity .3s,transform .4s cubic-bezier(.3,1.4,.5,1)}
+.cp-play .cp-i-pause{opacity:0;transform:scale(.4) rotate(90deg)}
+.clip-player__stage.is-playing .cp-play .cp-i-play{opacity:0;transform:scale(.4) rotate(-90deg)}
+.clip-player__stage.is-playing .cp-play .cp-i-pause{opacity:1;transform:none}
+.cp-time{flex:0 0 auto;min-width:36px;font:600 12px/1 var(--sans,system-ui);font-variant-numeric:tabular-nums;color:var(--ink,#f2eee6);opacity:.85}
+.cp-dur{text-align:right}
+
+/* перемотка: стебель и цветок-бегунок */
+.cp-progress{position:relative;flex:1 1 auto;min-width:60px;height:30px;cursor:pointer;touch-action:none}
+.cp-progress::before,.cp-buffer,.cp-fill{content:"";position:absolute;left:0;right:0;top:50%;height:4px;margin-top:-2px;border-radius:4px}
+.cp-progress::before{background:rgba(242,238,230,.18)}
+.cp-buffer{background:rgba(242,238,230,.22);transform:scaleX(0);transform-origin:left}
+.cp-fill{background:linear-gradient(90deg,var(--lilac,#d5b0ef),#f3c9d9 55%,#ffd2a6);transform:scaleX(0);transform-origin:left;
+  box-shadow:0 0 12px rgba(213,176,239,.55)}
+
+/* цветок: 6 лепестков вокруг серединки, раскрытие — переменная --open (0…1) */
+.cp-flower{--open:.6;position:relative;display:block;width:24px;height:24px}
+.cp-flower i{position:absolute;left:50%;top:50%;width:7px;height:11px;margin:-11px 0 0 -3.5px;border-radius:50% 50% 45% 45%/62% 62% 38% 38%;
+  background:var(--lilac,#d5b0ef);transform-origin:50% 100%;transform:rotate(calc(var(--k) * 60deg)) scale(var(--open));
+  transition:transform .4s cubic-bezier(.3,1.6,.5,1),background .3s;opacity:.95}
+.cp-flower i:nth-child(even){background:#f3c9d9}
+.cp-flower b{position:absolute;left:50%;top:50%;width:7px;height:7px;margin:-3.5px 0 0 -3.5px;border-radius:50%;background:#ffd38a;
+  box-shadow:0 0 8px rgba(255,211,138,.75)}
+.cp-thumb{position:absolute;top:50%;left:0;transform:translate(-50%,-50%) rotate(var(--spin,0deg));transition:transform .3s;pointer-events:none}
+.cp-progress:hover .cp-thumb,.cp-progress.is-scrub .cp-thumb{--open:1;transform:translate(-50%,-50%) rotate(var(--spin,0deg)) scale(1.3)}
+
+/* громкость: цветок раскрывается громче, закрывается в бутон тише */
+.cp-vol{display:flex;align-items:center;flex:0 0 auto}
+.cp-vol__btn{overflow:visible}
+.cp-volflower{width:30px;height:30px}
+.cp-volflower i{width:9px;height:14px;margin:-14px 0 0 -4.5px}
+.cp-volflower b{width:8px;height:8px;margin:-4px 0 0 -4px}
+.cp-vol__btn.is-muted .cp-volflower i{background:#7f7488}
+.cp-vol__btn.is-muted .cp-volflower b{background:#a89aa8;box-shadow:none}
+.cp-petal{position:absolute;left:50%;top:50%;width:7px;height:10px;border-radius:50% 50% 45% 45%/62% 62% 38% 38%;
+  background:#f3c9d9;pointer-events:none}
+.cp-petal:nth-child(odd){background:var(--lilac,#d5b0ef)}
+.cp-vol__range{--v:.9;-webkit-appearance:none;appearance:none;width:72px;height:4px;margin:0 6px 0 2px;border-radius:4px;cursor:pointer;
+  background:linear-gradient(90deg,var(--lilac,#d5b0ef) calc(var(--v) * 100%),rgba(242,238,230,.2) 0);transition:width .3s,opacity .3s,margin .3s}
+.cp-vol__range::-webkit-slider-thumb{-webkit-appearance:none;width:14px;height:14px;border-radius:50%;background:var(--ink,#f2eee6);border:0}
+.cp-vol__range::-moz-range-thumb{width:14px;height:14px;border-radius:50%;background:var(--ink,#f2eee6);border:0}
+
+/* текст под видео и ошибка */
+.clip-player__meta{display:grid;gap:4px}
+.clip-player__meta h3{margin:0;font:italic 24px/1.2 var(--serif,Georgia,serif)}
+.clip-player__meta p{margin:0;color:var(--muted,#aaa6a4);font:15px/1.5 var(--sans,system-ui)}
+.clip-player__source{color:var(--lilac,#d5b0ef);font:600 14px var(--sans,system-ui);text-underline-offset:4px}
+.clip-player__error{position:absolute;inset:0;display:grid;place-content:center;gap:12px;text-align:center;background:rgba(17,17,17,.92);padding:20px;z-index:2}
+.clip-player__error[hidden]{display:none}
+.clip-player__retry{justify-self:center;padding:10px 18px;border-radius:999px;border:0;background:var(--ink,#f2eee6);color:#111;font:700 14px var(--sans,system-ui);cursor:pointer}
+.clip-player__video::cue{font:500 18px/1.35 var(--sans,system-ui);background:rgba(17,17,17,.78);color:#f2eee6}
 html.clip-open{overflow:hidden}
-@media (prefers-reduced-motion:reduce){.clip-card,.clip-card__media img,.clip-card__play{transition:none}.clip-dialog[open]{animation:none}}
+
+@media (max-width:620px){
+  .clip-player__bar{position:static;gap:4px;padding:6px 6px 8px;background:#0c0a10}
+  .clip-player__stage.is-idle,.clip-player__stage.is-idle .clip-player__video{cursor:auto}
+  .cp-time{display:none}
+  .cp-vol__range{display:none}
+}
+@media (prefers-reduced-motion:reduce){
+  .clip-card,.clip-card__media img,.clip-card__play,.clip-card__preview,.cp-flower i,.cp-thumb,.clip-player__bar,.cp-play svg{transition:none}
+}
+html.reduce-motion .clip-card,html.reduce-motion .clip-card__media img,html.reduce-motion .cp-flower i,html.reduce-motion .cp-thumb{transition:none}
