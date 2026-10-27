@@ -1,6 +1,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import assert from 'node:assert/strict';
+import vm from 'node:vm';
 const read=file=>fs.readFileSync(file,'utf8');
 const moduleFromSource=async file=>import('data:text/javascript;base64,'+Buffer.from(read(file)).toString('base64'));
 const {countries,safeContentOverride}=await moduleFromSource('assets/atlas-data.js');
@@ -8,6 +9,9 @@ const {findCountry,pointInGeometry,normalizeLongitude}=await moduleFromSource('a
 const {clips,nextClip,randomOtherClip}=await moduleFromSource('assets/moments-data.js');
 const {streamClips,twitchEmbedUrl}=await moduleFromSource('assets/stream-player.js');
 const {shouldNudge}=await moduleFromSource('assets/polya-guide.js');
+const {localImageKey}=await moduleFromSource('assets/media-loading.js');
+assert.equal(localImageKey('assets/photos/polina-stream.webp?v=1','https://nedogon-polya.ru/'),'assets/photos/polina-stream.webp');
+assert.equal(localImageKey('https://elsewhere.test/photo.webp','https://nedogon-polya.ru/'),null);
 assert.ok(shouldNudge([{y:0,time:0,chapter:-1},{y:2600,time:1500,chapter:2}],1000));
 assert.ok(!shouldNudge([{y:0,time:0,chapter:0},{y:1000,time:1500,chapter:2}],1000));
 assert.ok(!shouldNudge([{y:0,time:0,chapter:0},{y:3000,time:4000,chapter:3}],1000));
@@ -34,6 +38,15 @@ const withHole={type:'Polygon',coordinates:[[[0,0],[10,0],[10,10],[0,10],[0,0]],
 const base=countries[0],invalid=safeContentOverride(base,{lat:99,id:'wrong',images:[{src:'https://unsafe.example/image.webp',alt:'x'}],sources:[{url:'javascript:alert(1)',label:'x'}]});assert.equal(invalid.lat,base.lat);assert.equal(invalid.id,base.id);assert.equal(invalid.images,base.images);assert.equal(invalid.sources,base.sources);
 const valid=safeContentOverride(base,{title:'Новая глава',story:['Проверенный текст'],images:[{src:'content/countries/id/photo.webp',alt:'Описание',role:'personal'}]});assert.equal(valid.title,'Новая глава');assert.deepEqual(valid.story,['Проверенный текст']);assert.equal(valid.images[0].role,'personal');
 const html=read('index.html'),gallery=read('gallery.html');
+const bootSource=html.match(/<script>([\s\S]*?)<\/script>/)?.[1];assert.ok(bootSource);
+for(const action of ['timeout','skip','escape']){
+ const classes=new Set(),timers=[],handlers={};let ready=0;
+ const context={document:{documentElement:{classList:{add:c=>classes.add(c),remove:c=>classes.delete(c),contains:c=>classes.has(c)}},addEventListener:(name,fn)=>handlers[name]=fn},window:{dispatchEvent:()=>ready++},setTimeout:(fn,ms)=>timers.push({fn,ms}),Event:class{}};
+ vm.runInNewContext(bootSource,context);assert.ok(classes.has('boot-loading'));
+ if(action==='timeout')timers.find(t=>t.ms===8000).fn();else if(action==='skip')handlers.click({target:{closest:()=>true}});else handlers.keydown({key:'Escape'});
+ assert.ok(!classes.has('boot-loading'));assert.equal(ready,1);context.window.finishSiteBoot();assert.equal(ready,1);
+}
+const previews=JSON.parse(read('assets/image-previews.json'));assert.ok(Object.keys(previews).length>=40);for(const [file,data] of Object.entries(previews)){assert.ok(fs.readFileSync(file).length);assert.ok(data.startsWith('data:image/webp;base64,'));}assert.ok(fs.readFileSync('assets/image-previews.json').length<40000);
 assert.ok(!html.includes('ЖИЗНЬ В МОМЕНТЕ'));assert.ok(!html.includes('class="ticker"'));assert.ok(html.includes('id="clip-panel"'));assert.ok(html.includes('data-open-clip="india"'));assert.ok(html.includes('class="portrait-stamp"'));
 const contentIndex=html.match(/name="country-content" content="([^"]+)"/)?.[1];
 if(contentIndex){const editorial=JSON.parse(read(contentIndex));assert.equal(editorial.countries.length,6);for(const entry of editorial.countries){const country=countries.find(c=>c.id===entry.id);assert.ok(country);const merged=safeContentOverride(country,entry);assert.ok(merged.moments.length===3);assert.ok(merged.story.every(p=>typeof p==='string'));}}
@@ -45,6 +58,7 @@ if(contentIndex)resources.add(contentIndex);
 resources.add('assets/moments.js');resources.add('assets/moments-data.js');
 resources.add('assets/stream-player.js');
 resources.add('assets/polya-guide.js');resources.add('assets/img/guide/polya-wait-v1.webp');
+resources.add('assets/media-loading.js');resources.add('assets/boot.js');resources.add('assets/image-previews.json');resources.add('story.html');resources.add('assets/story.js');resources.add('assets/story.css');
 for(const source of [html,gallery])for(const match of source.matchAll(/(?:src|href)="([^"#]+)"/g))if(!/^(https?:|mailto:)/.test(match[1]))resources.add(match[1].split(/[?#]/)[0]);
 for(const file of ['assets/site.css','assets/atlas.css','assets/gallery.css'])for(const match of read(file).matchAll(/url\(['"]?([^)'"\s]+)['"]?\)/g))resources.add(path.posix.normalize(path.posix.join('assets',match[1])));
 for(const country of countries)for(const image of country.images)resources.add(image.src);

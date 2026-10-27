@@ -186,3 +186,6 @@ body.is-playing .film-head > *{opacity:0;pointer-events:none}
   .moments-pin{position:static;height:auto;padding-block:12svh}
   .track{overflow-x:auto;transform:none!important;padding-right:var(--gutter)}
 }
+
+/* Loading feedback: never silently leave a blank cinema frame on a slow connection. */
+.cinema-state{font-size:13px;color:var(--ink);text-align:center;min-height:1.7em;max-width:55ch;margin:12px auto}.cinema-retry{display:block;border:1px solid var(--line);border-radius:30px;padding:10px 20px;margin:10px auto;min-height:44px;font-size:12px}.cinema-retry[hidden]{display:none}.layer{background-repeat:no-repeat}.layer>video{transition:opacity .35s}

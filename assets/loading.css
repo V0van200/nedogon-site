@@ -1,0 +1,18 @@
+/* Critical intro styles also live inline so slow CSS/JS cannot leave a trapped screen. */
+.page-loader{position:fixed;inset:0;z-index:10000;display:none;place-items:center;text-align:center;padding:28px;background:var(--bg,#111);color:var(--ink,#f2eee6)}
+html.boot-loading{overflow:hidden}html.boot-loading .page-loader{display:grid}html.boot-loading body>:not(.page-loader){visibility:hidden}
+html.boot-leaving .page-loader{display:grid;opacity:0;pointer-events:none;transition:opacity .4s}
+.loader-name{font:600 clamp(23px,5vw,48px)/1.1 var(--sans,Arial,sans-serif);letter-spacing:.04em}.loader-name span{font-weight:400;color:var(--lilac,#d5b0ef)}
+.loader-copy{font:italic clamp(22px,3.5vw,36px)/1.3 var(--serif,Georgia,serif);color:var(--ink,#f2eee6);margin-top:22px}
+.loader-track{height:1px;width:170px;margin:32px auto;background:var(--line,rgba(255,255,255,.2));overflow:hidden}.loader-track:after{content:'';display:block;height:100%;width:45%;background:var(--lilac,#d5b0ef);animation:loader-line 1.8s ease-in-out infinite}
+.loader-skip{border:1px solid var(--line);border-radius:40px;min-height:44px;padding:10px 22px;font-size:12px;color:var(--ink);background:transparent;cursor:pointer}.loader-hint{font-size:11px;max-width:35ch;margin:15px auto 0;color:var(--muted,#aaa6a4)}
+html.boot-loading .hero-room,html.boot-loading .hero-enter{animation-play-state:paused}
+.hero-room{background-color:var(--album-surface);background-image:url('./images/portrait-room.webp'),var(--hero-preview)}
+html.hero-image-ready .hero-room{background-image:url('./images/portrait-room.webp')}
+img.image-loading{background-color:var(--album-surface,#222);background-position:center;background-size:cover;filter:blur(6px);transition:filter .4s,opacity .4s}
+img.image-ready{transition:filter .4s}
+img.image-failed{background:var(--album-surface,#222);object-fit:contain!important;cursor:pointer;filter:none!important}
+@keyframes loader-line{0%{transform:translateX(-120%)}100%{transform:translateX(330%)}}
+@media(max-width:780px){.hero-room{background-image:url('./img/hero.webp'),var(--hero-mobile-preview)}html.hero-image-ready .hero-room{background-image:url('./img/hero.webp')}}
+@media(prefers-reduced-motion:reduce){.loader-track:after{animation:none;transform:none;width:100%}img.image-loading{transition:none}}
+html.reduce-motion .loader-track:after{animation:none;width:100%}

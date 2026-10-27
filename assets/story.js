@@ -1,3 +1,4 @@
+import { setPosterBackground } from './media-loading.js?v=1';
 // Полноэкранные истории стран: смена фона между главами, проявление текста, лента моментов, занавес между странами.
 import { stories } from './story-data.js';
 
@@ -89,6 +90,9 @@ function mediaNode(m, { lazy = false } = {}) {
 }
 
 const play = (v) => v && !reduce && v.play().catch(() => {});
+function releaseMedia(root) {
+  root.querySelectorAll('video').forEach(v => { v.pause(); v.removeAttribute('src'); v.load(); });
+}
 
 // --- сцена ---
 function setStage(media, key) {
@@ -96,12 +100,23 @@ function setStage(media, key) {
   stageKey = key;
   const next = layers[1 - front];
   const prev = layers[front];
-  next.replaceChildren(mediaNode(media));
+  releaseMedia(next);
+  const node = mediaNode(media);
+  if (media.poster) {
+    setPosterBackground(next, media.poster);
+    next.style.backgroundSize = 'cover'; next.style.backgroundPosition = 'center';
+    if(node.tagName === 'VIDEO') {
+      node.style.opacity = '0';
+      node.addEventListener('loadeddata', () => { node.style.opacity = '1'; }, {once:true});
+      node.addEventListener('error', () => { node.style.opacity = '0'; });
+    }
+  } else { next.style.backgroundImage = ''; delete next.dataset.posterSource; }
+  next.replaceChildren(node);
   play(next.querySelector('video'));
   next.classList.add('on');
   prev.classList.remove('on');
   front = 1 - front;
-  setTimeout(() => { if (!prev.classList.contains('on')) prev.replaceChildren(); }, 1500);
+  setTimeout(() => { if (!prev.classList.contains('on')) { releaseMedia(prev); prev.replaceChildren(); } }, 1500);
 }
 const stageVideo = () => layers[front].querySelector('video');
 
@@ -126,7 +141,7 @@ function setSound(on) {
 const cinema = el('dialog', 'cinema');
 cinema.setAttribute('aria-label', 'Видео со звуком');
 const cineVideo = el('video');
-Object.assign(cineVideo, { controls: true, playsInline: true, preload: 'auto' });
+Object.assign(cineVideo, { controls: true, playsInline: true, preload: 'none' });
 cineVideo.setAttribute('playsinline', '');
 const cineTitle = el('p');
 const cineLink = el('a');
@@ -136,7 +151,31 @@ cineCap.append(cineTitle, cineLink);
 const cineClose = el('button', 'cinema-close', '×');
 cineClose.type = 'button';
 cineClose.setAttribute('aria-label', 'Закрыть видео');
-cinema.append(cineClose, cineVideo, cineCap);
+const cineState = el('p', 'cinema-state');
+cineState.setAttribute('role', 'status');
+const cineRetry = el('button', 'cinema-retry', 'Повторить загрузку');
+cineRetry.type = 'button'; cineRetry.hidden = true;
+let cineWaitTimer;
+function waitingCinema() {
+  if(!cinema.open) return;
+  clearTimeout(cineWaitTimer);
+  cineState.textContent = 'Видео загружается…'; cineRetry.hidden = true;
+  cineWaitTimer = setTimeout(() => { if(cinema.open && cineVideo.readyState < 3) { cineState.textContent = 'Соединение медленное. Можно подождать или повторить загрузку.'; cineRetry.hidden = false; } }, 12000);
+}
+function playCinema() {
+  cineVideo.play().catch(error => {
+    if(!cinema.open || error.name === 'AbortError') return;
+    if(error.name === 'NotAllowedError') cineState.textContent = 'Нажми ▶ в плеере, чтобы начать.';
+  });
+}
+cineVideo.addEventListener('waiting', waitingCinema);
+cineVideo.addEventListener('playing', () => { clearTimeout(cineWaitTimer); cineState.textContent = ''; cineRetry.hidden = true; });
+cineVideo.addEventListener('error', () => {
+  if(!cinema.open || !cineVideo.getAttribute('src')) return;
+  clearTimeout(cineWaitTimer); cineState.textContent = 'Видео не удалось загрузить. Повтори загрузку или попробуй позже.'; cineRetry.hidden = false;
+});
+cineRetry.addEventListener('click', () => { waitingCinema(); cineVideo.load(); playCinema(); });
+cinema.append(cineClose, cineVideo, cineState, cineRetry, cineCap);
 document.body.append(cinema);
 
 function openCinema(full, title, link, linkText) {
@@ -149,10 +188,13 @@ function openCinema(full, title, link, linkText) {
   cineLink.hidden = !link;
   if (link) { cineLink.href = link; cineLink.textContent = `${linkText || 'Открыть'} ↗`; }
   cinema.showModal();
-  cineVideo.play().catch(() => {});
+  waitingCinema();
+  playCinema();
 }
 function closeCinema() {
   if (!cinema.open) return;
+  clearTimeout(cineWaitTimer);
+  cineState.textContent = ''; cineRetry.hidden = true;
   cineVideo.pause();
   cineVideo.removeAttribute('src');
   cineVideo.load();
@@ -266,6 +308,9 @@ function buildFinale(s, next) {
 }
 
 function build(s) {
+  closeCinema();
+  releaseMedia(main);
+  layers.forEach(layer => { releaseMedia(layer); layer.replaceChildren(); layer.classList.remove('on'); });
   observers.forEach((o) => o.disconnect());
   observers = [];
   story = s;
@@ -405,22 +450,26 @@ function lift() {
   }, reduce ? 0 : CURTAIN_MS + 50);
 }
 
+let navigationVersion = 0;
 function go(id, first = false) {
+  const version = ++navigationVersion;
   const s = stories.find((x) => x.id === id) || stories[0];
-  if (story && s.id === story.id) return;
+  if (story && s.id === story.id) { lift(); return; }
   curtainText(s);
   document.documentElement.style.setProperty('--tint', TINTS[s.id] || '#d5b0ef');
   const swap = () => {
+    if(version !== navigationVersion) return false;
     if (soundBtn.getAttribute('aria-pressed') === 'true') setSound(false);
     build(s);
     scrollTo(0, 0);
     onScroll();
+    return true;
   };
   if (reduce) { swap(); lift(); return; }
-  if (first) { swap(); setTimeout(lift, 900); return; }
+  if (first) { swap(); setTimeout(() => { if(version === navigationVersion) lift(); }, 900); return; }
   curtain.classList.remove('is-leave');
   curtain.classList.add('is-cover');
-  setTimeout(() => { swap(); setTimeout(lift, 380); }, CURTAIN_MS);
+  setTimeout(() => { if(swap()) setTimeout(() => { if(version === navigationVersion) lift(); }, 380); }, CURTAIN_MS);
 }
 
 addEventListener('hashchange', () => go(location.hash.slice(1)));

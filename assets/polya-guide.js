@@ -31,7 +31,7 @@ export function initPolyaGuide() {
     const section = document.getElementById(chapter.id);
     return section && section.getBoundingClientRect().top < innerHeight * .6 ? i : current;
   }, -1);
-  const busy = () => !!document.querySelector('dialog[open], .menu-toggle[aria-expanded="true"]') || [...document.querySelectorAll('video')].some(v => !v.paused && !v.ended);
+  const busy = () => document.documentElement.classList.contains('boot-loading') || !!document.querySelector('dialog[open], .menu-toggle[aria-expanded="true"]') || [...document.querySelectorAll('video')].some(v => !v.paused && !v.ended);
   function stopTyping() { clearTimeout(typingTimer); clearTimeout(buttonTimer); }
   function revealActions() { actions.inert = false; actions.classList.add('ready'); }
   function speak() {
@@ -116,5 +116,6 @@ export function initPolyaGuide() {
     const qualifies = shouldNudge(samples, innerHeight);
     timer = setTimeout(() => { if (qualifies && !document.hidden && performance.now() >= suppressUntil) open(); samples = []; }, 700);
   }, {passive:true});
-  if (new URLSearchParams(location.search).get('polya') === 'preview') setTimeout(() => open(true), 900);
+  window.addEventListener('site:ready', () => { suppressUntil = performance.now() + 3000; if(new URLSearchParams(location.search).get('polya') === 'preview') setTimeout(() => open(true), 700); }, {once:true});
+  if (!document.documentElement.classList.contains('boot-loading') && new URLSearchParams(location.search).get('polya') === 'preview') setTimeout(() => open(true), 900);
 }
