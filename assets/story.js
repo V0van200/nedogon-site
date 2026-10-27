@@ -105,14 +105,21 @@ function setStage(media, key) {
 }
 const stageVideo = () => layers[front].querySelector('video');
 
+// open.music: фоновое видео с музыкой — звук включается без перемотки и без скрытия текста
+const soundLabel = (on) => (story?.open.music
+  ? (on ? 'Выключить музыку' : 'Включить музыку')
+  : (on ? 'Выключить звук' : 'Смотреть со звуком'));
+
 function setSound(on) {
   const v = stageVideo();
   if (!v) return;
+  const music = Boolean(story?.open.music);
   v.muted = !on;
-  if (on) { v.currentTime = 0; v.play().catch(() => {}); }
+  if (on && !music) v.currentTime = 0;
+  if (on) v.play().catch(() => {});
   soundBtn.setAttribute('aria-pressed', String(on));
-  document.body.classList.toggle('is-playing', on);
-  soundBtn.textContent = on ? 'Выключить звук' : 'Смотреть со звуком';
+  document.body.classList.toggle('is-playing', on && !music);
+  soundBtn.textContent = soundLabel(on);
 }
 
 // --- кинорежим: момент со звуком на весь экран ---
@@ -168,7 +175,7 @@ function soundButton(label, full, title, link, linkText) {
 function kicker(n) { return el('p', 'kicker', `Глава ${n} · ${CHAPTERS[n - 1]}`); }
 
 function buildOpen(s) {
-  const film = Boolean(s.open.sound);
+  const film = Boolean(s.open.sound) && !s.open.music;
   const sec = el('section', `chapter ch-open${film ? ' is-film' : ''}`);
   const box = el('div', `wrap${film ? ' film-head' : ''}`);
   if (film) box.append(kicker(1), el('p', 'open-meta', `${s.name} · ${s.years} · ${s.place}`));
@@ -276,7 +283,7 @@ function build(s) {
       a.removeAttribute('aria-current');
     }
   });
-  const openMedia = s.open.video ? { video: s.open.video, poster: s.open.poster, fit: true } : s.open.media;
+  const openMedia = s.open.video ? { video: s.open.video, poster: s.open.poster, fit: !s.open.music } : s.open.media;
   mediaPlan = [[openMedia, 'o'], [s.text.media, 't'], [s.text.media, 't'], [s.finale.media, 'f']];
   sections = [buildOpen(s), buildText(s), buildMoments(s), buildFinale(s, next)];
   sections.forEach((sec, idx) => { sec.dataset.idx = idx; });
@@ -289,13 +296,15 @@ function activate(idx) {
   activeIdx = idx;
   const [media, key] = mediaPlan[idx];
   setStage(media, `${story.id}-${key}`);
-  const film = idx === 0 && Boolean(story.open.sound);
+  const audible = idx === 0 && Boolean(story.open.sound);
+  const film = audible && !story.open.music;
   document.body.classList.toggle('is-film', film);
   document.body.classList.toggle('is-text', idx === 1);
   document.body.classList.toggle('is-dim', idx === 2);
   [...rail.children].forEach((b, i) => (i === idx ? b.setAttribute('aria-current', 'step') : b.removeAttribute('aria-current')));
-  soundBtn.hidden = !film;
-  if (!film && soundBtn.getAttribute('aria-pressed') === 'true') setSound(false);
+  soundBtn.hidden = !audible;
+  if (audible && soundBtn.getAttribute('aria-pressed') !== 'true') soundBtn.textContent = soundLabel(false);
+  if (!audible && soundBtn.getAttribute('aria-pressed') === 'true') setSound(false);
 }
 
 function observe() {
