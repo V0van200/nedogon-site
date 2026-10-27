@@ -5,6 +5,11 @@ const read=file=>fs.readFileSync(file,'utf8');
 const moduleFromSource=async file=>import('data:text/javascript;base64,'+Buffer.from(read(file)).toString('base64'));
 const {countries,safeContentOverride}=await moduleFromSource('assets/atlas-data.js');
 const {findCountry,pointInGeometry,normalizeLongitude}=await moduleFromSource('assets/atlas-math.js');
+const {clips,nextClip,randomOtherClip}=await moduleFromSource('assets/moments-data.js');
+assert.equal(clips.length,6);assert.equal(new Set(clips.map(c=>c.id)).size,6);
+for(const clip of clips){assert.ok(clip.url.startsWith('https://www.youtube.com/watch?'));assert.ok(/^\d\d:\d\d$/.test(clip.time));assert.ok(fs.readFileSync(clip.image).length);}
+assert.equal(nextClip(0,-1),5);assert.equal(nextClip(5,1),0);
+for(let i=0;i<clips.length;i++)for(const random of [0,.25,.5,.99,1]){const result=randomOtherClip(i,()=>random);assert.ok(result>=0&&result<clips.length);assert.notEqual(result,i);}
 assert.equal(countries.length,8);assert.equal(new Set(countries.map(c=>c.id)).size,8);assert.equal(new Set(countries.map(c=>c.code)).size,8);
 for(const country of countries){assert.ok(country.lat>=-90&&country.lat<=90);assert.ok(country.lon>=-180&&country.lon<=180);assert.ok(country.images.length>=2,`${country.name}: photo carousel needs two images`);assert.ok(country.story.length);assert.ok(country.years.every(y=>Number.isInteger(y)&&y>=2022&&y<=2026));assert.ok(country.sources.every(s=>s.url.startsWith('https://')));assert.ok(country.images.every(p=>['personal','scenery','video'].includes(p.role)));}
 for(const year of [2022,2023,2024,2025,2026])assert.ok(countries.some(c=>c.years.includes(year)),`Empty filter ${year}`);
@@ -18,6 +23,7 @@ const withHole={type:'Polygon',coordinates:[[[0,0],[10,0],[10,10],[0,10],[0,0]],
 const base=countries[0],invalid=safeContentOverride(base,{lat:99,id:'wrong',images:[{src:'https://unsafe.example/image.webp',alt:'x'}],sources:[{url:'javascript:alert(1)',label:'x'}]});assert.equal(invalid.lat,base.lat);assert.equal(invalid.id,base.id);assert.equal(invalid.images,base.images);assert.equal(invalid.sources,base.sources);
 const valid=safeContentOverride(base,{title:'Новая глава',story:['Проверенный текст'],images:[{src:'content/countries/id/photo.webp',alt:'Описание',role:'personal'}]});assert.equal(valid.title,'Новая глава');assert.deepEqual(valid.story,['Проверенный текст']);assert.equal(valid.images[0].role,'personal');
 const html=read('index.html'),gallery=read('gallery.html');
+assert.ok(!html.includes('ЖИЗНЬ В МОМЕНТЕ'));assert.ok(!html.includes('class="ticker"'));assert.ok(html.includes('id="clip-panel"'));assert.ok(html.includes('data-open-clip="india"'));assert.ok(html.includes('class="portrait-stamp"'));
 const contentIndex=html.match(/name="country-content" content="([^"]+)"/)?.[1];
 if(contentIndex){const editorial=JSON.parse(read(contentIndex));assert.equal(editorial.countries.length,6);for(const entry of editorial.countries){const country=countries.find(c=>c.id===entry.id);assert.ok(country);const merged=safeContentOverride(country,entry);assert.ok(merged.moments.length===3);assert.ok(merged.story.every(p=>typeof p==='string'));}}
 const ids=[...html.matchAll(/\bid="([^"]+)"/g)].map(m=>m[1]);assert.equal(new Set(ids).size,ids.length,'Duplicate HTML ids');
@@ -25,6 +31,7 @@ for(const match of html.matchAll(/href="#([^"]+)"/g))assert.ok(ids.includes(matc
 assert.ok(ids.includes('country-drawer'));assert.ok(ids.includes('drawer-country'));assert.ok(html.includes('aria-roledescription="карусель"'));assert.ok(!html.includes('<iframe'));
 const resources=new Set(['index.html','gallery.html','assets/app.js','assets/atlas.js','assets/atlas-data.js','assets/atlas-math.js','assets/atlas-globe.js','assets/images/earth.jpg','assets/images/earth-lights.png','assets/countries/boundaries.json','assets/vendor/three.module.min.js']);
 if(contentIndex)resources.add(contentIndex);
+resources.add('assets/moments.js');resources.add('assets/moments-data.js');
 for(const source of [html,gallery])for(const match of source.matchAll(/(?:src|href)="([^"#]+)"/g))if(!/^(https?:|mailto:)/.test(match[1]))resources.add(match[1].split(/[?#]/)[0]);
 for(const file of ['assets/site.css','assets/atlas.css','assets/gallery.css'])for(const match of read(file).matchAll(/url\(['"]?([^)'"\s]+)['"]?\)/g))resources.add(path.posix.normalize(path.posix.join('assets',match[1])));
 for(const country of countries)for(const image of country.images)resources.add(image.src);

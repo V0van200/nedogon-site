@@ -1,3 +1,4 @@
+import { initMoments } from './moments.js?v=4';
 import { initAtlas } from './atlas.js?v=3';
 
 const root = document.documentElement;
@@ -58,4 +59,5 @@ document.querySelector('.sources-button').addEventListener('click',() => dialog.
 dialog.querySelector('.dialog-close').addEventListener('click',() => dialog.close());
 dialog.addEventListener('click', e => { const r = dialog.getBoundingClientRect(); if(e.clientX < r.left || e.clientX > r.right || e.clientY < r.top || e.clientY > r.bottom)dialog.close(); });
 
+initMoments({isMotionOff:()=>motionOff});
 initAtlas({isMotionOff:()=>motionOff});
