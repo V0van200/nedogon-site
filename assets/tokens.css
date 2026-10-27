@@ -7,6 +7,11 @@
   --album-overlay:rgba(17,17,17,.33); --album-art-overlay:rgba(17,17,17,.73);
   --album-art-border:rgba(255,255,255,.2); --album-lightbox:rgba(11,11,11,.96);
   --album-backdrop:#000;
+  --atlas-bg:#0c0e13; --atlas-panel:rgba(20,19,25,.97);
+  --atlas-toolbar:rgba(20,19,25,.92); --atlas-border:rgba(213,176,239,.28);
+  --atlas-tint:rgba(213,176,239,.055); --atlas-tooltip:rgba(17,16,22,.94);
+  --atlas-shadow:rgba(0,0,0,.33); --atlas-backdrop:rgba(5,5,9,.35);
+  --atlas-photo-shade:rgba(0,0,0,.65);
   --track:#ff5b47; --blush:#ffb3c1; --line:rgba(244,241,234,.14);
 
   --font-display:"Russo One", "Arial Black", Impact, system-ui, sans-serif;

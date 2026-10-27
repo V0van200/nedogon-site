@@ -1,0 +1,8 @@
+{
+  "source": "https://cdn.jsdelivr.net/npm/world-atlas@2.0.2/countries-110m.json",
+  "project": "https://github.com/topojson/world-atlas",
+  "underlyingData": "Natural Earth 1:110m",
+  "licenseFile": "vendor/LICENSE-world-atlas.txt",
+  "processing": "Seven selected country geometries converted from TopoJSON to GeoJSON; Maldives are represented only by a labelled marker because the small islands are absent at this resolution.",
+  "scope": "Illustrative country boundaries. No personal travel routes or addresses."
+}
