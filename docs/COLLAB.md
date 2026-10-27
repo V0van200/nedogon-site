@@ -12,6 +12,7 @@
 | Готовые ролики | **Claude** | `assets/video/<topic>/<id>.mp4`, `<id>-poster.webp`, `<id>.ru.vtt` |
 | Реестр готовых роликов | **Claude** | `content/media/library.json` |
 | Карточки клипов на главной | **Claude** | `assets/clips.js`, `assets/clips.css` (якоря `data-clips` в index.html) |
+| Страницы разделов (пока) | **Claude** | `cooking.html`, `sport.html`, `collabs.html`, `assets/topic.css` — GPT может забрать в общий шаблон |
 | Истории стран | **Claude** | `story.html`, `assets/story.js`, `assets/story.css`, `assets/story-data.js`, `content/countries/` |
 | Присланные исходники | общий | `content/media/uploads.json` — кто получил файл, тот и записывает |
 | Очередь заказов | общий | `docs/MEDIA-QUEUE.md` |

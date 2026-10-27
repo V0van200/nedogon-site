@@ -377,6 +377,12 @@ async function init() {
     slot.classList.add('clip-slot');
     if (slot.dataset.layout === 'row') slot.classList.add('clip-slot--row');
     slot.replaceChildren(...list.map(card));
+    // data-more="cooking.html" data-more-label="Все кукинги" — ссылка на страницу раздела под карточками
+    if (slot.dataset.more) {
+      const more = el('a', 'clip-more', `${slot.dataset.moreLabel || 'Все клипы'} →`);
+      more.href = slot.dataset.more;
+      slot.append(more);
+    }
   });
 }
 

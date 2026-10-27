@@ -1,0 +1,62 @@
+/* Страницы разделов (cooking.html, sport.html, collabs.html). Токены и шрифты — из site.css. */
+.topic-top{position:sticky;top:0;z-index:30;display:flex;align-items:center;justify-content:space-between;gap:20px;
+  padding:16px max(16px,4vw);background:rgba(17,17,17,.88);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.topic-top nav{display:flex;gap:22px;font-size:13px}
+.topic-top nav a{color:var(--muted);transition:color .2s}
+.topic-top nav a:hover,.topic-top nav a[aria-current="page"]{color:var(--ink)}
+.topic-back{font-size:13px;color:var(--muted)}
+.topic-back:hover{color:var(--ink)}
+
+.topic-hero{display:grid;grid-template-columns:1.05fr .95fr;gap:56px;align-items:center;padding-block:64px 40px}
+.topic-hero__photo{position:relative;margin:0}
+.topic-hero__photo img{display:block;width:100%;aspect-ratio:3/2;object-fit:cover;border-radius:18px}
+.topic-hero__photo figcaption{position:absolute;left:16px;bottom:14px;font:700 10px/1 var(--sans);letter-spacing:.16em;text-transform:uppercase;
+  padding:7px 10px;border-radius:999px;background:rgba(17,17,17,.78);color:var(--ink)}
+.topic-eyebrow{font:700 11px/1 var(--sans);letter-spacing:.18em;text-transform:uppercase;color:var(--lilac)}
+.topic-hero h1{font:400 clamp(44px,6vw,86px)/1 var(--serif);margin:16px 0 22px;letter-spacing:-.01em}
+.topic-hero h1 em,.topic h2 em{color:var(--lilac)}
+.topic-lead{font-size:17px;line-height:1.75;max-width:52ch;margin:0}
+.topic-tags{display:flex;flex-wrap:wrap;gap:8px;margin:24px 0 0;padding:0;list-style:none}
+.topic-tags li{padding:7px 13px;border:1px solid var(--line);border-radius:999px;font-size:12px;color:var(--muted)}
+
+.topic-section{padding-block:72px;border-top:1px solid var(--line)}
+.topic-section .section-heading{margin-bottom:36px}
+.topic h2{font:400 clamp(32px,4vw,54px)/1.05 var(--serif);margin:0}
+.topic-text{max-width:62ch;font-size:15px;line-height:1.8;color:var(--muted);margin:0 0 6px}
+.topic-text strong{color:var(--ink);font-weight:600}
+.topic-src{font-size:13px;color:var(--lilac);border-bottom:1px solid currentColor}
+
+.topic-steps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px;margin:0;padding:0;list-style:none}
+.topic-steps li{display:grid;gap:10px;align-content:start;padding:24px;border:1px solid var(--line);border-radius:16px;background:rgba(25,25,27,.55)}
+.topic-steps .num{font:700 11px/1 var(--sans);letter-spacing:.16em;color:var(--lilac)}
+.topic-steps h3{font:italic 400 24px/1.15 var(--serif);margin:0}
+.topic-steps p{margin:0;color:var(--muted);font-size:14px;line-height:1.7}
+.topic-steps blockquote{margin:0;font:italic 18px/1.4 var(--serif);color:var(--ink)}
+
+.topic-two{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:48px;align-items:start}
+.topic-two .clip-slot{margin-top:0}
+
+.topic-list{list-style:none;margin:0;padding:0;border-top:1px solid var(--line)}
+.topic-list li{border-bottom:1px solid var(--line)}
+.topic-list a{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr) auto;gap:24px;align-items:baseline;padding:20px 4px;transition:padding .25s,color .25s}
+.topic-list a:hover{padding-left:14px;color:var(--lilac)}
+.topic-list b{font:italic 400 22px/1.2 var(--serif)}
+.topic-list span{font-size:13px;color:var(--muted)}
+.topic-list small{font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums;white-space:nowrap}
+
+.topic-next{display:grid;grid-template-columns:1fr auto;gap:20px;align-items:center;margin-block:30px 90px;padding:34px;border:1px solid var(--line);
+  border-radius:18px;transition:border-color .25s,background .25s}
+.topic-next:hover{border-color:var(--lilac);background:rgba(213,176,239,.06)}
+.topic-next span{font:700 11px/1 var(--sans);letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+.topic-next b{display:block;margin-top:10px;font:400 clamp(28px,3.4vw,44px)/1.05 var(--serif)}
+.topic-next i{font-style:normal;font-size:34px;color:var(--lilac)}
+.topic-foot{display:flex;flex-wrap:wrap;justify-content:space-between;gap:16px;padding-block:28px;border-top:1px solid var(--line);font-size:13px;color:var(--muted)}
+
+@media (max-width:900px){
+  .topic-hero,.topic-two{grid-template-columns:1fr;gap:28px}
+  .topic-hero{padding-block:36px 24px}
+  .topic-steps{grid-template-columns:1fr}
+  .topic-list a{grid-template-columns:1fr;gap:6px}
+  .topic-top nav{display:none}
+}
+@media (max-width:780px){.topic-section{padding-block:52px}.topic-next{padding:24px;margin-bottom:60px}}

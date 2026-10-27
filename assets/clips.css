@@ -28,6 +28,10 @@
 .clip-slot--row .clip-card{grid-template-columns:1fr;align-items:start;gap:12px}
 @media (max-width:560px){.clip-card{grid-template-columns:1fr}.clip-card__title{font-size:19px}}
 
+.clip-more{justify-self:start;font:600 13px/1 var(--sans,system-ui);color:var(--lilac,#d5b0ef);padding-bottom:6px;border-bottom:1px solid currentColor;transition:opacity .2s}
+.clip-more:hover{opacity:.75}
+.clip-slot--row .clip-more{grid-column:1/-1}
+
 /* ---------- окно плеера ---------- */
 .clip-dialog{position:fixed;inset:0;width:100%;height:100%;max-width:none;max-height:none;margin:0;padding:0;border:0;
   background:transparent;color:var(--ink,#f2eee6);overflow:hidden}
