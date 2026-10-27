@@ -1,0 +1,13 @@
+/* Широкий, но вертикальный экран: Android Chrome «Версия для ПК» в портрете, планшеты вертикально.
+   Компьютерная раскладка первого экрана обрезала лицо на широком фото — здесь первый экран как постер:
+   сверху вертикальное фото целиком, ниже текст и кнопки на затемнении. Обычные ПК и телефоны не затрагиваются. */
+@media (min-width:781px) and (orientation:portrait){
+  .hero{height:auto;min-height:0;max-height:none}
+  /* !important: скрипт загрузки картинок прописывает фон в style элемента */
+  .hero-room{inset:0;background-color:#111;background-image:url('./img/hero.webp')!important;background-position:center top!important;background-size:100% auto!important;background-repeat:no-repeat;opacity:1}
+  .hero-shade{background:linear-gradient(0deg,#111 0%,#111 calc(100% - 100vw * 1.12),rgba(17,17,17,.55) calc(100% - 100vw * .95),transparent calc(100% - 100vw * .62))}
+  .hero-content{padding-top:calc(100vw * 1.02)}
+  .hero h1{font-size:clamp(72px,11.5vw,128px);max-width:100%}
+  .hero-greeting{margin-top:26px}
+  .hero-bottom{position:static;margin-top:56px;padding-bottom:40px}
+}
