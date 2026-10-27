@@ -1,0 +1,62 @@
+{
+  "createdOn": "2026-10-27",
+  "images": [
+    {
+      "file": "assets/img/formats/cooking.webp",
+      "synthetic": true,
+      "purpose": "Editorial illustration of cooking format, not a still or record of a particular broadcast",
+      "references": [
+        "user supplied streaming portrait",
+        "user supplied bouquet portrait",
+        "user supplied hooded portrait"
+      ],
+      "prompt": "Photoreal editorial cooking livestream illustration; preserve adult Polina face from references; ivory tee charcoal apron; natural hands stirring salad; dark kitchen warm amber subtle lavender; no text, logos or other people."
+    },
+    {
+      "file": "assets/img/formats/sport.webp",
+      "synthetic": true,
+      "purpose": "Editorial illustration of sports format, not a record of a particular workout",
+      "references": [
+        "user supplied streaming portrait",
+        "user supplied bouquet portrait",
+        "user supplied hooded portrait"
+      ],
+      "prompt": "Edit editorial sports portrait; preserve adult Polina face, ivory top and black leggings, warm studio; replace folded stretching pose with simple seated pose, two parallel bent legs and two white trainers in front, hands resting on knees; anatomically correct body; no text or logos."
+    },
+    {
+      "file": "assets/img/formats/isolation.webp",
+      "synthetic": false,
+      "source": "User supplied project poster photo_5192678197911296829_y.jpg",
+      "purpose": "Project poster, staged costumes; not evidence of real imprisonment"
+    }
+  ],
+  "audience": {
+    "asOf": "2026-10-27",
+    "twitchFollowers": 86453,
+    "telegramSubscribersApprox": 7410,
+    "averageConcurrentLast30Days": 517,
+    "display": "Rounded static snapshot",
+    "sources": [
+      "https://www.twitchmetrics.net/c/775803864-nedogonpolya",
+      "https://t.me/s/NEDOGONPOLYAA"
+    ]
+  },
+  "editorialSources": {
+    "cooking": [
+      "https://t.me/NEDOGONPOLYAA/8844",
+      "https://t.me/NEDOGONPOLYAA/9813",
+      "https://t.me/NEDOGONPOLYAA/9204"
+    ],
+    "sport": [
+      "https://t.me/NEDOGONPOLYAA/8897",
+      "https://t.me/NEDOGONPOLYAA/2266"
+    ],
+    "isolation": [
+      "https://t.me/NEDOGONPOLYAA/10075",
+      "https://t.me/NEDOGONPOLYAA/10164"
+    ],
+    "cosplay": [
+      "https://t.me/NEDOGONPOLYAA/10460"
+    ]
+  }
+}

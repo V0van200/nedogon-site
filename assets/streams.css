@@ -1,0 +1,31 @@
+.stream-audience{display:grid;grid-template-columns:repeat(3,1fr);border-block:1px solid var(--line);margin-top:54px}
+.stream-audience>a{padding:30px 24px;border-right:1px solid var(--line);display:flex;flex-direction:column;gap:8px;transition:background .25s}
+.stream-audience>a:first-child{padding-left:0}.stream-audience>a:last-child{border:0}
+.stream-audience>a:hover{background:var(--atlas-tint)}
+.stream-audience strong{font:normal clamp(36px,4.2vw,64px)/1.1 var(--serif);letter-spacing:-.05em}
+.stream-audience strong span{font:500 13px var(--sans);letter-spacing:0;margin-left:9px}
+.stream-audience a>span{font-size:11px;color:var(--muted)}
+.audience-date{font-size:10px;margin-top:14px;max-width:75ch;line-height:1.8}
+.stream-formats{display:grid;grid-template-columns:1.15fr 1fr;gap:48px;margin-top:65px;align-items:start}
+.format-sport{margin-top:100px}.format-photo{position:relative;overflow:hidden;border-radius:3px}
+.format-photo img{width:100%;height:auto;aspect-ratio:3/2;object-fit:cover;transition:transform .9s var(--ease)}
+.format-card:hover .format-photo img{transform:scale(1.045)}
+.format-index{position:absolute;top:16px;left:16px;background:var(--bg);padding:7px 12px;font-size:9px;letter-spacing:.12em}
+.format-copy{padding-top:24px}.format-copy h3{font:normal clamp(29px,3.2vw,43px)/1.15 var(--serif);letter-spacing:-.035em}
+.format-copy h3 em{font-weight:normal;color:var(--lilac)}.format-copy p{font-size:13px;max-width:43ch;margin:17px 0 22px}
+.format-source{display:inline-block;font-size:11px;color:var(--muted);margin-left:20px;text-decoration:underline;text-underline-offset:5px}
+.stream-project{display:grid;grid-template-columns:1.25fr 1fr;gap:48px;align-items:center;margin-top:85px;border-block:1px solid var(--line);padding-block:42px}
+.project-photo{position:relative;display:block;overflow:hidden}.project-photo img{width:100%;height:auto;transition:transform .9s var(--ease)}.project-photo:hover img{transform:scale(1.03)}
+.project-duration{position:absolute;bottom:18px;left:18px;background:var(--ink);color:var(--bg);font:normal 40px/1 var(--serif);padding:14px 20px;display:flex;align-items:center;gap:12px;transform:rotate(-3deg)}
+.project-duration small{font:600 10px/1.3 var(--sans);max-width:7ch}
+.project-copy .eyebrow{color:var(--lilac);font-size:9px}.project-copy h3{font:normal clamp(38px,4.5vw,64px)/1.1 var(--serif);letter-spacing:-.045em;margin:18px 0}
+.project-copy p{font-size:13px;max-width:40ch;margin-bottom:24px}
+.stream-extras{display:grid;grid-template-columns:repeat(3,1fr);gap:30px;margin-top:45px}
+.stream-extras a{position:relative;padding:18px 28px 26px 0;border-bottom:1px solid var(--line);transition:transform .3s var(--ease)}
+.stream-extras a:hover{transform:translateY(-5px)}.stream-extras a>span{font-size:8px;letter-spacing:.1em;color:var(--muted)}
+.stream-extras h3{font:normal 26px/1.2 var(--serif);margin:15px 0 9px}.stream-extras p{font-size:11px;max-width:28ch}
+.stream-extras b{position:absolute;right:0;top:17px;font-size:22px;font-weight:400;color:var(--lilac)}
+@media(max-width:900px){.stream-formats{gap:26px}.stream-project{gap:28px}.project-duration{font-size:30px}.stream-extras{gap:20px}.stream-extras h3{font-size:23px}}
+@media(max-width:600px){.stream-audience{margin-top:30px}.stream-audience>a{padding:20px 12px}.stream-audience strong{font-size:32px}.stream-audience strong span{display:block;margin:5px 0 0;font-size:11px}.stream-audience a>span{font-size:9px;line-height:1.6}.stream-formats{grid-template-columns:1fr;gap:40px;margin-top:40px}.format-sport{margin-top:0}.format-copy{padding-top:20px}.format-copy p{max-width:100%}.stream-project{grid-template-columns:1fr;margin-top:45px;padding-block:30px;gap:28px}.project-copy p{max-width:100%}.stream-extras{grid-template-columns:1fr;gap:0;margin-top:20px}.stream-extras a{padding-block:22px}.stream-extras b{top:22px}.stream-extras h3{margin:10px 0}.stream-extras p{max-width:100%}}
+@media(prefers-reduced-motion:reduce){.format-photo img,.project-photo img,.stream-extras a{transition:none;transform:none!important}}
+html.reduce-motion .format-photo img,html.reduce-motion .project-photo img,html.reduce-motion .stream-extras a{transition:none;transform:none!important}

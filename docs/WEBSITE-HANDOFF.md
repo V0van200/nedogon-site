@@ -59,3 +59,7 @@ Manrope взят из google/fonts, лицензия `assets/fonts/OFL.txt`. Thr
 ## Промпт сгенерированного фона
 
 Инструмент: встроенный ImageGen. Использован предоставленный пользователем референс комнаты. Смысл промпта: широкая фотореалистичная вечерняя стримерская, справа большое окно с вымышленным ночным городом и тёмное кресло, кремовые шторы, цветы и фигурки, белая лампа-сердце с локальным сиреневым светом; слева тёмное пространство для заголовка. Без людей, текста, логотипов, рекламы, донатов, интерфейса плеера и общего фиолетового градиента. Это художественное изображение по референсу.
+
+
+## Streaming formats — 27 October 2026
+Replaced #what with audience snapshot, cooking/sports editorial image cards, Isolation project poster, and source-linked cosplay/guest entries. Header now links to Эфиры. All source/provenance and image prompts are in assets/img/formats/sources.json. Cooking and sports illustrations are generated from user-approved Polina portraits; they describe formats, not specific past events. Per user instruction, no visible AI labels on these cards. Isolation image is user-supplied staged project art. Audience figures are a rounded dated snapshot, not live counters. Images are local lazy-loaded WebP. CSS hover/reveal motion respects the existing pause control and reduced motion. No new WebGL contexts or embeds. Browser visual QA unavailable because earlier browser-origin access was declined; source and HTTP checks only.
