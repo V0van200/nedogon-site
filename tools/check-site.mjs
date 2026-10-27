@@ -10,6 +10,12 @@ const {clips,nextClip,randomOtherClip}=await moduleFromSource('assets/moments-da
 const {streamClips,twitchEmbedUrl}=await moduleFromSource('assets/stream-player.js');
 const {shouldNudge}=await moduleFromSource('assets/polya-guide.js');
 const {localImageKey}=await moduleFromSource('assets/media-loading.js');
+const {flightPoint,wheelImpulse}=await moduleFromSource('assets/atlas-flight-math.js');
+assert.equal(wheelImpulse(100000),1.4);assert.equal(wheelImpulse(-100000),-1.4);assert.equal(wheelImpulse(1,1),.096);
+const a=[1,0,0],b=[0,1,0];
+for(const t of [0,.25,.5,.75,1]){const p=flightPoint(a,b,t);assert.ok(p.every(Number.isFinite));assert.ok(Math.hypot(...p)>1.08);}
+assert.ok(Math.abs(flightPoint(a,b,0)[0]-1.105)<1e-9);assert.ok(Math.abs(flightPoint(a,b,1)[1]-1.105)<1e-9);
+assert.ok(Math.hypot(...flightPoint(a,b,.5))>Math.hypot(...flightPoint(a,b,0)));
 assert.equal(localImageKey('assets/photos/polina-stream.webp?v=1','https://nedogon-polya.ru/'),'assets/photos/polina-stream.webp');
 assert.equal(localImageKey('https://elsewhere.test/photo.webp','https://nedogon-polya.ru/'),null);
 assert.ok(shouldNudge([{y:0,time:0,chapter:-1},{y:2600,time:1500,chapter:2}],1000));
@@ -59,6 +65,7 @@ resources.add('assets/moments.js');resources.add('assets/moments-data.js');
 resources.add('assets/stream-player.js');
 resources.add('assets/polya-guide.js');resources.add('assets/img/guide/polya-wait-v1.webp');
 resources.add('assets/media-loading.js');resources.add('assets/boot.js');resources.add('assets/image-previews.json');resources.add('story.html');resources.add('assets/story.js');resources.add('assets/story.css');
+resources.add('assets/atlas-flight-math.js');
 for(const source of [html,gallery])for(const match of source.matchAll(/(?:src|href)="([^"#]+)"/g))if(!/^(https?:|mailto:)/.test(match[1]))resources.add(match[1].split(/[?#]/)[0]);
 for(const file of ['assets/site.css','assets/atlas.css','assets/gallery.css'])for(const match of read(file).matchAll(/url\(['"]?([^)'"\s]+)['"]?\)/g))resources.add(path.posix.normalize(path.posix.join('assets',match[1])));
 for(const country of countries)for(const image of country.images)resources.add(image.src);

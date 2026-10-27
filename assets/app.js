@@ -1,7 +1,7 @@
 import { initPolyaGuide } from './polya-guide.js?v=2';
 import { initStreamPlayer } from './stream-player.js?v=1';
 import { initMoments } from './moments.js?v=4';
-import { initAtlas } from './atlas.js?v=3';
+import { initAtlas } from './atlas.js?v=4';
 
 const root = document.documentElement;
 const systemMotion = matchMedia('(prefers-reduced-motion: reduce)');
