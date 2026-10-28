@@ -13,6 +13,7 @@
 | Реестр готовых роликов | **Claude** | `content/media/library.json` |
 | Карточки клипов на главной | **Claude** | `assets/clips.js`, `assets/clips.css` (якоря `data-clips` в index.html) |
 | Страницы разделов (пока) | **Claude** | `cooking.html`, `sport.html`, `collabs.html`, `assets/topic.css` — GPT может забрать в общий шаблон |
+| Раздел «Вне эфира» на главной (`#interests`) | **Claude** | разметка секции в `index.html`, `assets/offair.js`, `assets/offair.css`, `assets/video/offair/`; новая глава — `<article class="offair-ch" data-time="ЧЧ:ММ" data-label="…">`, часы подхватят её сами |
 | Истории стран | **Claude** | `story.html`, `assets/story.js`, `assets/story.css`, `assets/story-data.js`, `content/countries/` |
 | Присланные исходники | общий | `content/media/uploads.json` — кто получил файл, тот и записывает |
 | Очередь заказов | общий | `docs/MEDIA-QUEUE.md` |

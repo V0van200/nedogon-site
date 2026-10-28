@@ -1,0 +1,183 @@
+/* Раздел «Вне эфира» (#interests): экран стрима гаснет, дальше ночь по часам — её слова и её видео.
+   Движение — assets/offair.js (добавляет .is-live). Без JS раздел читается обычным текстом. Автор — Claude. */
+.offair{position:relative;padding-top:110px;overflow-x:clip}
+
+/* ---------- 1. стрим гаснет, как старый телевизор ---------- */
+.offair-intro__stage{display:grid;gap:40px;padding-bottom:60px}
+.offair-intro__kicker{margin-bottom:0}
+.offair-screen{position:relative;justify-self:center;width:min(880px,86vw,calc(52vh * 16 / 9));aspect-ratio:16/9}
+.offair-screen__glass{position:absolute;inset:0;border-radius:18px;overflow:hidden;background:#000;
+  transform:scale(var(--sx,1),var(--sy,1));filter:brightness(var(--br,1));
+  box-shadow:0 40px 120px -50px rgba(213,176,239,.5),inset 0 0 0 1px rgba(242,238,230,.12)}
+.offair-screen__video{display:block;width:100%;height:100%;object-fit:cover}
+.offair-screen__glass::after{content:"";position:absolute;inset:0;pointer-events:none;
+  background:repeating-linear-gradient(0deg,rgba(0,0,0,.22) 0 1px,transparent 1px 3px)}
+.offair-screen__live{position:absolute;left:16px;top:14px;z-index:1;display:flex;gap:8px;align-items:center;padding:7px 11px;border-radius:6px;
+  background:#e5484d;color:#fff;font:700 11px/1 var(--sans);letter-spacing:.14em;opacity:var(--live,1)}
+.offair-screen__live i{width:7px;height:7px;border-radius:50%;background:#fff;animation:offair-blink 1.1s steps(2,jump-none) infinite}
+.offair-screen::after{content:"";position:absolute;left:50%;top:50%;width:12px;height:12px;margin:-6px;border-radius:50%;background:#fff;
+  box-shadow:0 0 30px 10px rgba(213,176,239,.85);opacity:var(--dot,0)}
+.offair-screen__offline{display:none}
+@keyframes offair-blink{50%{opacity:.15}}
+
+.offair-intro__title h2{margin-bottom:22px}
+.offair-intro__title p{max-width:44ch;font:15px/1.6 var(--sans);color:var(--muted)}
+
+/* с JS: экран прилипает, при прокрутке схлопывается в линию, потом в точку — и появляется заголовок */
+.offair.is-live .offair-intro{height:240vh}
+.offair.is-live .offair-intro__stage{position:sticky;top:0;height:100vh;height:100svh;padding:96px 0 6vh;gap:0;
+  grid-template-rows:auto 1fr;align-items:center}
+.offair.is-live .offair-screen{grid-row:2;grid-column:1}
+.offair.is-live .offair-screen__offline{display:block;position:absolute;left:50%;top:-34px;transform:translateX(-50%);white-space:nowrap;
+  font:600 11px/1 var(--sans);letter-spacing:.32em;color:var(--muted);opacity:var(--off,0)}
+.offair.is-live .offair-intro__title{grid-row:2;grid-column:1;align-self:center;text-align:center;
+  opacity:var(--ti,0);transform:translateY(calc((1 - var(--ti,0)) * 50px));pointer-events:none}
+.offair.is-live .offair-intro__title p{margin-inline:auto}
+.offair.is-live .offair-intro__title h2{max-width:none}
+
+/* ---------- 2. ночь: часы слева, главы справа ---------- */
+.offair-night{position:relative;padding:20px 0 150px}
+.offair-sky{position:sticky;top:0;height:100vh;margin-bottom:-100vh;pointer-events:none}
+.offair-sky i{position:absolute;inset:0;opacity:0}
+.offair-sky__night{background:radial-gradient(55% 45% at 75% 25%,rgba(124,82,196,.24),transparent 70%)}
+.offair-sky__blue{background:radial-gradient(65% 55% at 25% 20%,rgba(58,92,210,.26),transparent 70%)}
+.offair-sky__snow{background:radial-gradient(70% 55% at 65% 10%,rgba(196,220,255,.17),transparent 70%)}
+.offair-sky__dawn{background:radial-gradient(80% 60% at 50% 105%,rgba(255,168,108,.24),transparent 70%)}
+.offair-night__grid{position:relative;display:grid;grid-template-columns:190px minmax(0,1fr);gap:clamp(32px,6vw,96px)}
+
+.offair-clock{position:sticky;top:calc(50vh - 110px);align-self:start;display:grid;justify-items:start;gap:16px}
+.offair-clock__face{position:relative;width:88px;height:88px;border-radius:50%;border:1px solid var(--line)}
+.offair-clock__face::before{content:"";position:absolute;inset:7px;border-radius:50%;
+  background:repeating-conic-gradient(rgba(242,238,230,.45) 0 1.6deg,transparent 1.6deg 30deg);
+  -webkit-mask:radial-gradient(circle,transparent 80%,#000 81%);mask:radial-gradient(circle,transparent 80%,#000 81%)}
+.offair-clock__face::after{content:"";position:absolute;left:50%;top:50%;width:6px;height:6px;margin:-3px;border-radius:50%;background:var(--ink)}
+.offair-clock__h,.offair-clock__m{position:absolute;left:50%;bottom:50%;width:2px;margin-left:-1px;border-radius:2px;transform-origin:50% 100%}
+.offair-clock__h{height:22px;background:var(--ink);transform:rotate(var(--ha,0deg))}
+.offair-clock__m{height:33px;background:var(--lilac);transform:rotate(var(--ma,0deg))}
+.offair-clock__time{font:200 clamp(46px,4.6vw,66px)/1 var(--sans);letter-spacing:-.04em;font-variant-numeric:tabular-nums;color:var(--ink)}
+.offair-clock__label{font:600 10px/1.3 var(--sans);letter-spacing:.17em;text-transform:uppercase;color:var(--lilac)}
+
+.offair-chapters{display:grid;gap:clamp(130px,20vh,220px);padding-top:8vh}
+.offair-ch__time{display:flex;gap:14px;align-items:baseline;margin:0 0 22px;font:600 10px/1 var(--sans);letter-spacing:.17em;text-transform:uppercase;color:var(--muted)}
+.offair-ch__time time{font:300 15px/1 var(--sans);letter-spacing:.06em;color:var(--lilac)}
+.offair-quote{margin:0 0 24px;max-width:17ch;font:italic normal clamp(34px,4.4vw,64px)/1.08 var(--serif);letter-spacing:-.03em;color:var(--ink)}
+.offair-ch__text{max-width:58ch;margin:0 0 44px;font:15px/1.65 var(--sans);color:var(--muted)}
+
+/* появление глав: цитата «проявляется» слева направо */
+.offair.is-live .offair-ch{opacity:0;transform:translateY(40px);transition:opacity .9s var(--ease),transform .9s var(--ease)}
+.offair.is-live .offair-ch .offair-quote{clip-path:inset(0 100% 0 0);transition:clip-path 1.2s .2s var(--ease)}
+.offair.is-live .offair-ch.is-in{opacity:1;transform:none}
+.offair.is-live .offair-ch.is-in .offair-quote{clip-path:inset(0 -10% 0 0)}
+
+/* фестиваль: вертикальный ролик, браслет, корешок билета */
+.offair-fest{display:grid;grid-template-columns:minmax(220px,290px) minmax(0,1fr);gap:clamp(28px,5vw,64px);align-items:center}
+.offair-fest .clip-slot--reel{margin:0;grid-template-columns:1fr}
+.offair-fest__side{display:grid;gap:44px;min-width:0}
+.offair-band{display:flex;overflow:hidden;margin-inline:-12px;padding:15px 0;transform:rotate(-4deg);background:var(--lilac);color:#1b1420;
+  font:800 13px/1 var(--sans);letter-spacing:.24em;white-space:nowrap;box-shadow:0 18px 40px -18px rgba(0,0,0,.7)}
+.offair-band span{flex:none;animation:offair-band 22s linear infinite}
+@keyframes offair-band{to{transform:translateX(-100%)}}
+.offair-stub{position:relative;display:grid;gap:7px;justify-self:start;max-width:320px;margin:0;padding:22px 30px;border:1px dashed rgba(242,238,230,.34);
+  border-radius:12px;background:rgba(25,25,27,.75);transform:rotate(2.5deg);transition:transform .4s var(--ease)}
+.offair-stub:hover{transform:rotate(0) translateY(-3px)}
+.offair-stub::before,.offair-stub::after{content:"";position:absolute;top:50%;width:18px;height:18px;margin-top:-9px;border-radius:50%;background:var(--bg)}
+.offair-stub::before{left:-10px}.offair-stub::after{right:-10px}
+.offair-stub__k{font:600 9px/1.2 var(--sans);letter-spacing:.17em;text-transform:uppercase;color:var(--muted)}
+.offair-stub strong{font:italic normal 36px/1 var(--serif);color:var(--ink)}
+.offair-stub span:last-child{font:13px/1.4 var(--sans);color:var(--muted)}
+
+/* монтаж: редактор в телефоне, дорожка едет вместе с видео */
+.offair-ch--edit{display:grid;grid-template-columns:minmax(0,1fr) auto;column-gap:clamp(28px,5vw,72px);align-items:start}
+.offair-ch--edit>:not(.offair-editor){grid-column:1}
+.offair-ch--edit>.offair-editor{grid-column:2;grid-row:1 / span 3}
+.offair-editor{display:grid;gap:14px;justify-items:center;margin:0}
+.offair-editor__phone{width:min(320px,100%);padding:14px 12px 16px;border-radius:36px;background:#0b0b0c;border:1px solid rgba(242,238,230,.14);
+  box-shadow:0 50px 100px -40px rgba(0,0,0,.85),inset 0 0 0 5px #19191b}
+.offair-editor__top{display:flex;justify-content:space-between;align-items:center;padding:6px 10px 12px;font:600 11px/1 var(--sans);color:var(--muted)}
+.offair-editor__res{padding:5px 7px;border-radius:5px;background:rgba(242,238,230,.08)}
+.offair-editor__export{padding:7px 11px;border-radius:7px;background:var(--lilac);color:#111}
+.offair-editor__preview{width:min(190px,62%);aspect-ratio:9/16;margin:0 auto;border-radius:6px;overflow:hidden;background:#000}
+.offair-editor__preview video{display:block;width:100%;height:100%;object-fit:cover}
+.offair-editor__bar{display:flex;justify-content:center;gap:6px;padding:12px 0 10px;font:500 11px/1 var(--sans);font-variant-numeric:tabular-nums;color:var(--ink)}
+.offair-editor__dur{color:var(--muted)}
+.offair-editor__timeline{position:relative;height:100px;overflow:hidden;border-radius:10px;background:#141416}
+/* 27 px на секунду ролика — то же число в offair.js (PX) */
+.offair-editor__tracks{position:absolute;left:50%;top:10px;width:1377px;display:grid;gap:6px;transform:translateX(var(--tx,-764px));will-change:transform}
+.offair-editor__track--v{height:48px;border-radius:6px;background:url(video/offair/nsc-strip.webp) 0 0/1377px 48px no-repeat;box-shadow:inset 0 0 0 2px #fff}
+.offair-editor__track--t{position:relative;height:16px}
+.offair-editor__track--t span{position:absolute;top:0;height:16px;padding:0 6px;overflow:hidden;border-radius:4px;background:#d9a93b;color:#16120a;
+  font:700 8px/16px var(--sans);white-space:nowrap;text-overflow:ellipsis}
+.offair-editor__track--a{height:14px;border-radius:4px;background:rgba(213,176,239,.18);
+  -webkit-mask:repeating-linear-gradient(90deg,#000 0 2px,transparent 2px 4px);mask:repeating-linear-gradient(90deg,#000 0 2px,transparent 2px 4px);
+  box-shadow:inset 0 -7px 0 rgba(213,176,239,.75),inset 0 7px 0 rgba(213,176,239,.45)}
+.offair-editor__playhead{position:absolute;left:50%;top:0;bottom:0;width:2px;margin-left:-1px;background:#fff}
+.offair-editor__playhead::before{content:"";position:absolute;left:-4px;top:2px;width:10px;height:10px;border-radius:2px;background:#fff}
+.offair-editor figcaption{max-width:30ch;font:13px/1.5 var(--sans);color:var(--muted);text-align:center}
+
+/* склон: прыжок с «высотомером», кружок со звуком, опрос */
+.offair-snow{display:grid;grid-template-columns:minmax(220px,290px) minmax(0,1fr);gap:clamp(28px,5vw,64px);align-items:center}
+.offair-jump{position:relative;margin:0}
+.offair-jump video{display:block;width:100%;aspect-ratio:9/16;object-fit:cover;border-radius:18px;background:#000}
+.offair-jump figcaption{margin-top:12px;font:600 9px/1 var(--sans);letter-spacing:.17em;text-transform:uppercase;color:var(--muted)}
+.offair-meter{position:absolute;right:12px;top:16px;bottom:44px;width:8px}
+.offair-meter__bar{position:absolute;inset:0;border-radius:4px;background:rgba(255,255,255,.28);overflow:hidden}
+.offair-meter__bar b{position:absolute;inset:0;background:var(--lilac);transform-origin:50% 100%;transform:scaleY(var(--h,0))}
+.offair-meter__scale{position:absolute;right:14px;top:-5px;bottom:-5px;display:flex;flex-direction:column;justify-content:space-between;align-items:flex-end;
+  font:700 9px/1 var(--sans);color:#fff;text-shadow:0 1px 5px rgba(0,0,0,.7)}
+.offair-meter__scale i{font-style:normal;white-space:nowrap}
+.offair-meter__felt,.offair-meter__fact{position:absolute;right:44px;white-space:nowrap;padding:6px 9px;border-radius:7px;background:rgba(17,17,17,.86);
+  font:600 11px/1 var(--sans);color:var(--ink);opacity:0;transform:translateX(8px);transition:opacity .25s,transform .25s}
+.offair-meter__felt{top:-6px}.offair-meter__fact{bottom:-6px;color:var(--lilac)}
+.offair-jump.is-felt .offair-meter__felt,.offair-jump.is-fact .offair-meter__fact{opacity:1;transform:none}
+
+.offair-snow__side{display:grid;gap:36px;justify-items:start;min-width:0}
+.offair-circle{all:unset;box-sizing:border-box;position:relative;display:grid;justify-items:center;gap:14px;cursor:pointer;--d:clamp(170px,17vw,220px)}
+.offair-circle__video{display:block;width:var(--d);aspect-ratio:1;border-radius:50%;overflow:hidden;background:#000;transition:transform .45s var(--ease)}
+.offair-circle:hover .offair-circle__video{transform:scale(1.04)}
+.offair-circle:focus-visible .offair-circle__video{outline:2px solid var(--lilac);outline-offset:5px}
+.offair-circle video{display:block;width:100%;height:100%;object-fit:cover}
+.offair-circle__ring{position:absolute;left:50%;top:-7px;width:calc(var(--d) + 14px);margin-left:calc((var(--d) + 14px) / -2);aspect-ratio:1;transform:rotate(-90deg);pointer-events:none}
+.offair-circle__ring circle{fill:none;stroke:rgba(242,238,230,.16);stroke-width:2}
+.offair-circle.is-sound .offair-circle__ring circle{stroke:var(--lilac);stroke-dasharray:301.6;stroke-dashoffset:calc(301.6 * (1 - var(--pr,0)))}
+.offair-circle__hint{font:600 10px/1 var(--sans);letter-spacing:.15em;text-transform:uppercase;color:var(--muted)}
+.offair-circle.is-sound .offair-circle__hint{color:var(--lilac)}
+.offair-poll{display:flex;flex-wrap:wrap;gap:10px}
+.offair-poll button{all:unset;cursor:pointer;padding:12px 17px;border:1px solid var(--line);border-radius:999px;background:rgba(25,25,27,.6);
+  font:500 14px/1 var(--sans);color:var(--ink);transition:border-color .2s,transform .2s,background .2s}
+.offair-poll button:hover{border-color:var(--lilac);transform:translateY(-2px)}
+.offair-poll button[aria-pressed="true"]{border-color:var(--lilac);background:rgba(213,176,239,.16)}
+.offair-poll button:focus-visible{outline:2px solid var(--lilac);outline-offset:3px}
+.offair-burst{position:fixed;left:0;top:0;z-index:60;font-size:24px;line-height:1;pointer-events:none}
+
+/* 11:11 — её пожелание, слова загораются по мере прокрутки */
+.offair-ch--wish{padding-block:6vh 2vh}
+.offair-wish{max-width:19ch;margin:0 0 30px;font:italic normal clamp(38px,5.4vw,84px)/1.06 var(--serif);letter-spacing:-.035em;color:var(--ink)}
+.offair-wish .w{opacity:.14;transition:opacity .5s,color .5s}
+.offair-wish .w.is-lit{opacity:1}
+.offair-wish .w.is-accent.is-lit{color:var(--lilac)}
+.offair-wish__by{max-width:52ch;margin:0;font:14px/1.6 var(--sans);color:var(--muted)}
+
+/* ---------- телефон ---------- */
+@media (max-width:780px){
+  .offair{padding-top:70px}
+  .offair.is-live .offair-intro{height:210vh}
+  .offair.is-live .offair-intro__stage{padding-top:84px}
+  .offair-screen{width:calc(100vw - 40px)}
+  .offair-night__grid{grid-template-columns:1fr;gap:0}
+  .offair-clock{top:78px;z-index:5;grid-template-columns:auto auto 1fr;align-items:center;justify-self:stretch;gap:12px;margin-bottom:26px;
+    padding:9px 16px 9px 10px;border:1px solid var(--line);border-radius:999px;background:rgba(17,17,17,.94)}
+  .offair-clock__face{width:30px;height:30px}
+  .offair-clock__face::before{inset:3px}
+  .offair-clock__h{height:7px}.offair-clock__m{height:11px}
+  .offair-clock__face::after{width:4px;height:4px;margin:-2px}
+  .offair-clock__time{font-size:24px}
+  .offair-clock__label{justify-self:end;text-align:right}
+  .offair-chapters{gap:120px;padding-top:24px}
+  .offair-quote{font-size:clamp(31px,8.6vw,42px)}
+  .offair-fest,.offair-snow{grid-template-columns:1fr}
+  .offair-fest .clip-slot--reel,.offair-jump{width:min(280px,100%)}
+  .offair-ch--edit{display:block}
+  .offair-editor{justify-items:start}
+  .offair-editor figcaption{text-align:left}
+  .offair-wish{font-size:clamp(34px,9.4vw,48px)}
+}
