@@ -384,6 +384,25 @@
    "status": "published",
    "playbackCheckedOn": null,
    "reviewNote": "Шортс с её канала @NEDOGONPOLYAA, заголовок вшит в видео. Текст проверен Whisper — без мата. Звук на слух не проверен человеком."
+  },
+  {
+   "id": "music-new-star-camp",
+   "topic": "music",
+   "title": "NEW STAR CAMP — это была маленькая жизнь",
+   "summary": "Фестиваль в горах: концерты, склон, падения в снег и подъёмник.",
+   "kind": "story",
+   "src": "assets/video/music/music-new-star-camp.mp4",
+   "poster": "assets/video/music/music-new-star-camp-poster.webp",
+   "preview": "assets/video/music/music-new-star-camp-teaser.mp4",
+   "captions": null,
+   "durationSeconds": 51,
+   "width": 720,
+   "height": 1280,
+   "people": [],
+   "music": "HoliznaCC0 — The Best of Times (CC0)",
+   "status": "published",
+   "playbackCheckedOn": "2026-10-28",
+   "reviewNote": "Ролик прислал владелец сайта (uploads.json: new-star-camp). Исходная музыка из Instagram заменена на CC0, речи в исходнике нет (Whisper). Без ссылок на Telegram/Instagram — по просьбе пользователя. preview — беззвучный тизер 28.3–38.4 с для data-layout=\"reel\". Звук на слух не проверен человеком."
   }
  ]
 }

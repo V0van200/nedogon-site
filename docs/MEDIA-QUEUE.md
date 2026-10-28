@@ -12,7 +12,7 @@ Claude отмечает: `- [~]` в работе, `- [x]` готово (+ id в 
 - [ ] cooking-danya — cooking.html — кукинг с Даней (t.me/NEDOGONPOLYAA/9813)
 - [ ] cooking-chat-menu — cooking.html — чат выбирает еду (t.me/NEDOGONPOLYAA/9204), результат (/8848)
 - [x] collab-funny-1 → collab-quest — collabs.html — один самый смешной совместный момент, короткий и понятный без контекста
-- [ ] music-new-star-camp — music.html / sport.html — из присланного `assets/video/music/new-star-camp.mp4`: постер, проверка, при необходимости субтитры (позже — по просьбе пользователя)
+- [x] music-new-star-camp — index.html, «Вне эфира» → 01 «Музыка и фестивали» — вертикальный ролик с тизером (`data-layout="reel"`), музыка Instagram заменена на CC0; ссылка «После фестиваля ↗» на Telegram убрана по просьбе пользователя
 
 ## Партия 2 — клипы из канала нарезок (материалы: content/topics/)
 

@@ -81,6 +81,22 @@
 .clip-slot--shorts .clip-card__label{font-size:9px}
 @media (max-width:560px){.clip-slot--shorts{grid-template-columns:repeat(2,minmax(0,1fr))}}
 
+/* data-layout="reel": вертикальный ролик справа от текста раскрытого блока «Вне эфира», тизер крутится сам */
+.clip-slot--reel{grid-template-columns:minmax(0,270px);margin-top:0}
+.clip-slot--reel .clip-card{grid-template-columns:1fr;gap:12px;padding:8px;border-radius:20px}
+.clip-slot--reel .clip-card__media{aspect-ratio:9/16;border-radius:14px}
+.clip-slot--reel .clip-card__media.is-previewing .clip-card__play{opacity:.92;transform:scale(.8)}
+.clip-slot--reel .clip-card__title{font-size:18px}
+.clip-slot--reel .clip-card__summary{display:none}
+.interest-body:has(>.clip-slot--reel){display:grid;grid-template-columns:minmax(0,1fr) minmax(200px,270px);grid-template-rows:auto auto 1fr;
+  column-gap:clamp(28px,5vw,64px);align-items:start;max-width:1000px}
+.interest-body:has(>.clip-slot--reel)>*{grid-column:1}
+.interest-body:has(>.clip-slot--reel)>.clip-slot--reel{grid-column:2;grid-row:1 / span 3}
+@media (max-width:760px){
+  .interest-body:has(>.clip-slot--reel){display:block}
+  .interest-body>.clip-slot--reel{margin-top:26px;grid-template-columns:minmax(0,260px)}
+}
+
 /* карточка-переход в раздел под клипами (data-more-image) */
 .clip-promo{grid-column:1/-1;display:grid;grid-template-columns:120px minmax(0,1fr) auto;gap:20px;align-items:center;margin-top:6px;padding:12px 22px 12px 12px;
   border-radius:20px;background:linear-gradient(120deg,rgba(213,176,239,.16),rgba(255,255,255,.04) 55%,rgba(255,198,168,.10));

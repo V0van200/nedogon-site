@@ -1,5 +1,5 @@
 // Клипы из content/media/library.json в блоках главной: <div data-clips="cooking"></div>.
-// Карточка: постер; на ПК при наведении — беззвучное превью. По клику видео «вырастает» из карточки
+// Карточка: постер; на ПК при наведении — беззвучное превью (в data-layout="reel" тизер крутится сам). По клику видео «вырастает» из карточки
 // в свой плеер (цветок-бегунок, цветок-громкость). Показываем только status = "published".
 // Автор модуля — Claude, правила — docs/COLLAB.md.
 const LIB = 'content/media/library.json';
@@ -317,15 +317,51 @@ function closePlayer() {
 }
 
 // ---------- карточки ----------
-function card(item) {
+// data-layout="reel": беззвучный тизер (item.preview, около 1 МБ) крутится сам, пока карточка на экране.
+// Полный ролик грузится только по клику, первая загрузка страницы остаётся лёгкой.
+function loopWhenVisible(item, media) {
+  if (!item.preview || saveData()) return null;
+  const v = el('video', 'clip-card__preview');
+  Object.assign(v, { muted: true, loop: true, playsInline: true, preload: 'none' });
+  v.setAttribute('muted', '');
+  v.setAttribute('playsinline', '');
+  v.setAttribute('aria-hidden', 'true');
+  media.append(v);
+  // долю на экране считаем сами: событие наблюдателя бывает запоздалым, когда карточка уже вернулась
+  const onScreen = () => {
+    const r = media.getBoundingClientRect();
+    return r.height > 0 && (Math.min(r.bottom, innerHeight) - Math.max(r.top, 0)) / r.height >= 0.3;
+  };
+  const play = () => {
+    if (!onScreen() || (P && P.dialog.open)) return;
+    if (!v.src) v.src = item.preview;
+    v.play().then(() => media.classList.add('is-previewing')).catch(() => {});
+  };
+  new IntersectionObserver(() => (onScreen() ? play() : v.pause()), { threshold: [0, 0.3] }).observe(media);
+  return { video: v, play };
+}
+
+function card(item, auto) {
   const media = el('span', 'clip-card__media');
   const img = el('img');
   Object.assign(img, { src: item.poster, alt: '', loading: 'lazy', decoding: 'async' });
   media.append(img, el('span', 'clip-card__play'), el('span', 'clip-card__time', fmt(item.durationSeconds)));
   const text = el('span', 'clip-card__text');
-  text.append(el('span', 'clip-card__label', 'Смотреть клип'), el('span', 'clip-card__title', item.title));
+  text.append(el('span', 'clip-card__label', auto ? 'Смотреть со звуком' : 'Смотреть клип'), el('span', 'clip-card__title', item.title));
   if (item.summary) text.append(el('span', 'clip-card__summary', item.summary));
   const b = button('clip-card', `Смотреть: ${item.title}, ${fmt(item.durationSeconds)}`, media, text);
+
+  if (auto) {
+    const loop = loopWhenVisible(item, media);
+    b.addEventListener('click', () => {
+      // тизер короче ролика, поэтому плеер начинает с начала, а не с кадра тизера
+      openPlayer(item, b, null);
+      if (!loop) return;
+      loop.video.pause();
+      P.dialog.addEventListener('close', loop.play, { once: true });
+    });
+    return b;
+  }
 
   // превью при наведении мыши: только ПК, без экономии трафика и с включёнными анимациями
   let preview = null;
@@ -459,7 +495,9 @@ async function init() {
     if (slot.dataset.layout === 'row' || slot.dataset.layout === 'feature') slot.classList.add('clip-slot--row');
     if (slot.dataset.layout === 'feature') slot.classList.add('clip-slot--feature');
     if (slot.dataset.layout === 'shorts') slot.classList.add('clip-slot--shorts');
-    slot.replaceChildren(...list.map(card));
+    const reel = slot.dataset.layout === 'reel';
+    if (reel) slot.classList.add('clip-slot--reel');
+    slot.replaceChildren(...list.map((item) => card(item, reel)));
     // data-more="cooking.html" data-more-label="Все кукинги" — ссылка на страницу раздела под карточками
     if (slot.dataset.more) {
       const label = slot.dataset.moreLabel || 'Все клипы';
