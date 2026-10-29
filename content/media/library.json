@@ -403,6 +403,27 @@
    "status": "published",
    "playbackCheckedOn": "2026-10-28",
    "reviewNote": "Ролик прислал владелец сайта (uploads.json: new-star-camp). Исходная музыка из Instagram заменена на CC0, речи в исходнике нет (Whisper). Без ссылок на Telegram/Instagram — по просьбе пользователя. preview — беззвучный тизер 28.3–38.4 с для data-layout=\"reel\". Звук на слух не проверен человеком."
+  },
+  {
+   "id": "short-mabelend-shop",
+   "topic": "collabs",
+   "title": "Неожиданная ситуация в супермаркете",
+   "summary": "Mabelend застряла в тележке, Полина везёт её через весь магазин — суета, извинения и «рот закрыла?».",
+   "kind": "short",
+   "src": "assets/video/shorts/short-mabelend-shop.mp4",
+   "poster": "assets/video/shorts/short-mabelend-shop-poster.webp",
+   "captions": null,
+   "durationSeconds": 26,
+   "width": 720,
+   "height": 1280,
+   "people": [
+    "Mabelend"
+   ],
+   "sourceUrl": "https://www.instagram.com/p/DK6UeJ5NUrb/",
+   "music": null,
+   "status": "published",
+   "playbackCheckedOn": "2026-10-29",
+   "reviewNote": "Фан-нарезка _fan_nedogonpolya_ (Instagram, 2025-06-15), субтитры вшиты. Whisper: мата нет; шутка «пять тысяч в час» оставлена по решению владельца сайта. Музыка на слух не проверена."
   }
  ]
 }

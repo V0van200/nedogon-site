@@ -190,7 +190,7 @@
    "id": "mabelend",
    "name": "Mabelend",
    "twitch": "https://www.twitch.tv/mabelend",
-   "count": 2,
+   "count": 3,
    "line": "Кукинги, которые пошли не по плану.",
    "projects": [
     {
@@ -204,7 +204,8 @@
    ],
    "clips": [
     "cooking-handcuffs",
-    "cooking-mabelend"
+    "cooking-mabelend",
+    "short-mabelend-shop"
    ],
    "photo": "assets/img/people/mabelend.webp"
   },
