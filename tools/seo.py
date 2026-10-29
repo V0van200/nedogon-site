@@ -17,7 +17,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 SITE = 'https://nedogon-polya.ru'
 # коды подтверждения из Яндекс Вебмастера и Google Search Console (пусто — тег не ставим)
-VERIFY = {'yandex-verification': 'a65a26c646360cb8', 'google-site-verification': ''}
+VERIFY = {'yandex-verification': 'a65a26c646360cb8', 'google-site-verification': 'HrWOWDos6N7Z4bgDcoT11PyUf5WXKbtQWFe1nZRf7tg'}
 
 PERSON = {
     '@type': 'Person',
