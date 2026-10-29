@@ -406,7 +406,14 @@ function personCard(p, i, byId) {
   const card = el('article', 'crew');
   card.style.setProperty('--h', String((i * 47 + 280) % 360));
   const top = el('div', 'crew__top');
-  const mono = el('span', 'crew__mono', p.name.replace(/[^A-Za-zА-Яа-яЁё0-9]/g, '').slice(0, 2).toUpperCase());
+  // фото стримера (assets/img/people/<id>.webp, поле photo в people.json), пока его нет — две буквы ника
+  let mono;
+  if (p.photo) {
+    mono = el('img', 'crew__photo');
+    Object.assign(mono, { src: p.photo, alt: '', width: 104, height: 104, loading: 'lazy', decoding: 'async' });
+  } else {
+    mono = el('span', 'crew__mono', p.name.replace(/[^A-Za-zА-Яа-яЁё0-9]/g, '').slice(0, 2).toUpperCase());
+  }
   mono.setAttribute('aria-hidden', 'true');
   const head = el('div', 'crew__head');
   head.append(el('h3', null, p.name), el('span', 'crew__count', `${p.count} ${plural(p.count)}`));

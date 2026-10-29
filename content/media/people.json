@@ -28,7 +28,8 @@
    "clips": [
     "cooking-sushi-show",
     "short-ekatze"
-   ]
+   ],
+   "photo": "assets/img/people/ekatze.webp"
   },
   {
    "id": "enzzai",
@@ -58,7 +59,8 @@
     "cooking-handcuffs",
     "collab-quest",
     "cooking-challenge"
-   ]
+   ],
+   "photo": "assets/img/people/enzzai.webp"
   },
   {
    "id": "fasoollka",
@@ -87,7 +89,8 @@
    "clips": [
     "sport-teach-acro",
     "cooking-masterchef"
-   ]
+   ],
+   "photo": "assets/img/people/fasoollka.webp"
   },
   {
    "id": "mugretnug",
@@ -111,7 +114,8 @@
    ],
    "clips": [
     "sport-yoga-two-types"
-   ]
+   ],
+   "photo": "assets/img/people/mugretnug.webp"
   },
   {
    "id": "leva2k",
@@ -135,7 +139,8 @@
    ],
    "clips": [
     "collab-quest"
-   ]
+   ],
+   "photo": "assets/img/people/leva2k.webp"
   },
   {
    "id": "llaviks",
@@ -178,7 +183,8 @@
    "clips": [
     "cooking-handcuffs",
     "cooking-masterchef"
-   ]
+   ],
+   "photo": "assets/img/people/muhanjan.webp"
   },
   {
    "id": "mabelend",
@@ -199,7 +205,8 @@
    "clips": [
     "cooking-handcuffs",
     "cooking-mabelend"
-   ]
+   ],
+   "photo": "assets/img/people/mabelend.webp"
   },
   {
    "id": "streamhouse",

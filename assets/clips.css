@@ -212,3 +212,4 @@ html.clip-open{overflow:hidden}
 }
 
 html.reduce-motion .clip-card,html.reduce-motion .clip-card__media img,html.reduce-motion .cp-flower i,html.reduce-motion .cp-thumb{transition:none}
+.crew__photo{display:block;width:52px;height:52px;border-radius:50%;object-fit:cover;flex:none;box-shadow:0 0 0 2px hsl(var(--h) 70% 72% / .55)}
