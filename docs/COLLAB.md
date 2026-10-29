@@ -15,6 +15,7 @@
 | Страницы разделов (пока) | **Claude** | `cooking.html`, `sport.html`, `collabs.html`, `assets/topic.css` — GPT может забрать в общий шаблон |
 | Раздел «Вне эфира» на главной (`#interests`) | **Claude** | разметка секции в `index.html`, `assets/offair.js`, `assets/offair.css`, `assets/video/offair/`; новая глава — `<article class="offair-ch" data-time="ЧЧ:ММ" data-label="…">`, часы подхватят её сами |
 | Истории стран | **Claude** | `story.html`, `assets/story.js`, `assets/story.css`, `assets/story-data.js`, `content/countries/` |
+| Поиск и индексация | **Claude** | `robots.txt`, `sitemap.xml`, `404.html`, `tools/seo.py` (блок `<!-- seo:start -->…<!-- seo:end -->` в `<head>` страниц — не править руками, после новой страницы добавить её в `PAGES` и запустить `python3 tools/seo.py`), `tools/indexnow.py`, ключ IndexNow `*.txt` в корне. Заголовки и описания страниц — GPT |
 | Присланные исходники | общий | `content/media/uploads.json` — кто получил файл, тот и записывает |
 | Очередь заказов | общий | `docs/MEDIA-QUEUE.md` |
 | Правила | общий | `AGENTS.md`, этот файл |

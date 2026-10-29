@@ -1,0 +1,10 @@
+# Поисковикам можно всё публичное; служебное — нет
+User-agent: *
+Allow: /
+Disallow: /docs/
+Disallow: /tools/
+Disallow: /shop/
+Disallow: /wardrobe.html
+Disallow: /sneakers.html
+
+Sitemap: https://nedogon-polya.ru/sitemap.xml
