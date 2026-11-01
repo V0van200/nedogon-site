@@ -47,9 +47,48 @@
   const tierOf = (price) => TIERS.filter(([from]) => price >= from).pop()[1];
   const songFor = (price) => songs.filter((s) => s.price <= price).pop();
 
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const flash = document.querySelector('.flash');
+  const amountBox = meter.querySelector('.meter-amount');
+  let shownAmount = tasks[0].price;
+  let countFrame = 0;
+  let lastTier = '';
+  let heatNow = 0;
+
+  // Сумма «докручивается» до новой, как счётчик на табло.
+  function countTo(target) {
+    cancelAnimationFrame(countFrame);
+    if (reduceMotion) { shownAmount = target; out.amount.textContent = fmt(target); return; }
+    const from = shownAmount;
+    const start = performance.now();
+    const DURATION = 380;
+    const tick = (now) => {
+      const k = Math.min(1, (now - start) / DURATION);
+      const eased = 1 - Math.pow(1 - k, 3);
+      shownAmount = Math.round(from + (target - from) * eased);
+      out.amount.textContent = fmt(shownAmount);
+      if (k < 1) countFrame = requestAnimationFrame(tick);
+    };
+    countFrame = requestAnimationFrame(tick);
+    amountBox.classList.remove('pop');
+    void amountBox.offsetWidth;
+    amountBox.classList.add('pop');
+  }
+
+  function levelUp() {
+    if (reduceMotion) return;
+    flash.classList.remove('go');
+    meter.classList.remove('level-up');
+    void flash.offsetWidth;
+    flash.classList.add('go');
+    meter.classList.add('level-up');
+    if (navigator.vibrate) navigator.vibrate([30, 40, 60]);
+  }
+
   function show(index) {
     const item = tasks[index];
     const heat = heatOf(item.price);
+    heatNow = heat;
     const root = document.body.style;
     root.setProperty('--heat', heat.toFixed(3));
     root.setProperty('--hue', String(hueOf(heat)));
@@ -57,8 +96,11 @@
     meter.style.setProperty('--hue', String(hueOf(heat)));
     meter.style.setProperty('--pos', (index / (tasks.length - 1)).toFixed(3));
 
-    out.amount.textContent = fmt(item.price);
-    out.tier.textContent = tierOf(item.price);
+    countTo(item.price);
+    const tier = tierOf(item.price);
+    if (lastTier && tier !== lastTier && tier !== TIERS[0][1]) levelUp();
+    lastTier = tier;
+    out.tier.textContent = tier;
     out.task.textContent = item.title;
     out.task.classList.remove('bump');
     void out.task.offsetWidth; // перезапуск анимации
@@ -66,7 +108,7 @@
     const song = songFor(item.price);
     out.song.innerHTML = '';
     if (song) {
-      out.song.append('А донат на эту сумму включит песню ');
+      out.song.append('+ песня ');
       const b = document.createElement('b');
       b.textContent = `«${song.title}»`;
       out.song.append(b);
@@ -93,4 +135,63 @@
   }));
 
   set(0);
+  if (!reduceMotion) startSparks(() => heatNow);
 })();
+
+// Искры на фоне: чем дороже задание (heat 0..1), тем их больше, быстрее и «теплее» цвет.
+function startSparks(getHeat) {
+  const canvas = document.querySelector('.sparks');
+  const ctx = canvas && canvas.getContext('2d');
+  if (!ctx) return;
+  const MAX_SPARKS = 140;
+  const dpr = Math.min(window.devicePixelRatio || 1, 2);
+  let w = 0;
+  let h = 0;
+  const sparks = [];
+
+  const resize = () => {
+    w = canvas.clientWidth;
+    h = canvas.clientHeight;
+    canvas.width = w * dpr;
+    canvas.height = h * dpr;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  };
+  const spawn = (heat) => ({
+    x: Math.random() * w,
+    y: h + 10,
+    r: 0.8 + Math.random() * (1.2 + heat * 2.2),
+    vy: 0.4 + Math.random() * (0.6 + heat * 2.6),
+    vx: (Math.random() - 0.5) * 0.6,
+    life: 1,
+    hue: 270 + heat * 135 + (Math.random() - 0.5) * 30,
+  });
+
+  const frame = () => {
+    const heat = getHeat();
+    const target = Math.round(18 + heat * (MAX_SPARKS - 18));
+    for (let n = 0; n < 3 && sparks.length < target; n += 1) {
+      const s = spawn(heat);
+      if (sparks.length < target * 0.6) s.y = Math.random() * h; // при росте «жары» искры появляются сразу по всему экрану
+      sparks.push(s);
+    }
+    ctx.clearRect(0, 0, w, h);
+    ctx.globalCompositeOperation = 'lighter';
+    for (let i = sparks.length - 1; i >= 0; i -= 1) {
+      const s = sparks[i];
+      s.y -= s.vy;
+      s.x += s.vx + Math.sin(s.y / 40) * 0.3;
+      s.life -= 0.0035 + s.vy * 0.0015;
+      if (s.life <= 0 || s.y < -10) { sparks.splice(i, 1); continue; }
+      ctx.fillStyle = `hsla(${s.hue % 360}, 95%, 62%, ${s.life * (0.35 + heat * 0.5)})`;
+      ctx.beginPath();
+      ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+      ctx.fill();
+    }
+    if (sparks.length > target) sparks.splice(0, sparks.length - target);
+    requestAnimationFrame(frame);
+  };
+
+  resize();
+  window.addEventListener('resize', resize);
+  requestAnimationFrame(frame);
+}

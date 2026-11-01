@@ -29,7 +29,7 @@
 .meter-step{width:44px;height:44px;border-radius:50%;border:1px solid var(--line);font:400 24px/1 var(--sans);color:var(--ink);transition:border-color .2s,transform .15s}
 .meter-step:hover{border-color:var(--c)}.meter-step:active{transform:scale(.92)}
 .meter-track{position:relative;height:44px;border-radius:999px;background:repeating-linear-gradient(90deg,rgba(255,255,255,.07) 0 2px,transparent 2px calc(100%/19)),#1b1a1e;overflow:hidden;border:1px solid var(--line)}
-.meter-fill{position:absolute;inset:0 auto 0 0;width:calc(14% + var(--pos,0)*86%);border-radius:999px;
+.meter-fill{position:absolute;inset:0 auto 0 0;width:calc(42px + var(--pos,0)*(100% - 42px));border-radius:999px;
   background:linear-gradient(90deg,hsl(270 70% 55%),hsl(calc(var(--hue) - 20) 90% 55%) 60%,hsl(var(--hue) 95% 62%));
   box-shadow:0 0 calc(8px + var(--heat)*30px) hsl(var(--hue) 95% 60% / calc(.3 + var(--heat)*.6));transition:width .25s var(--ease)}
 .meter-range{position:absolute;inset:0;width:100%;height:100%;margin:0;opacity:0;cursor:pointer;touch-action:pan-y}
@@ -61,6 +61,22 @@
 .tp-foot{font-size:11px;text-align:center;margin-top:4px}
 .tp-foot a{text-decoration:underline;text-underline-offset:3px}
 
+/* Эффекты: искры на фоне, вспышка при смене уровня, «ручка» ползунка */
+.sparks{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:0}
+.tp{position:relative;z-index:1}
+.flash{position:fixed;inset:0;pointer-events:none;z-index:2;opacity:0;background:radial-gradient(60% 45% at 50% 35%,hsl(var(--hue,270) 95% 60% / .55),transparent 70%)}
+.flash.go{animation:flash .7s ease-out}
+@keyframes flash{0%{opacity:1}100%{opacity:0}}
+.meter-title{font-size:clamp(26px,7vw,36px);letter-spacing:.14em;color:var(--muted)}
+.meter-knob{position:absolute;right:4px;top:50%;width:34px;height:34px;margin-top:-17px;border-radius:50%;background:#fff;
+  box-shadow:0 0 0 4px hsl(var(--hue) 95% 62% / .35),0 0 calc(10px + var(--heat)*26px) hsl(var(--hue) 95% 65%)}
+.meter.level-up{animation:shake .45s var(--ease)}
+@keyframes shake{0%,100%{transform:none}20%{transform:translateX(-5px) rotate(-.4deg)}45%{transform:translateX(5px) rotate(.4deg)}70%{transform:translateX(-2px)}}
+.meter-tier{font-size:12px}
+.meter-amount output{display:inline-block}
+.meter-amount.pop output{animation:pop .3s var(--ease)}
+@keyframes pop{0%{transform:scale(1.12)}100%{transform:none}}
+
 @media (min-width:700px){.tp{padding-top:26px;gap:16px}.meter{padding:28px 28px 24px}}
-@media (prefers-reduced-motion:reduce){.meter-task.bump{animation:none}.meter-fill,.meter,.tasks-page{transition:none}}
+@media (prefers-reduced-motion:reduce){.sparks{display:none}.flash.go,.meter.level-up,.meter-amount.pop output{animation:none}.meter-task.bump{animation:none}.meter-fill,.meter,.tasks-page{transition:none}}
 html.reduce-motion .meter-task.bump{animation:none}

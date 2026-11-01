@@ -11,9 +11,11 @@
 <link rel="stylesheet" href="assets/fonts/fonts.css">
 <link rel="stylesheet" href="assets/tokens.css?v=5">
 <link rel="stylesheet" href="assets/site.css?v=4">
-<link rel="stylesheet" href="assets/tasks.css?v=2">
+<link rel="stylesheet" href="assets/tasks.css?v=3">
 <!-- seo:start --><link rel="canonical" href="https://nedogon-polya.ru/задания/"><meta property="og:url" content="https://nedogon-polya.ru/задания/"><meta property="og:site_name" content="NEDOGONPOLYA"><meta property="og:locale" content="ru_RU"><meta property="og:image" content="https://nedogon-polya.ru/assets/og-image.jpg"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><link rel="icon" href="assets/favicon-120.png" type="image/png" sizes="120x120"><link rel="apple-touch-icon" href="assets/apple-touch-icon.png"><meta name="yandex-verification" content="a65a26c646360cb8"><meta name="google-site-verification" content="HrWOWDos6N7Z4bgDcoT11PyUf5WXKbtQWFe1nZRf7tg"><script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebPage","@id":"https://nedogon-polya.ru/задания/#page","url":"https://nedogon-polya.ru/задания/","name":"Задания и песни — NEDOGONPOLYA","description":"Задания за донат на стримах Полины Недогон: крути ползунок и смотри, что она сделает за твою сумму. Плюс песни, которые включаются на стриме от доната.","inLanguage":"ru-RU","isPartOf":{"@id":"https://nedogon-polya.ru/#site"},"about":{"@id":"https://nedogon-polya.ru/#person"}},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"NEDOGONPOLYA","item":"https://nedogon-polya.ru/"},{"@type":"ListItem","position":2,"name":"Задания и песни","item":"https://nedogon-polya.ru/задания/"}]}]}</script><!-- seo:end --></head>
 <body class="tasks-page">
+<canvas class="sparks" aria-hidden="true"></canvas>
+<div class="flash" aria-hidden="true"></div>
 <main class="tp">
   <header class="tp-top">
     <a class="wordmark" href="index.html" aria-label="NEDOGONPOLYA — на главную">NEDOGON<span>POLYA</span></a>
@@ -21,7 +23,7 @@
   </header>
 
   <section class="meter" data-meter aria-labelledby="tp-title" style="--heat:0;--hue:270">
-    <h1 id="tp-title" class="meter-title">Задания <span>за донат</span></h1>
+    <h1 id="tp-title" class="meter-title">Задания</h1>
 
     <div class="meter-screen">
       <p class="meter-tier" data-tier>Разминка</p>
@@ -33,15 +35,14 @@
     <div class="meter-control">
       <button type="button" class="meter-step" data-step="-1" aria-label="Задание дешевле">−</button>
       <div class="meter-track">
-        <div class="meter-fill" aria-hidden="true"></div>
+        <div class="meter-fill" aria-hidden="true"><i class="meter-knob"></i></div>
         <input id="tp-range" class="meter-range" type="range" min="0" max="19" step="1" value="0" aria-label="Выбери задание по сумме">
       </div>
       <button type="button" class="meter-step" data-step="1" aria-label="Задание дороже">+</button>
     </div>
-    <p class="meter-hint">Крути ползунок — чем больше сумма, тем жарче задание</p>
 
     <a class="meter-donate" href="https://ihaqdonate.com/d/NEDOGONPOLYA" target="_blank" rel="noopener noreferrer">Задонатить <span data-donate-sum>200 ₽</span></a>
-    <p class="meter-note">В сообщении к донату напиши задание. Выполняет на стриме.</p>
+    <p class="meter-note">Задание — в сообщении к донату</p>
   </section>
 
   <details class="drawer">
@@ -100,8 +101,8 @@
     </ol>
   </details>
 
-  <p class="tp-foot">Цены — из описания канала на Twitch, 1 ноября 2026. Фан-сайт о Полине Недогон. <a href="index.html">На главную</a></p>
+  <p class="tp-foot">Цены с Twitch · <a href="index.html">nedogon-polya.ru</a></p>
 </main>
-<script src="assets/tasks.js?v=2" defer></script>
+<script src="assets/tasks.js?v=3" defer></script>
 </body>
 </html>
