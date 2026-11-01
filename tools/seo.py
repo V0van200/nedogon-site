@@ -50,6 +50,7 @@ WEBSITE = {
 PAGES = {
     'index.html': ('/', None, '1.0'),
     'streams.html': ('/streams.html', 'Эфиры', '0.8'),
+    'tasks.html': ('/tasks.html', 'Задания и песни', '0.8'),
     'cooking.html': ('/cooking.html', 'Кукинги', '0.8'),
     'sport.html': ('/sport.html', 'Спорт', '0.7'),
     'collabs.html': ('/collabs.html', 'Гости и коллабы', '0.7'),
