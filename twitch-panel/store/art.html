@@ -1,0 +1,38 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+@font-face{font-family:'Russo One';src:url('../fonts/RussoOne-400-cyrillic.woff2') format('woff2');unicode-range:U+0400-045F}
+@font-face{font-family:'Russo One';src:url('../fonts/RussoOne-400-latin.woff2') format('woff2');unicode-range:U+0000-00FF,U+20BD}
+@font-face{font-family:Manrope;font-weight:600;src:url('../fonts/Manrope-600-cyrillic.woff2') format('woff2');unicode-range:U+0400-045F}
+@font-face{font-family:Manrope;font-weight:600;src:url('../fonts/Manrope-600-latin.woff2') format('woff2');unicode-range:U+0000-00FF}
+body{margin:0;background:transparent}
+.box{position:relative;overflow:hidden;background:radial-gradient(120% 90% at 50% 0%,#3a1d4a 0%,#141117 60%);color:#f2eee6;font-family:Manrope,sans-serif}
+.grad{background:linear-gradient(90deg,#8b4fd6,#e0457b 55%,#f5c454)}
+</style></head><body>
+<div id="logo" class="box" style="width:100px;height:100px;border-radius:0;display:grid;place-items:center">
+  <svg width="100" height="100" viewBox="0 0 100 100" style="position:absolute;inset:0"><defs><linearGradient id="g" x1="0" x2="1"><stop offset="0" stop-color="#8b4fd6"/><stop offset=".55" stop-color="#e0457b"/><stop offset="1" stop-color="#f5c454"/></linearGradient></defs>
+  <path d="M22 70 A32 32 0 1 1 78 70" fill="none" stroke="#2a2430" stroke-width="9" stroke-linecap="round"/>
+  <path d="M22 70 A32 32 0 1 1 78 70" fill="none" stroke="url(#g)" stroke-width="9" stroke-linecap="round"/>
+  <circle cx="78" cy="70" r="7" fill="#fff"/></svg>
+  <b style="position:relative;font:400 38px/1 'Russo One';margin-top:-2px">₽</b>
+</div>
+<div id="icon" style="width:24px;height:24px;background:#141117;display:grid;place-items:center;border-radius:5px">
+  <svg width="24" height="24" viewBox="0 0 24 24"><defs><linearGradient id="g2" x1="0" x2="1"><stop offset="0" stop-color="#8b4fd6"/><stop offset="1" stop-color="#f5c454"/></linearGradient></defs><path d="M5 17 A8.5 8.5 0 1 1 19 17" fill="none" stroke="url(#g2)" stroke-width="3" stroke-linecap="round"/><circle cx="19" cy="17" r="2.2" fill="#fff"/></svg>
+</div>
+<div id="disc" class="box" style="width:300px;height:200px;padding:22px 22px 0;box-sizing:border-box">
+  <div style="font:600 10px Manrope;letter-spacing:.24em;color:#c9a9e8">NEDOGONPOLYA</div>
+  <div style="font:400 40px/1.05 'Russo One';margin-top:8px;letter-spacing:.02em">ЗАДАНИЯ</div>
+  <div style="font:600 13px Manrope;color:#bdb3c4;margin-top:4px">крути ползунок — смотри, что будет за донат</div>
+  <div style="position:relative;height:22px;border-radius:99px;background:#24202a;margin-top:18px;border:1px solid #3a3340">
+    <div class="grad" style="position:absolute;inset:0 30% 0 0;border-radius:99px;box-shadow:0 0 18px rgba(224,69,123,.6)"></div>
+    <div style="position:absolute;left:calc(70% - 22px);top:1px;width:19px;height:19px;border-radius:50%;background:#fff"></div></div>
+  <div style="display:flex;justify-content:space-between;font:400 13px 'Russo One';margin-top:10px;color:#f5c454"><span style="color:#b98be8">200 ₽</span><span>222 222 ₽</span></div>
+</div>
+<div id="shot" class="box" style="width:1024px;height:768px;display:flex;align-items:center;justify-content:center;gap:40px;padding:0 44px;box-sizing:border-box">
+  <div style="max-width:280px;flex:none">
+    <div style="font:600 13px Manrope;letter-spacing:.24em;color:#c9a9e8">ПАНЕЛЬ ПОД СТРИМОМ</div>
+    <div style="font:400 54px/1.05 'Russo One';margin:12px 0 16px">ЗАДАНИЯ<br>ЗА ДОНАТ</div>
+    <div style="font:600 17px/1.55 Manrope;color:#d6cfdb">Двигай ползунок — на табло сумма и задание, которое стример выполнит в эфире.<br><br>Чем дороже — тем ярче: от сиреневого к золотому. Ниже — полный список.</div>
+  </div>
+  <iframe id="f1" src="../panel.html" style="width:318px;height:500px;border:0;border-radius:14px;box-shadow:0 20px 60px rgba(0,0,0,.55)"></iframe>
+  <iframe id="f2" src="../panel.html" style="width:318px;height:500px;border:0;border-radius:14px;box-shadow:0 20px 60px rgba(0,0,0,.55)"></iframe>
+</div>
+</body></html>
