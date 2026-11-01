@@ -1,61 +1,66 @@
-/* tasks.html — задания и песни за донат. Токены — из site.css / tokens.css. */
-.tasks-cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:30px}
-.tasks-cta--end{margin-top:36px}
-.tasks-note{margin-top:22px;font-size:12px;max-width:70ch}
+/* /задания/ — одноэкранный «силомер» заданий. --heat (0..1) и --hue задаёт tasks.js по цене. */
+.tasks-page{min-height:100svh;background:radial-gradient(120% 60% at 50% 0%,hsl(var(--hue,270) 70% 22% / calc(.25 + var(--heat,0)*.45)),transparent 70%),var(--bg);transition:background .4s}
+.tp{width:min(560px,100% - 32px);margin-inline:auto;padding:14px 0 28px;display:flex;flex-direction:column;gap:14px}
+.tp-top{display:flex;justify-content:space-between;align-items:center}
+.tp-top .wordmark{font-size:13px;letter-spacing:.06em;font-weight:800}
+.tp-top .wordmark span{font-weight:400}
+.tp-live{display:inline-flex;align-items:center;gap:8px;font-size:12px;color:var(--muted);padding:6px 12px;border:1px solid var(--line);border-radius:999px}
+.tp-live i{width:7px;height:7px;border-radius:50%;background:var(--track)}
 
-/* Калькулятор */
-.calc{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:48px;align-items:stretch;padding:36px;border:1px solid var(--line);border-radius:18px;background:rgba(25,25,27,.55)}
-.calc-label{display:block;font:700 11px/1 var(--sans);letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
-.calc-amount{display:flex;align-items:baseline;gap:10px;margin:14px 0 22px;border-bottom:1px solid var(--line)}
-.calc-amount input{width:100%;min-width:0;background:none;border:0;color:var(--ink);font:400 clamp(48px,6vw,80px)/1.1 var(--serif);letter-spacing:-.03em;padding:0 0 8px;outline:none}
-.calc-amount span{font:400 clamp(30px,3vw,44px)/1 var(--serif);color:var(--lilac)}
-.calc-amount:focus-within{border-color:var(--lilac)}
-.calc-range{width:100%;accent-color:var(--lilac);height:28px;margin:0}
-.calc-quick{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
-.calc-quick button{padding:8px 14px;border:1px solid var(--line);border-radius:999px;font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums;transition:color .2s,border-color .2s}
-.calc-quick button:hover,.calc-quick button[aria-pressed="true"]{color:var(--ink);border-color:var(--lilac)}
-.calc-result{display:flex;flex-direction:column;gap:18px;justify-content:center}
-.calc-hint{font-size:13px}
-.calc-pick{display:grid;gap:6px;padding-bottom:18px;border-bottom:1px solid var(--line)}
-.calc-pick span{font:700 10px/1 var(--sans);letter-spacing:.16em;text-transform:uppercase;color:var(--lilac)}
-.calc-pick b{font:italic 400 clamp(26px,2.8vw,36px)/1.15 var(--serif)}
-.calc-pick small{font-size:12px;color:var(--muted);min-height:1.5em}
-.calc-count{font-size:12px}
+/* Табло */
+.meter{--c:hsl(var(--hue) 85% calc(62% + var(--heat)*6%));display:flex;flex-direction:column;gap:14px;padding:20px 18px 18px;border-radius:22px;
+  border:1px solid hsl(var(--hue) 70% 60% / calc(.25 + var(--heat)*.5));background:rgba(20,19,22,.82);
+  box-shadow:0 0 calc(10px + var(--heat)*60px) hsl(var(--hue) 90% 55% / calc(.12 + var(--heat)*.45));transition:box-shadow .35s,border-color .35s}
+.meter-title{font:400 clamp(30px,8.5vw,44px)/1 var(--font-display);text-transform:uppercase;letter-spacing:.01em;margin:0}
+.meter-title span{display:block;font-size:.5em;color:var(--muted);letter-spacing:.12em;margin-top:6px}
+.meter-screen{display:grid;gap:6px;min-height:178px;align-content:start}
+.meter-tier{font:700 11px/1 var(--sans);letter-spacing:.2em;text-transform:uppercase;color:var(--c)}
+.meter-amount{display:flex;align-items:baseline;gap:8px;margin:2px 0 0;color:var(--c);text-shadow:0 0 calc(var(--heat)*28px) hsl(var(--hue) 95% 60% / .7)}
+.meter-amount output{font:400 clamp(54px,17vw,92px)/1 var(--font-display);letter-spacing:-.01em;font-variant-numeric:tabular-nums}
+.meter-amount span{font:400 clamp(26px,7vw,40px)/1 var(--font-display)}
+.meter-task{font:400 clamp(24px,6.6vw,34px)/1.15 var(--serif);font-style:italic;color:var(--ink);margin:4px 0 0}
+.meter-task.bump{animation:bump .35s var(--ease)}
+.meter-song{font-size:13px;color:var(--muted);min-height:1.4em}
+.meter-song b{color:var(--ink);font-weight:600}
+@keyframes bump{0%{transform:translateY(6px);opacity:.3}100%{transform:none;opacity:1}}
 
-/* Списки цен */
-.tier+.tier{margin-top:46px}
-.tier-title{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;font:400 clamp(26px,2.8vw,36px)/1.1 var(--serif);margin:0 0 16px}
-.tier-title span{font:700 11px/1 var(--sans);letter-spacing:.16em;color:var(--lilac)}
-.tier-title small{font:500 12px/1 var(--sans);color:var(--muted);letter-spacing:.02em}
-.price-list{list-style:none;margin:0;padding:0;border-top:1px solid var(--line)}
-.price-list li{display:grid;grid-template-columns:140px minmax(0,1fr) auto;gap:20px;align-items:baseline;padding:16px 4px;border-bottom:1px solid var(--line);transition:background .3s,opacity .3s,padding .3s var(--ease)}
-.price-list b{font:500 14px/1.4 var(--font-num);color:var(--muted);font-variant-numeric:tabular-nums;white-space:nowrap}
-.price-list span{font:400 22px/1.3 var(--serif)}
-.price-list i{font-style:normal;font-size:11px;letter-spacing:.06em;color:var(--muted);padding:4px 10px;border:1px solid var(--line);border-radius:999px}
-.price-list--songs{display:grid;grid-template-columns:1fr 1fr;column-gap:48px;grid-auto-flow:column;grid-template-rows:repeat(12,auto);border-top:0}
-.price-list--songs li{grid-template-columns:120px minmax(0,1fr)}
-.price-list--songs li:nth-child(1),.price-list--songs li:nth-child(13){border-top:1px solid var(--line)}
+/* Ползунок-полоска: заполнение и цвет растут с ценой */
+.meter-control{display:grid;grid-template-columns:44px 1fr 44px;gap:10px;align-items:center}
+.meter-step{width:44px;height:44px;border-radius:50%;border:1px solid var(--line);font:400 24px/1 var(--sans);color:var(--ink);transition:border-color .2s,transform .15s}
+.meter-step:hover{border-color:var(--c)}.meter-step:active{transform:scale(.92)}
+.meter-track{position:relative;height:44px;border-radius:999px;background:repeating-linear-gradient(90deg,rgba(255,255,255,.07) 0 2px,transparent 2px calc(100%/19)),#1b1a1e;overflow:hidden;border:1px solid var(--line)}
+.meter-fill{position:absolute;inset:0 auto 0 0;width:calc(14% + var(--pos,0)*86%);border-radius:999px;
+  background:linear-gradient(90deg,hsl(270 70% 55%),hsl(calc(var(--hue) - 20) 90% 55%) 60%,hsl(var(--hue) 95% 62%));
+  box-shadow:0 0 calc(8px + var(--heat)*30px) hsl(var(--hue) 95% 60% / calc(.3 + var(--heat)*.6));transition:width .25s var(--ease)}
+.meter-range{position:absolute;inset:0;width:100%;height:100%;margin:0;opacity:0;cursor:pointer;touch-action:pan-y}
+.meter-track:has(.meter-range:focus-visible){outline:2px solid var(--c);outline-offset:3px}
+.meter-hint{font-size:11px;color:var(--muted);text-align:center;margin:-4px 0 0}
 
-/* Подсветка от калькулятора */
-.has-amount .price-list li{opacity:.42}
-.has-amount .price-list li.is-on{opacity:1}
-.has-amount .price-list li.is-on b{color:var(--lilac)}
-.price-list li.is-best{background:rgba(213,176,239,.08);padding-inline:14px}
-.price-list li.is-best span::after{content:" ← твой вариант";font:600 11px/1 var(--sans);color:var(--lilac);letter-spacing:.04em;white-space:nowrap}
+.meter-donate{display:flex;justify-content:center;align-items:center;gap:10px;min-height:56px;border-radius:999px;font:400 17px/1 var(--font-display);text-transform:uppercase;letter-spacing:.03em;
+  color:#16111a;background:var(--c);box-shadow:0 8px calc(16px + var(--heat)*30px) hsl(var(--hue) 95% 55% / calc(.25 + var(--heat)*.45));transition:transform .2s,background .35s}
+.meter-donate:hover{transform:translateY(-2px)}
+.meter-note{font-size:11px;text-align:center;margin:-4px 0 0}
 
-@media (max-width:900px){
-  .calc{grid-template-columns:1fr;gap:30px;padding:24px}
-}
-@media (max-width:700px){
-  .price-list li{grid-template-columns:96px minmax(0,1fr);gap:4px 14px;padding-block:14px}
-  .price-list i{grid-column:2;justify-self:start;font-size:10px;padding:3px 8px}
-  .price-list span{font-size:19px}
-  .price-list b{font-size:12px}
-  .price-list--songs{display:block;border-top:1px solid var(--line)}
-  .price-list--songs li{grid-template-columns:96px minmax(0,1fr)}
-  .price-list--songs li:nth-child(1),.price-list--songs li:nth-child(13){border-top:0}
-  .price-list li.is-best span::after{display:block;margin-top:6px;content:"твой вариант"}
-  .tasks-cta .button{flex:1 1 160px}
-}
-html.reduce-motion .price-list li{transition:none}
-@media (prefers-reduced-motion:reduce){.price-list li{transition:none}}
+/* Свёрнутые списки */
+.drawer{border:1px solid var(--line);border-radius:16px;background:rgba(20,19,22,.7)}
+.drawer summary{display:grid;grid-template-columns:1fr auto 22px;gap:10px;align-items:center;padding:16px 18px;cursor:pointer;list-style:none;font:400 16px/1 var(--font-display);text-transform:uppercase;letter-spacing:.03em}
+.drawer summary::-webkit-details-marker{display:none}
+.drawer summary small{font:600 12px/1 var(--sans);color:var(--muted)}
+.drawer summary i{width:12px;height:12px;border-right:2px solid var(--muted);border-bottom:2px solid var(--muted);transform:rotate(45deg) translate(-3px,-3px);transition:transform .25s}
+.drawer[open] summary i{transform:rotate(-135deg)}
+.drawer summary:focus-visible{outline:2px solid var(--lilac);outline-offset:3px;border-radius:16px}
+.drawer-lead{font-size:13px;padding:0 18px 10px}
+.heat-list{list-style:none;margin:0;padding:0 10px 12px}
+.heat-list li{--h:270;--t:0;position:relative;display:grid;grid-template-columns:96px 1fr;gap:12px;align-items:center;padding:12px 8px;border-radius:10px;cursor:pointer;overflow:hidden}
+.heat-list li::before{content:"";position:absolute;inset:auto auto 4px 8px;height:3px;width:calc(8% + var(--t)*88%);border-radius:3px;
+  background:hsl(var(--h) 90% 60%);opacity:calc(.35 + var(--t)*.65);box-shadow:0 0 calc(var(--t)*12px) hsl(var(--h) 95% 60%)}
+.heat-list li:hover,.heat-list li.is-now{background:rgba(255,255,255,.05)}
+.heat-list li.is-now span::after{content:" ●";color:hsl(var(--h) 90% 62%)}
+.heat-list b{font:600 13px/1.3 var(--font-num);color:hsl(var(--h) 85% 70%);white-space:nowrap}
+.heat-list span{font:400 17px/1.3 var(--serif)}
+.tp-foot{font-size:11px;text-align:center;margin-top:4px}
+.tp-foot a{text-decoration:underline;text-underline-offset:3px}
+
+@media (min-width:700px){.tp{padding-top:26px;gap:16px}.meter{padding:28px 28px 24px}}
+@media (prefers-reduced-motion:reduce){.meter-task.bump{animation:none}.meter-fill,.meter,.tasks-page{transition:none}}
+html.reduce-motion .meter-task.bump{animation:none}

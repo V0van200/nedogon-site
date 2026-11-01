@@ -1,82 +1,96 @@
-// tasks.html: калькулятор «что будет за твою сумму». Данные берутся из разметки (li[data-price][data-kind]).
+// /задания/: ползунок шагает по заданиям; чем дороже, тем «горячее» цвет и свечение.
+// Данные — из разметки списков (li[data-price]).
 (() => {
-  const calc = document.querySelector('[data-calc]');
-  if (!calc) return;
+  const meter = document.querySelector('[data-meter]');
+  if (!meter) return;
 
-  const MIN = 200;
-  const MAX = 250000;
-  const START = 3000;
-  const RANGE_STEPS = 1000;
+  const HUE_COLD = 270; // сиреневый
+  const HUE_HOT = 405; // через малиновый и красный к золотому (405 = 45°)
+  const TIERS = [
+    [0, 'Разминка'],
+    [3000, 'Всерьёз'],
+    [15000, 'Большие'],
+    [66666, 'Легенды'],
+  ];
 
-  const input = calc.querySelector('#calc-amount');
-  const range = calc.querySelector('.calc-range');
-  const quick = [...calc.querySelectorAll('[data-amount]')];
-  const countEl = calc.querySelector('[data-count]');
-  const items = [...document.querySelectorAll('.price-list li[data-price]')].map((el) => ({
+  const read = (kind) => [...document.querySelectorAll(`[data-list="${kind}"] li[data-price]`)].map((el) => ({
     el,
     price: Number(el.dataset.price),
-    kind: el.dataset.kind,
     title: el.querySelector('span').textContent.trim(),
   }));
+  const tasks = read('task');
+  const songs = read('song');
+  if (!tasks.length) return;
 
-  const fmt = (n) => Math.round(n).toLocaleString('ru-RU').replace(/ | /g, ' ');
-  const parse = (s) => Math.min(Number(String(s).replace(/\D/g, '').slice(0, 9)) || 0, 999999999);
-
-  // Логарифмическая шкала: и 200 ₽, и 222 222 ₽ помещаются на одном ползунке.
-  const toRange = (amount) => {
-    const a = Math.min(Math.max(amount, MIN), MAX);
-    return Math.round((Math.log(a / MIN) / Math.log(MAX / MIN)) * RANGE_STEPS);
+  const range = meter.querySelector('.meter-range');
+  const out = {
+    amount: meter.querySelector('[data-amount]'),
+    tier: meter.querySelector('[data-tier]'),
+    task: meter.querySelector('[data-task]'),
+    song: meter.querySelector('[data-song]'),
+    donate: meter.querySelector('[data-donate-sum]'),
   };
-  const fromRange = (pos) => {
-    const raw = MIN * Math.pow(MAX / MIN, pos / RANGE_STEPS);
-    const step = raw < 2000 ? 100 : raw < 20000 ? 500 : raw < 100000 ? 1000 : 5000;
-    return Math.round(raw / step) * step;
-  };
+  const fmt = (n) => n.toLocaleString('ru-RU').replace(/ | /g, ' ');
 
-  const ofKind = (kind) => items.filter((i) => i.kind === kind);
-  const best = (kind, amount) => ofKind(kind).filter((i) => i.price <= amount).sort((a, b) => b.price - a.price)[0];
-  const next = (kind, amount) => ofKind(kind).filter((i) => i.price > amount).sort((a, b) => a.price - b.price)[0];
+  const minLog = Math.log(tasks[0].price);
+  const maxLog = Math.log(tasks[tasks.length - 1].price);
+  const heatOf = (price) => Math.min(1, Math.max(0, (Math.log(price) - minLog) / (maxLog - minLog)));
+  const hueOf = (heat) => Math.round(HUE_COLD + (HUE_HOT - HUE_COLD) * heat);
 
-  function show(kind, amount) {
-    const top = best(kind, amount);
-    const up = next(kind, amount);
-    calc.querySelector(`[data-best="${kind}"]`).textContent = top ? top.title : 'пока ничего';
-    calc.querySelector(`[data-next="${kind}"]`).textContent = up
-      ? `ещё ${fmt(up.price - amount)} ₽ — и «${up.title}»`
-      : 'это максимум из списка';
-    return top;
-  }
-
-  function render(amount) {
-    const picks = [show('task', amount), show('song', amount)];
-    document.body.classList.add('has-amount');
-    const on = items.filter((i) => i.price <= amount).length;
-    items.forEach((i) => {
-      i.el.classList.toggle('is-on', i.price <= amount);
-      i.el.classList.toggle('is-best', picks.includes(i));
-    });
-    countEl.textContent = on
-      ? `Доступно ${on} из ${items.length} — подсвечено в списках ниже.`
-      : `Минимальный заказ — ${fmt(MIN)} ₽.`;
-    quick.forEach((b) => b.setAttribute('aria-pressed', String(Number(b.dataset.amount) === amount)));
-  }
-
-  function set(amount, from) {
-    if (from !== 'input') input.value = fmt(amount);
-    if (from !== 'range') range.value = String(toRange(amount));
-    render(amount);
-  }
-
-  input.addEventListener('input', () => {
-    const amount = parse(input.value);
-    const tail = input.value.length - (input.selectionStart ?? input.value.length);
-    input.value = amount ? fmt(amount) : '';
-    const pos = Math.max(0, input.value.length - tail);
-    input.setSelectionRange(pos, pos);
-    set(amount, 'input');
+  // Цвет полоски у каждой строки списков — по её цене.
+  [...tasks, ...songs].forEach((item) => {
+    const t = heatOf(item.price);
+    item.el.style.setProperty('--t', t.toFixed(3));
+    item.el.style.setProperty('--h', String(hueOf(t)));
   });
-  range.addEventListener('input', () => set(fromRange(Number(range.value)), 'range'));
-  quick.forEach((b) => b.addEventListener('click', () => set(Number(b.dataset.amount))));
 
-  set(START);
+  const tierOf = (price) => TIERS.filter(([from]) => price >= from).pop()[1];
+  const songFor = (price) => songs.filter((s) => s.price <= price).pop();
+
+  function show(index) {
+    const item = tasks[index];
+    const heat = heatOf(item.price);
+    const root = document.body.style;
+    root.setProperty('--heat', heat.toFixed(3));
+    root.setProperty('--hue', String(hueOf(heat)));
+    meter.style.setProperty('--heat', heat.toFixed(3));
+    meter.style.setProperty('--hue', String(hueOf(heat)));
+    meter.style.setProperty('--pos', (index / (tasks.length - 1)).toFixed(3));
+
+    out.amount.textContent = fmt(item.price);
+    out.tier.textContent = tierOf(item.price);
+    out.task.textContent = item.title;
+    out.task.classList.remove('bump');
+    void out.task.offsetWidth; // перезапуск анимации
+    out.task.classList.add('bump');
+    const song = songFor(item.price);
+    out.song.innerHTML = '';
+    if (song) {
+      out.song.append('А донат на эту сумму включит песню ');
+      const b = document.createElement('b');
+      b.textContent = `«${song.title}»`;
+      out.song.append(b);
+    }
+    out.donate.textContent = `${fmt(item.price)} ₽`;
+    range.setAttribute('aria-valuetext', `${fmt(item.price)} рублей — ${item.title}`);
+    tasks.forEach((t, i) => t.el.classList.toggle('is-now', i === index));
+  }
+
+  const set = (index) => {
+    const i = Math.min(tasks.length - 1, Math.max(0, index));
+    range.value = String(i);
+    show(i);
+  };
+
+  range.max = String(tasks.length - 1);
+  range.addEventListener('input', () => show(Number(range.value)));
+  meter.querySelectorAll('[data-step]').forEach((btn) => {
+    btn.addEventListener('click', () => set(Number(range.value) + Number(btn.dataset.step)));
+  });
+  tasks.forEach((t, i) => t.el.addEventListener('click', () => {
+    set(i);
+    meter.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }));
+
+  set(0);
 })();
