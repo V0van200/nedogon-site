@@ -1,6 +1,6 @@
 import { setPosterBackground } from './media-loading.js?v=1';
 // Полноэкранные истории стран: смена фона между главами, проявление текста, лента моментов, занавес между странами.
-import { stories } from './story-data.js?v=2';
+import { stories } from './story-data.js?v=3';
 
 const reduce = false; // анимации на сайте включены всегда
 const TINTS = { in: '#ffb37a', ae: '#f3cf8a', mv: '#8fe3e0', th: '#b9e59c', id: '#9ee6b8', vn: '#a3d8ff' };

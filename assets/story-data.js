@@ -26,7 +26,7 @@ export const stories = [
       ],
     },
     moments: [
-      loop('in-taxi', 'Таксист, который возил её по всем достопримечательностям', tg(2706), 'Пост в Telegram', full('in-taxi-full', '0:12')),
+      loop('in-taxi', 'Таксист, который возил её по всем достопримечательностям', tg(2706), 'Пост в Telegram', { ...full('in-taxi-full', '0:34'), src: `${V('in-taxi-full')}?v=2` }),
       loop('in-crowd', '«Чувствую себя самой популярной девушкой»', yt('qgsX30zvU-0', 884), 'Момент во влоге', full('in-crowd-full', '0:34')),
       loop('in-gateway', 'Ворота Индии и тысячи голубей', yt('qgsX30zvU-0'), 'Влог целиком'),
       loop('in-street', 'Старый Бомбей из окна такси', yt('qgsX30zvU-0', 456), 'Момент во влоге'),
