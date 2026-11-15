@@ -1,6 +1,6 @@
 import { setPosterBackground } from './media-loading.js?v=1';
 // Полноэкранные истории стран: смена фона между главами, проявление текста, лента моментов, занавес между странами.
-import { stories } from './story-data.js';
+import { stories } from './story-data.js?v=2';
 
 const reduce = false; // анимации на сайте включены всегда
 const TINTS = { in: '#ffb37a', ae: '#f3cf8a', mv: '#8fe3e0', th: '#b9e59c', id: '#9ee6b8', vn: '#a3d8ff' };
@@ -120,20 +120,20 @@ function setStage(media, key) {
 }
 const stageVideo = () => layers[front].querySelector('video');
 
-// open.music: фоновое видео с музыкой — звук включается без перемотки и без скрытия текста
-const soundLabel = (on) => (story?.open.music
-  ? (on ? 'Выключить музыку' : 'Включить музыку')
+// open.background: звук фонового видео включается без перемотки и без скрытия текста
+const soundLabel = (on) => (story?.open.background
+  ? (on ? 'Выключить звук' : 'Включить звук')
   : (on ? 'Выключить звук' : 'Смотреть со звуком'));
 
 function setSound(on) {
   const v = stageVideo();
   if (!v) return;
-  const music = Boolean(story?.open.music);
+  const background = Boolean(story?.open.background);
   v.muted = !on;
-  if (on && !music) v.currentTime = 0;
+  if (on && !background) v.currentTime = 0;
   if (on) v.play().catch(() => {});
   soundBtn.setAttribute('aria-pressed', String(on));
-  document.body.classList.toggle('is-playing', on && !music);
+  document.body.classList.toggle('is-playing', on && !background);
   soundBtn.textContent = soundLabel(on);
 }
 
@@ -217,7 +217,7 @@ function soundButton(label, full, title, link, linkText) {
 function kicker(n) { return el('p', 'kicker', `Глава ${n} · ${CHAPTERS[n - 1]}`); }
 
 function buildOpen(s) {
-  const film = Boolean(s.open.sound) && !s.open.music;
+  const film = Boolean(s.open.sound) && !s.open.background;
   const sec = el('section', `chapter ch-open${film ? ' is-film' : ''}`);
   const box = el('div', `wrap${film ? ' film-head' : ''}`);
   if (film) box.append(kicker(1), el('p', 'open-meta', `${s.name} · ${s.years} · ${s.place}`));
@@ -328,7 +328,7 @@ function build(s) {
       a.removeAttribute('aria-current');
     }
   });
-  const openMedia = s.open.video ? { video: s.open.video, poster: s.open.poster, fit: !s.open.music } : s.open.media;
+  const openMedia = s.open.video ? { video: s.open.video, poster: s.open.poster, fit: !s.open.background } : s.open.media;
   mediaPlan = [[openMedia, 'o'], [s.text.media, 't'], [s.text.media, 't'], [s.finale.media, 'f']];
   sections = [buildOpen(s), buildText(s), buildMoments(s), buildFinale(s, next)];
   sections.forEach((sec, idx) => { sec.dataset.idx = idx; });
@@ -342,7 +342,7 @@ function activate(idx) {
   const [media, key] = mediaPlan[idx];
   setStage(media, `${story.id}-${key}`);
   const audible = idx === 0 && Boolean(story.open.sound);
-  const film = audible && !story.open.music;
+  const film = audible && !story.open.background;
   document.body.classList.toggle('is-film', film);
   document.body.classList.toggle('is-text', idx === 1);
   document.body.classList.toggle('is-dim', idx === 2);

@@ -12,7 +12,7 @@ export const stories = [
   {
     id: 'in', name: 'Индия', years: '2023', place: 'Мумбаи',
     open: {
-      video: V('india-bg'), poster: P('india-bg-poster'), sound: true, music: true,
+      video: V('in-story'), poster: P('in-story'), sound: true, background: true,
       quote: 'Я просто не могла оторвать глаз',
       sub: 'Январь 2023. Первое путешествие за границу одной — и без английского.',
     },
