@@ -34,6 +34,8 @@ let sections = [];
 let mediaPlan = [];
 let observers = [];
 let moments = null;
+let holdIntro = false;
+let cancelIntro = () => {};
 
 stories.forEach((s) => {
   const a = el('a', null, s.name);
@@ -112,7 +114,7 @@ function setStage(media, key) {
     }
   } else { next.style.backgroundImage = ''; delete next.dataset.posterSource; }
   next.replaceChildren(node);
-  play(next.querySelector('video'));
+  if (!holdIntro) play(next.querySelector('video'));
   next.classList.add('on');
   prev.classList.remove('on');
   front = 1 - front;
@@ -450,8 +452,125 @@ function lift() {
   }, reduce ? 0 : CURTAIN_MS + 50);
 }
 
+
+ // Подготовка первого ролика: ждём реальные данные, затем пробуем запуск со звуком.
+function prepareIntro(version) {
+  const video = stageVideo();
+  if (!video) { holdIntro = false; lift(); return; }
+  video.pause();
+  video.currentTime = 0;
+  const panel = el('div', 'intro-load');
+  const status = el('p', 'intro-load__status', 'Загружаем видео…');
+  status.setAttribute('role', 'status');
+  status.setAttribute('aria-live', 'polite');
+  const start = el('button', 'intro-load__start', 'Смотреть со звуком');
+  start.type = 'button'; start.hidden = true;
+  const skip = el('button', 'intro-load__skip', 'Продолжить без звука');
+  skip.type = 'button';
+  panel.append(status, start, skip);
+  curtain.append(panel);
+  document.body.classList.add('intro-loading');
+  main.inert = true;
+  let active = true;
+  let ready = false;
+  let starting = false;
+  let retry = false;
+  let minimumElapsed = false;
+  const current = () => active && version === navigationVersion;
+  const cleanup = () => {
+    active = false;
+    clearTimeout(minimumTimer);
+    clearTimeout(slowTimer);
+    video.removeEventListener('canplay', checkReady);
+    video.removeEventListener('error', failed);
+    panel.remove();
+    document.body.classList.remove('intro-loading');
+    main.inert = false;
+    holdIntro = false;
+  };
+  cancelIntro = cleanup;
+  const reveal = (sound) => {
+    soundBtn.setAttribute('aria-pressed', String(sound));
+    soundBtn.textContent = soundLabel(sound);
+    cleanup();
+    lift();
+  };
+  const begin = async () => {
+    if (!current() || starting || !ready) return;
+    starting = true;
+    start.disabled = true;
+    video.muted = false;
+    try {
+      await video.play();
+      if (current()) reveal(true);
+    } catch (error) {
+      if (!current()) return;
+      video.pause();
+      video.muted = true;
+      starting = false;
+      start.disabled = false;
+      if (error.name === 'NotAllowedError') {
+        status.textContent = 'Видео готово';
+        retry = false;
+        start.textContent = 'Смотреть со звуком';
+        start.hidden = false;
+      } else {
+        failed();
+      }
+    }
+  };
+  function checkReady() {
+    if (!current() || video.readyState < 3) return;
+    ready = true;
+    retry = false;
+    start.textContent = 'Смотреть со звуком';
+    if (minimumElapsed) begin();
+  }
+  function failed() {
+    if (!current()) return;
+    ready = false;
+    starting = false;
+    retry = true;
+    status.textContent = 'Видео не удалось загрузить';
+    start.textContent = 'Повторить загрузку';
+    start.disabled = false;
+    start.hidden = false;
+  }
+  start.addEventListener('click', () => {
+    if (retry) {
+      retry = false;
+      start.hidden = true;
+      status.textContent = 'Загружаем видео…';
+      video.load();
+      checkReady();
+    } else begin();
+  });
+  skip.addEventListener('click', () => {
+    if (!current()) return;
+    video.muted = true;
+    reveal(false);
+    play(video);
+  });
+  video.addEventListener('canplay', checkReady);
+  video.addEventListener('error', failed);
+  const minimumTimer = setTimeout(() => {
+    minimumElapsed = true;
+    checkReady();
+  }, 900);
+  const slowTimer = setTimeout(() => {
+    if (!current() || ready) return;
+    status.textContent = 'Видео ещё загружается. Можно подождать или продолжить без звука.';
+    retry = true;
+    start.textContent = 'Повторить загрузку';
+    start.hidden = false;
+  }, 15000);
+  if (video.error) failed();
+  else checkReady();
+}
+
 let navigationVersion = 0;
 function go(id, first = false) {
+  cancelIntro();
   const version = ++navigationVersion;
   const s = stories.find((x) => x.id === id) || stories[0];
   if (story && s.id === story.id) { lift(); return; }
@@ -466,7 +585,13 @@ function go(id, first = false) {
     return true;
   };
   if (reduce) { swap(); lift(); return; }
-  if (first) { swap(); setTimeout(() => { if(version === navigationVersion) lift(); }, 900); return; }
+  if (first) {
+    holdIntro = Boolean(s.open.video && s.open.sound);
+    swap();
+    if (holdIntro) prepareIntro(version);
+    else setTimeout(() => { if(version === navigationVersion) lift(); }, 900);
+    return;
+  }
   curtain.classList.remove('is-leave');
   curtain.classList.add('is-cover');
   setTimeout(() => { if(swap()) setTimeout(() => { if(version === navigationVersion) lift(); }, 380); }, CURTAIN_MS);
